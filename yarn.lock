@@ -1342,13 +1342,6 @@ electron-download@^3.0.1:
     semver "^5.3.0"
     sumchecker "^1.2.0"
 
-electron-prebuilt@^1.4.13:
-  version "1.4.13"
-  resolved "https://registry.yarnpkg.com/electron-prebuilt/-/electron-prebuilt-1.4.13.tgz#0a0e4d7bf895a242061ccfab29394dcda1da33d2"
-  dependencies:
-    electron-download "^3.0.1"
-    extract-zip "^1.0.3"
-
 electron-stream@^5.0.0:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/electron-stream/-/electron-stream-5.0.4.tgz#dafacc13678e9184e451244d6d8a678c23b7fb84"

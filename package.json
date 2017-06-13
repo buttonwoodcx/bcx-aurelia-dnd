@@ -1,0 +1,51 @@
+{
+  "name": "bcx-aurelia-dnd",
+  "version": "0.1.0",
+  "description": "Buttonwood Aurelia Drag and Drop",
+  "keywords": [
+    "aurelia",
+    "aurelia-dnd",
+    "dnd",
+    "drag-and-drop"
+  ],
+  "homepage": "http://github.com/buttonwoodcx/bcx-aurelia-dnd",
+  "bugs": {
+    "url": "https://github.com/buttonwoodcx/bcx-aurelia-dnd/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/buttonwoodcx/bcx-aurelia-dnd"
+  },
+  "license": "MIT",
+  "author": "Chunpeng Huo",
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
+    "eslint": "^3.19.0",
+    "faucet": "^0.0.1",
+    "jquery": "^3.2.1",
+    "rollup": "^0.42.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "tape": "^4.6.3",
+    "tape-run": "^3.0.0"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "lint": "eslint src",
+    "prepare": "npm run build",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags",
+    "pretest": "npm run lint",
+    "test": "env BABEL_ENV=test browserify -t babelify test/dnd.spec.js | tape-run"
+  },
+  "main": "dist/index.js",
+  "dependencies": {
+    "aurelia-event-aggregator": "^1.0.1"
+  }
+}

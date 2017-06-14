@@ -7,7 +7,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 
 // DndService only works in browser.
 const doc = document;
-const documentElement = doc.documentElement;
+const documentElement = doc && doc.documentElement;
 
 const css = `
 /* bcx-aurelia-dnd styles */

@@ -1,3 +1,4 @@
+/* global global, self */
 // borrowed many code from https://github.com/bevacqua/dragula.git
 
 import {EventAggregator} from 'aurelia-event-aggregator';
@@ -6,7 +7,27 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 // enough DOM features for bcx-aurelia-dnd to work.
 
 // DndService only works in browser.
-const doc = document;
+// code can be loaded in nodejs env, as long as you don't run it.
+// for aurelia component testing in nodejs, feed constructor with a mock DndService.
+//
+
+// copied from https://github.com/aurelia/pal/blob/master/src/index.js
+const _global = (function() {
+  // Workers don’t have `window`, only `self`
+  if (typeof self !== 'undefined') {
+    return self;
+  }
+
+  if (typeof global !== 'undefined') {
+    return global;
+  }
+
+  // Not all environments allow eval and Function
+  // Use only as a last resort:
+  return new Function('return this')();
+})();
+
+const doc = _global.document;
 const documentElement = doc && doc.documentElement;
 
 const css = `
@@ -195,7 +216,7 @@ export class DndSource {
       this.element = delegate.dndElement;
     }
 
-    if (! (this.element instanceof Element)) {
+    if (! (this.element instanceof _global.Element)) {
       throw new Error("Missing dndElement or options.element on dnd source delegate.");
     }
 
@@ -227,7 +248,7 @@ export class DndTarget {
       this.element = delegate.dndElement;
     }
 
-    if (! (this.element instanceof Element)) {
+    if (! (this.element instanceof _global.Element)) {
       throw new Error("Missing dndElement or options.element on dnd target delegate.");
     }
 
@@ -239,7 +260,7 @@ export class DndTarget {
 }
 
 function indexOfElementOrDelegate(array, delegateOrElement) {
-  const test = (delegateOrElement instanceof Element) ?
+  const test = (delegateOrElement instanceof _global.Element) ?
                (o => o.element === delegateOrElement) :
                (o => o.delegate === delegateOrElement);
 

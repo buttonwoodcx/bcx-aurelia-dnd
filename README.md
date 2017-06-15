@@ -2,6 +2,6 @@
 
 A Drag and Drop library mainly for app built with [Aurelia](http://aurelia.io).
 
-Pending documentation and examples.
+Read documentation [here](https://buttonwoodcx.github.io/bcx-aurelia-dnd)
 
 [BUTTONWOODCX™ PTY LTD](http://www.buttonwood.com.au).

@@ -5,8 +5,8 @@ import {DndService} from 'bcx-aurelia-dnd';
 export class Container {
   items = [
     {name: 'A', x: 20, y: 20},
-    {name: 'B', x: 50, y: 300},
-    {name: 'C', x: 300, y: 100}
+    {name: 'B', x: 50, y: 200},
+    {name: 'C', x: 200, y: 100}
   ];
 
   constructor(dndService) {

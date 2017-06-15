@@ -1,13 +1,12 @@
 <template>
-  <require from="./canvas-container"></require>
-
   <p>Draw lines in canvas</p>
 
-  <svg class="svg-canvas" ref="dndElement" width="400" height="400">
+  <svg ref="dndElement" width="300" height="300">
     <rect
-      x="0" y="0" width="400" height="400" stroke="#555" stroke-width="1"
+      x="0" y="0" width="300" height="300" stroke="#555" stroke-width="1"
       fill="transparent"
     ></rect>
+
     <line
       repeat.for="line of lines"
       x1.bind="line.from.x"

@@ -1,0 +1,115 @@
+html, body {
+  height :100%;
+  font-family: Helvetica, Arial;
+}
+
+body {
+  position: relative;
+  min-width: 750px;
+}
+
+.doc-navigation {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 150px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #eee;
+  padding: 5px;
+}
+
+.doc-navigation .title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.doc-navigation a.remote-link,
+.doc-navigation a.remote-link:visited {
+  display: block;
+  text-decoration: none;
+  color: black;
+  padding: 2px;
+  padding-left: 10px;
+  font-size: 0.7rem;
+  margin: 4px 0;
+}
+
+
+a.link {
+  display: block;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+a.link, a.link:visited {
+  display: block;
+  color: black;
+  padding: 5px;
+  padding-left: 10px;
+  margin: 8px 0;
+}
+
+.doc-navigation a.remote-link:hover,
+a.link:hover {
+  text-decoration: underline;
+}
+
+a.link.active {
+  background-color: #555;
+  color: white;
+}
+
+.doc-content {
+  position: absolute;
+  top: 0;
+  left: 150px;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.doc-demo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.doc-source-code {
+  position: absolute;
+  top: 400px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 2px solid #eee;
+  box-sizing: border-box;
+}
+
+.doc-source-code select {
+  margin: 5px 0 0 5px;
+}
+
+.doc-source-code display-source {
+  display: block;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+display-source pre {
+  font-size: 0.9rem;
+}

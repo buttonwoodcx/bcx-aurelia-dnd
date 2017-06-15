@@ -12,10 +12,10 @@
     "aurelia-bootstrapper": "^2.1.1",
     "bcx-aurelia-dnd": "^0.1.1",
     "bluebird": "^3.4.1",
-    "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
     "requirejs": "^2.3.2",
+    "showdown": "^1.7.1",
     "text": "github:requirejs/text#latest"
   },
   "peerDependencies": {},

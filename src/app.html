@@ -1,19 +1,30 @@
 <template>
-  <require from="bootstrap/css/bootstrap.css"></require>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12 col-md-3">
-        <div class="list-group">
-          <a
-            repeat.for="row of router.navigation"
-            class="list-group-item ${row.isActive ? 'active' : ''}"
-            href.bind="row.href"
-          >${row.title}</a>
-        </div>
-      </div>
-      <div class="col-xs-12 col-md-9">
-        <router-view></router-view>
-      </div>
-    </div>
+  <require from="normalize.css"></require>
+  <require from="./app.css"></require>
+
+  <div class="doc-navigation">
+    <div class="title">bcx-aurelia-dnd</div>
+
+    <a href="https://github.com/buttonwoodcx/bcx-aurelia-dnd" class="remote-link">» GitHub Repository</a>
+
+    <h4><em>Tutorial</em></h4>
+
+    <a
+      repeat.for="row of router.navigation | navSection:'tutorial'"
+      class="link ${row.isActive ? 'active' : ''}"
+      href.bind="row.href"
+    >${row.title}</a>
+
+    <h4><em>Examples</em></h4>
+
+    <a
+      repeat.for="row of router.navigation | navSection:'examples'"
+      class="link ${row.isActive ? 'active' : ''}"
+      href.bind="row.href"
+    >${row.title}</a>
+  </div>
+
+  <div class="doc-content">
+    <router-view></router-view>
   </div>
 </template>

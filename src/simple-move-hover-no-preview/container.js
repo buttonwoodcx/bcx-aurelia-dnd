@@ -7,8 +7,8 @@ import _ from 'lodash';
 export class Container {
   items = [
     {id: 'a', name: 'A', x: 20, y: 20},
-    {id: 'b', name: 'B', x: 50, y: 300},
-    {id: 'c', name: 'C', x: 300, y: 100}
+    {id: 'b', name: 'B', x: 50, y: 200},
+    {id: 'c', name: 'C', x: 200, y: 100}
   ];
 
   intention;

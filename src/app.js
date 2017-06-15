@@ -22,6 +22,12 @@ export class App {
         title: 'Move object, add object, customize preview',
         nav: true,
         moduleId: 'move-plus-add/index'
+      },
+      {
+        route: 'draw', name: 'draw',
+        title: 'Draw in canvas',
+        nav: true,
+        moduleId: 'draw/index'
       }
     ]);
   }

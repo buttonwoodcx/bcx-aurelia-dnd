@@ -1,0 +1,4 @@
+.svg-canvas {
+  position: relative;
+  pointer-events: none;
+}

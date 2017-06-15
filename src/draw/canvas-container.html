@@ -1,0 +1,29 @@
+<template>
+  <require from="./canvas-container"></require>
+
+  <p>Draw lines in canvas</p>
+
+  <svg class="svg-canvas" ref="dndElement" width="400" height="400">
+    <rect
+      x="0" y="0" width="400" height="400" stroke="#555" stroke-width="1"
+      fill="transparent"
+    ></rect>
+    <line
+      repeat.for="line of lines"
+      x1.bind="line.from.x"
+      y1.bind="line.from.y"
+      x2.bind="line.to.x"
+      y2.bind="line.to.y"
+      stroke="#333"
+    ></line>
+
+    <line
+      if.bind="drawingLine"
+      x1.bind="drawingLine.from.x"
+      y1.bind="drawingLine.from.y"
+      x2.bind="drawingLine.to.x"
+      y2.bind="drawingLine.to.y"
+      stroke="blue"
+    ></line>
+  </svg>
+</template>

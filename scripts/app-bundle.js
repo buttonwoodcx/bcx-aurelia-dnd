@@ -36,6 +36,11 @@ define('app',['exports'], function (exports) {
         title: 'Move object, add object, customize preview',
         nav: true,
         moduleId: 'move-plus-add/index'
+      }, {
+        route: 'draw', name: 'draw',
+        title: 'Draw in canvas',
+        nav: true,
+        moduleId: 'draw/index'
       }]);
     };
 
@@ -85,16 +90,105 @@ define('main',['exports', './environment', 'bootstrap'], function (exports, _env
     });
   }
 });
-define('resources/index',['exports'], function (exports) {
+define('draw/canvas-container',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'aurelia-event-aggregator'], function (exports, _aureliaFramework, _bcxAureliaDnd, _aureliaEventAggregator) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.configure = configure;
-  function configure(config) {
-    config.globalResources(['./elements/display-source', './elements/display-sources']);
+  exports.CanvasContainer = undefined;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
   }
+
+  var _dec, _class;
+
+  var CanvasContainer = exports.CanvasContainer = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService, _aureliaEventAggregator.EventAggregator), _dec(_class = function () {
+    function CanvasContainer(dndService, ea) {
+      _classCallCheck(this, CanvasContainer);
+
+      this.lines = [];
+
+      this.dndService = dndService;
+      this.ea = ea;
+    }
+
+    CanvasContainer.prototype.attached = function attached() {
+      var _this = this;
+
+      this.dndService.addSource(this, { noPreview: true });
+      this.dndService.addTarget(this);
+      this.subscribers = [this.ea.subscribe('dnd:willStart', function () {
+        return _this.resetDrawingLine();
+      }), this.ea.subscribe('dnd:didEnd', function () {
+        return _this.resetDrawingLine();
+      })];
+    };
+
+    CanvasContainer.prototype.detached = function detached() {
+      this.dndService.removeSource(this);
+      this.dndService.removeTarget(this);
+      this.subscribers.forEach(function (s) {
+        return s.dispose();
+      });
+    };
+
+    CanvasContainer.prototype.resetDrawingLine = function resetDrawingLine() {
+      this.drawingLine = null;
+    };
+
+    CanvasContainer.prototype.dndModel = function dndModel() {
+      return { type: 'drawLine' };
+    };
+
+    CanvasContainer.prototype.dndCanDrop = function dndCanDrop(model) {
+      return model.type === 'drawLine';
+    };
+
+    CanvasContainer.prototype.dndHover = function dndHover(location) {
+      var mouseStartPointPageOffset = location.mouseStartPointPageOffset,
+          targetElementPageOffset = location.targetElementPageOffset,
+          mouseEndPointOffsetInTargetElement = location.mouseEndPointOffsetInTargetElement;
+
+
+      var from = {
+        x: mouseStartPointPageOffset.x - targetElementPageOffset.x,
+        y: mouseStartPointPageOffset.y - targetElementPageOffset.y
+      };
+
+      this.drawingLine = { from: from, to: mouseEndPointOffsetInTargetElement };
+    };
+
+    CanvasContainer.prototype.dndDrop = function dndDrop() {
+      if (this.drawingLine) {
+        this.lines.push(this.drawingLine);
+      }
+    };
+
+    return CanvasContainer;
+  }()) || _class);
+});
+define('draw/index',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Index = exports.Index = function Index() {
+    _classCallCheck(this, Index);
+
+    this.sourceFilenames = ['src/draw/canvas-container.js', 'src/draw/canvas-container.html', 'src/draw/canvas-container.css'];
+  };
 });
 define('move-plus-add/add-box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'jquery'], function (exports, _aureliaFramework, _bcxAureliaDnd, _jquery) {
   'use strict';
@@ -582,6 +676,17 @@ define('move-plus-add/index',['exports'], function (exports) {
 
     this.sourceFilenames = ['src/move-plus-add/container.js', 'src/move-plus-add/container.html', 'src/move-plus-add/container.css', 'src/move-plus-add/target-effect.css', 'src/move-plus-add/box.js', 'src/move-plus-add/box.html', 'src/move-plus-add/box.css', 'src/move-plus-add/add-box.js', 'src/move-plus-add/add-box.html', 'src/move-plus-add/add-source.css', 'src/move-plus-add/add-money.js', 'src/move-plus-add/add-money.html'];
   };
+});
+define('resources/index',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.configure = configure;
+  function configure(config) {
+    config.globalResources(['./elements/display-source', './elements/display-sources']);
+  }
 });
 define('simple-move/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
   'use strict';
@@ -1247,21 +1352,24 @@ define('resources/elements/display-sources',['exports', 'aurelia-framework'], fu
   })), _class);
 });
 define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"bootstrap/css/bootstrap.css\"></require>\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-xs-12 col-md-3\">\n        <div class=\"list-group\">\n          <a\n            repeat.for=\"row of router.navigation\"\n            class=\"list-group-item ${row.isActive ? 'active' : ''}\"\n            href.bind=\"row.href\"\n          >${row.title}</a>\n        </div>\n      </div>\n      <div class=\"col-xs-12 col-md-9\">\n        <router-view></router-view>\n      </div>\n    </div>\n  </div>\n</template>\n"; });
+define('text!draw/canvas-container.css', ['module'], function(module) { module.exports = ".svg-canvas {\n  position: relative;\n  pointer-events: none;\n}"; });
+define('text!draw/canvas-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./canvas-container\"></require>\n\n  <p>Draw lines in canvas</p>\n\n  <svg class=\"svg-canvas\" ref=\"dndElement\" width=\"400\" height=\"400\">\n    <rect\n      x=\"0\" y=\"0\" width=\"400\" height=\"400\" stroke=\"#555\" stroke-width=\"1\"\n      fill=\"transparent\"\n    ></rect>\n    <line\n      repeat.for=\"line of lines\"\n      x1.bind=\"line.from.x\"\n      y1.bind=\"line.from.y\"\n      x2.bind=\"line.to.x\"\n      y2.bind=\"line.to.y\"\n      stroke=\"#333\"\n    ></line>\n\n    <line\n      if.bind=\"drawingLine\"\n      x1.bind=\"drawingLine.from.x\"\n      y1.bind=\"drawingLine.from.y\"\n      x2.bind=\"drawingLine.to.x\"\n      y2.bind=\"drawingLine.to.y\"\n      stroke=\"blue\"\n    ></line>\n  </svg>\n</template>\n"; });
 define('text!move-plus-add/add-source.css', ['module'], function(module) { module.exports = ".example-add-source {\n  display: inline-block;\n  border: 1px solid #555;\n  box-sizing: border-box;\n}"; });
-define('text!move-plus-add/add-box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./add-source.css\"></require>\n  <div ref=\"dndElement\" class=\"example-add-source\">\n    Add Box\n  </div>\n</template>"; });
+define('text!draw/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./canvas-container\"></require>\n\n  <div class=\"row\">\n    <div class=\"col-xs-12 col-lg-6\">\n      <canvas-container></canvas-container>\n    </div>\n    <div class=\"col-xs-12 col-lg-6\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!move-plus-add/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px dotted #555;\n  padding: 0.5rem;\n}"; });
-define('text!move-plus-add/add-money.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./add-source.css\"></require>\n  <div ref=\"dndElement\" class=\"example-add-source\">\n    Add money\n  </div>\n</template>\n"; });
+define('text!move-plus-add/add-box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./add-source.css\"></require>\n  <div ref=\"dndElement\" class=\"example-add-source\">\n    Add Box\n  </div>\n</template>"; });
 define('text!move-plus-add/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 400px;\n  height: 400px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!move-plus-add/box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./box.css\"></require>\n  <require from=\"./target-effect.css\"></require>\n\n  <div\n    ref=\"dndElement\"\n    class=\"example-box ${dndCss}\"\n    style.bind=\"positionCss\"\n  >\n    $${item.dollars}\n  </div>\n</template>"; });
+define('text!move-plus-add/add-money.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./add-source.css\"></require>\n  <div ref=\"dndElement\" class=\"example-add-source\">\n    Add money\n  </div>\n</template>\n"; });
 define('text!move-plus-add/target-effect.css', ['module'], function(module) { module.exports = ".can-drop {\n  background-color: lightgreen;\n}\n\n.can-drop.shallow-hover {\n  outline: 3px solid green;\n}\n\n.can-not-drop {\n  background-color: lightgrey;\n}"; });
-define('text!move-plus-add/container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container.css\"></require>\n  <require from=\"./target-effect.css\"></require>\n  <require from=\"./box\"></require>\n  <require from=\"./add-box\"></require>\n  <require from=\"./add-money\"></require>\n\n  <add-box></add-box>\n  <add-money></add-money>\n  <br><br>\n\n  <div ref=\"dndElement\" class=\"example-container ${dndCss}\">\n    <box repeat.for=\"item of patchedItems\" item.bind=\"item\"></box>\n  </div>\n</template>\n"; });
+define('text!move-plus-add/box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./box.css\"></require>\n  <require from=\"./target-effect.css\"></require>\n\n  <div\n    ref=\"dndElement\"\n    class=\"example-box ${dndCss}\"\n    style.bind=\"positionCss\"\n  >\n    $${item.dollars}\n  </div>\n</template>"; });
 define('text!simple-move/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px dotted #555;\n  background: white;\n}"; });
-define('text!move-plus-add/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"row\">\n    <div class=\"col-xs-12 col-lg-6\">\n      <container></container>\n    </div>\n    <div class=\"col-xs-12 col-lg-6\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
+define('text!move-plus-add/container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container.css\"></require>\n  <require from=\"./target-effect.css\"></require>\n  <require from=\"./box\"></require>\n  <require from=\"./add-box\"></require>\n  <require from=\"./add-money\"></require>\n\n  <add-box></add-box>\n  <add-money></add-money>\n  <br><br>\n\n  <div ref=\"dndElement\" class=\"example-container ${dndCss}\">\n    <box repeat.for=\"item of patchedItems\" item.bind=\"item\"></box>\n  </div>\n</template>\n"; });
 define('text!simple-move/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 400px;\n  height: 400px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!simple-move/box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./box.css\"></require>\n\n  <div\n    ref=\"dndElement\"\n    class=\"example-box\"\n    style.bind=\"positionCss\"\n    show.bind=\"!draggingMe\"\n  >\n    ${item.name}\n  </div>\n</template>"; });
+define('text!move-plus-add/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"row\">\n    <div class=\"col-xs-12 col-lg-6\">\n      <container></container>\n    </div>\n    <div class=\"col-xs-12 col-lg-6\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px dotted #555;\n  background: white;\n}"; });
-define('text!simple-move/container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container.css\"></require>\n  <require from=\"./box\"></require>\n\n  <div ref=\"dndElement\" class=\"example-container\">\n    <box repeat.for=\"item of items\" item.bind=\"item\"></box>\n  </div>\n</template>\n"; });
+define('text!simple-move/box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./box.css\"></require>\n\n  <div\n    ref=\"dndElement\"\n    class=\"example-box\"\n    style.bind=\"positionCss\"\n    show.bind=\"!draggingMe\"\n  >\n    ${item.name}\n  </div>\n</template>"; });
 define('text!simple-move-hover-no-preview/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 400px;\n  height: 400px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
+define('text!simple-move/container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container.css\"></require>\n  <require from=\"./box\"></require>\n\n  <div ref=\"dndElement\" class=\"example-container\">\n    <box repeat.for=\"item of items\" item.bind=\"item\"></box>\n  </div>\n</template>\n"; });
 define('text!simple-move/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"row\">\n    <div class=\"col-xs-12 col-lg-6\">\n      <container></container>\n    </div>\n    <div class=\"col-xs-12 col-lg-6\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview/box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./box.css\"></require>\n\n  <div\n    ref=\"dndElement\"\n    class=\"example-box\"\n    style.bind=\"positionCss\"\n  >\n    ${item.name}\n  </div>\n</template>"; });
 define('text!simple-move-hover-no-preview/container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container.css\"></require>\n  <require from=\"./box\"></require>\n\n  <div ref=\"dndElement\" class=\"example-container\">\n    <box repeat.for=\"item of patchedItems\" item.bind=\"item\"></box>\n  </div>\n</template>\n"; });

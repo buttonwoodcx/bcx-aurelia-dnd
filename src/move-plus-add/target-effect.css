@@ -1,0 +1,11 @@
+.can-drop {
+  background-color: lightgreen;
+}
+
+.can-drop.shallow-hover {
+  outline: 3px solid green;
+}
+
+.can-not-drop {
+  background-color: lightgrey;
+}

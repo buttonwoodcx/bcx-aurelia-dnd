@@ -1,0 +1,10 @@
+<template>
+  <form>
+    <div class="form-group">
+      <select class="form-control" value.bind="selected">
+        <option repeat.for="filename of filenames" model.bind="filename">${filename}</option>
+      </select>
+    </div>
+  </form>
+  <display-source if.bind="selected" filename.bind="selected"></display-source>
+</template>

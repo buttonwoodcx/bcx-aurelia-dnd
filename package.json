@@ -1,51 +1,53 @@
 {
-  "name": "bcx-aurelia-dnd",
-  "version": "0.1.1",
-  "description": "Buttonwood Aurelia Drag and Drop",
-  "keywords": [
-    "aurelia",
-    "aurelia-dnd",
-    "dnd",
-    "drag-and-drop"
-  ],
-  "homepage": "http://github.com/buttonwoodcx/bcx-aurelia-dnd",
-  "bugs": {
-    "url": "https://github.com/buttonwoodcx/bcx-aurelia-dnd/issues"
-  },
+  "name": "bcx-aurelia-dnd-examples",
+  "description": "bcx-aurelia-dnd examples",
+  "version": "0.1.0",
   "repository": {
-    "type": "git",
-    "url": "http://github.com/buttonwoodcx/bcx-aurelia-dnd"
+    "type": "???",
+    "url": "???"
   },
   "license": "MIT",
-  "author": "Chunpeng Huo",
-  "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "babel-preset-es2015-rollup": "^3.0.0",
-    "babel-preset-stage-1": "^6.24.1",
-    "babel-register": "^6.24.1",
-    "babelify": "^7.3.0",
-    "browserify": "^14.4.0",
-    "eslint": "^3.19.0",
-    "faucet": "^0.0.1",
-    "jquery": "^3.2.1",
-    "rollup": "^0.42.0",
-    "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-uglify": "^2.0.1",
-    "tape": "^4.6.3",
-    "tape-run": "^3.0.0"
-  },
-  "scripts": {
-    "build": "rollup -c",
-    "lint": "eslint src",
-    "prepare": "npm run build",
-    "preversion": "npm test",
-    "postversion": "git push && git push --tags",
-    "pretest": "npm run lint",
-    "test": "env BABEL_ENV=test browserify -t babelify test/dnd.spec.js | tape-run"
-  },
-  "main": "dist/index.js",
   "dependencies": {
-    "aurelia-event-aggregator": "^1.0.1"
+    "aurelia-animator-css": "^1.0.2",
+    "aurelia-bootstrapper": "^2.1.1",
+    "bcx-aurelia-dnd": "^0.1.1",
+    "bluebird": "^3.4.1",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
+    "requirejs": "^2.3.2",
+    "text": "github:requirejs/text#latest"
+  },
+  "peerDependencies": {},
+  "devDependencies": {
+    "aurelia-cli": "^0.30.0",
+    "aurelia-testing": "^1.0.0-beta.3.0.1",
+    "aurelia-tools": "^1.0.0",
+    "babel-eslint": "^6.0.4",
+    "babel-plugin-syntax-flow": "^6.8.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-es2015-modules-amd": "^6.8.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.10.3",
+    "babel-plugin-transform-flow-strip-types": "^6.8.0",
+    "babel-polyfill": "^6.9.1",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-stage-1": "^6.5.0",
+    "babel-register": "^6.9.0",
+    "browser-sync": "^2.13.0",
+    "connect-history-api-fallback": "^1.2.0",
+    "debounce": "^1.0.2",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-changed-in-place": "^2.0.3",
+    "gulp-eslint": "^2.0.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.0.0-alpha",
+    "gulp-watch": "^4.3.11",
+    "minimatch": "^3.0.2",
+    "through2": "^2.0.1",
+    "uglify-js": "^2.6.3",
+    "vinyl-fs": "^2.4.3"
   }
 }

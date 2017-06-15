@@ -1,12 +1,27 @@
-# Nodejs
-node_modules/
-npm-debug.*
+# You may want to customise this file depending on your Operating System
+# and the editor that you use.
+#
+# We recommend that you use a Global Gitignore for files that are not related
+# to the project. (https://help.github.com/articles/ignoring-files/#create-a-global-gitignore)
 
-dist/
-/.source*
+# OS
+#
+# Ref: https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
+# Ref: https://github.com/github/gitignore/blob/master/Global/Windows.gitignore
+# Ref: https://github.com/github/gitignore/blob/master/Global/Linux.gitignore
+.DS_STORE
+Thumbs.db
 
-# Mac OS X
-.DS_Store
+# Editors
+#
+# Ref: https://github.com/github/gitignore/blob/master/Global
+# Ref: https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
+# Ref: https://github.com/github/gitignore/blob/master/Global/VisualStudioCode.gitignore
+.idea
+.vscode
 
-# my temporary test file
-/_test_.js
+# Dependencies
+node_modules
+
+# Compiled files
+# scripts

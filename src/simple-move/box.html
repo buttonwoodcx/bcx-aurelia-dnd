@@ -1,0 +1,12 @@
+<template>
+  <require from="./box.css"></require>
+
+  <div
+    ref="dndElement"
+    class="example-box"
+    style.bind="positionCss"
+    show.bind="!draggingMe"
+  >
+    ${item.name}
+  </div>
+</template>

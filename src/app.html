@@ -1,0 +1,19 @@
+<template>
+  <require from="bootstrap/css/bootstrap.css"></require>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-md-3">
+        <div class="list-group">
+          <a
+            repeat.for="row of router.navigation"
+            class="list-group-item ${row.isActive ? 'active' : ''}"
+            href.bind="row.href"
+          >${row.title}</a>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-9">
+        <router-view></router-view>
+      </div>
+    </div>
+  </div>
+</template>

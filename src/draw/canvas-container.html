@@ -1,28 +1,64 @@
 <template>
-  <p>Draw lines in canvas</p>
+  <p>Draw
+    <select value.bind="selectedType">
+      <option repeat.for="type of drawingTypes" model.bind="type.value">${type.label}</option>
+    </select>
+  </p>
+
 
   <svg ref="dndElement" width="300" height="300">
+    <!-- draw border of svg -->
     <rect
-      x="0" y="0" width="300" height="300" stroke="#555" stroke-width="1"
+      x="0"
+      y="0"
+      width="300"
+      height="300"
+      stroke="#555"
+      stroke-width="1"
       fill="transparent"
     ></rect>
 
-    <line
-      repeat.for="line of lines"
-      x1.bind="line.from.x"
-      y1.bind="line.from.y"
-      x2.bind="line.to.x"
-      y2.bind="line.to.y"
-      stroke="#333"
-    ></line>
+    <g repeat.for="shape of shapes">
+      <line
+        if.bind="shape.type == 'line'"
+        x1.bind="shape.from.x"
+        y1.bind="shape.from.y"
+        x2.bind="shape.to.x"
+        y2.bind="shape.to.y"
+        stroke="#333"
+      ></line>
+
+      <rect
+        if.bind="shape.type == 'rect'"
+        x.bind="shape.x"
+        y.bind="shape.y"
+        width.bind="shape.width"
+        height.bind="shape.height"
+        stroke="#333"
+        stroke-width="1"
+        fill="transparent"
+      ></rect>
+    </g>
+
 
     <line
-      if.bind="drawingLine"
-      x1.bind="drawingLine.from.x"
-      y1.bind="drawingLine.from.y"
-      x2.bind="drawingLine.to.x"
-      y2.bind="drawingLine.to.y"
+      if.bind="drawingShape.type == 'line'"
+      x1.bind="drawingShape.from.x"
+      y1.bind="drawingShape.from.y"
+      x2.bind="drawingShape.to.x"
+      y2.bind="drawingShape.to.y"
       stroke="blue"
     ></line>
+
+    <rect
+      if.bind="drawingShape.type == 'rect'"
+      x.bind="drawingShape.x"
+      y.bind="drawingShape.y"
+      width.bind="drawingShape.width"
+      height.bind="drawingShape.height"
+      stroke="blue"
+      stroke-width="1"
+      fill="transparent"
+    ></rect>
   </svg>
 </template>

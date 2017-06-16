@@ -4,8 +4,14 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 
 @inject(DndService, EventAggregator)
 export class CanvasContainer {
-  lines = [];
-  drawingLine;
+  shapes = [];
+  drawingShape;
+
+  selectedType = 'drawLine';
+  drawingTypes = [
+    {value: 'drawLine', label: 'Line'},
+    {value: 'drawRect', label: 'Rectangular'}
+  ];
 
   constructor(dndService, ea) {
     this.dndService = dndService;
@@ -17,8 +23,8 @@ export class CanvasContainer {
     this.dndService.addSource(this, {noPreview: true});
     this.dndService.addTarget(this);
     this.subscribers = [
-      this.ea.subscribe('dnd:willStart', () => this.resetDrawingLine()),
-      this.ea.subscribe('dnd:didEnd', () => this.resetDrawingLine())
+      this.ea.subscribe('dnd:willStart', () => this.resetDrawingShape()),
+      this.ea.subscribe('dnd:didEnd', () => this.resetDrawingShape())
     ];
   }
 
@@ -28,16 +34,17 @@ export class CanvasContainer {
     this.subscribers.forEach(s => s.dispose());
   }
 
-  resetDrawingLine() {
-    this.drawingLine = null;
+  resetDrawingShape() {
+    this.drawingShape = null;
   }
 
   dndModel() {
-    return {type: 'drawLine'};
+    return {type: this.selectedType};
   }
 
   dndCanDrop(model) {
-    return model.type === 'drawLine';
+    return model.type === 'drawLine' ||
+           model.type === 'drawRect';
   }
 
   dndHover(location) {
@@ -45,17 +52,27 @@ export class CanvasContainer {
            targetElementPageOffset,
            mouseEndPointOffsetInTargetElement} = location;
 
-    const from = {
+    const start = {
       x: mouseStartPointPageOffset.x - targetElementPageOffset.x,
       y: mouseStartPointPageOffset.y - targetElementPageOffset.y
     };
 
-    this.drawingLine = {from, to: mouseEndPointOffsetInTargetElement};
+    const end = mouseEndPointOffsetInTargetElement;
+
+    if (this.dnd.model.type === 'drawLine') {
+      this.drawingShape = {type: 'line', from: start, to: end};
+    } else if (this.dnd.model.type === 'drawRect') {
+      const x = Math.min(start.x, end.x);
+      const y = Math.min(start.y, end.y);
+      const width = Math.abs(start.x - end.x);
+      const height = Math.abs(start.y - end.y);
+      this.drawingShape = {type: 'rect', x, y, width, height};
+    }
   }
 
   dndDrop() {
-    if (this.drawingLine) {
-      this.lines.push(this.drawingLine);
+    if (this.drawingShape) {
+      this.shapes.push(this.drawingShape);
     }
   }
 }

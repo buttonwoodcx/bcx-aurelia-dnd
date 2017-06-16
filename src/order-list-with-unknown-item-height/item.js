@@ -28,7 +28,7 @@ export class Item {
     };
   }
 
-  // use canDrop true to receive dndHover, but do nothing in dndDrop
+  // set canDrop true to receive dndHover, but do nothing in dndDrop
   dndCanDrop(model) {
     return model.type === 'orderItem' && model.id !== this.item.id;
   }
@@ -40,6 +40,8 @@ export class Item {
     const height = $(this.dndElement).height();
     const {y} = location.mouseEndPointOffsetInTargetElement;
 
+    // because of unknown size diff between items,
+    // check half size to avoid endless bouncing of swapping of two items.
     if (y < (height / 2)) {
       // hover over top half, user want to move smth before this item.
       this.updateIntention({targetId: this.item.id, beforeTarget: true});

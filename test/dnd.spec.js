@@ -47,6 +47,7 @@ const model2 = () => ({type: 'two', name: 'model2'});
 const box_0_0 = addBox('00', 0, 0, 100, 100);
 const box_0_1 = addBox('01', 0, 100, 100, 100);
 const box_0_2 = addBox('02', 0, 200, 100, 100);
+const box_0_3 = addBox('03', 0, 300, 100, 100);
 
 const tbox_big = addBox('tbox_big', 200, 0, 500, 500);
 const tbox_small_inner = addBox('tbox_small_inner', 300, 100, 200, 200);
@@ -106,14 +107,12 @@ const target3 = {
     track({
       event: 'drop on tbox_big2',
       location,
-      dnd: this.dnd
     });
   },
   dndHover(location) {
     track({
       event: 'hover on tbox_big2',
       location,
-      dnd: this.dnd
     });
   }
 };
@@ -142,6 +141,19 @@ test('add source', t => {
       return dom.get(0);
     }
   });
+
+  // source with customised preview, centerPreviewToMousePosition
+  dndService.addSource({
+    dndModel: model2,
+    dndElement: box_0_3,
+    dndPreview: (model) => {
+      const dom = $('<div></div>');
+      dom.text('+');
+      dom.css('width', '20px');
+      dom.css('height', '20px');
+      return dom.get(0);
+    }
+  }, {centerPreviewToMousePosition: true, hideCursor: true});
 
   t.end();
 });
@@ -264,6 +276,8 @@ test('drag type one, hover over 2 targets, drop on inner target', t => {
   const m = {type: 'one', name: 'model1'};
 
   fireEvent(box_0_0, 'mousedown', {which: 1, clientX: 10, clientY: 20});
+  t.notOk($('body').hasClass('bcx-dnd-hide-cursor'));
+
   // first small movement, this is where dnd starts
   fireEvent(documentElement, 'mousemove', {which: 1, clientX: 11, clientY: 20});
   const preview = $('.bcx-dnd-preview');
@@ -271,6 +285,7 @@ test('drag type one, hover over 2 targets, drop on inner target', t => {
   fireEvent(documentElement, 'mousemove', {which: 1, clientX: 15, clientY: 20});
   t.equal(preview.css('left'), '4px'); // moved 4px to the right
   t.equal(preview.css('top'), '0px');
+  t.notOk($('body').hasClass('bcx-dnd-hide-cursor'));
 
   clearTrack();
 
@@ -581,6 +596,116 @@ test('drag type two with customised preview, drop on invalid target', t => {
     { event: 'dnd:willEnd', isProcessing: true, model: { name: 'model2', type: 'two' } },
     { event: 'dnd:didEnd', isProcessing: undefined, model: undefined }
   ], 'no drop recorded');
+
+  clearTrack();
+  t.end();
+});
+
+test('drag type two with customised preview, hideCursor, centerPreviewToMousePosition, drop on target', t => {
+  const m = {type: 'two', name: 'model2'};
+
+  fireEvent(box_0_3, 'mousedown', {which: 1, clientX: 20, clientY: 320});
+
+  t.notOk($('body').hasClass('bcx-dnd-hide-cursor'));
+  // first small movement, this is where dnd starts
+  fireEvent(documentElement, 'mousemove', {which: 1, clientX: 21, clientY: 320});
+  const preview = $('.bcx-dnd-preview');
+  t.equal(preview.length, 1);
+  t.equal(preview.css('left'), '11px');
+  t.equal(preview.css('top'), '310px');
+  t.equal(preview.css('width'), '20px', 'customised width, not source element width.');
+  t.equal(preview.css('height'), '20px', 'customised height, not source element height.');
+
+  t.ok($('body').hasClass('bcx-dnd-hide-cursor'));
+
+  // following movement re-position preview.
+  fireEvent(documentElement, 'mousemove', {which: 1, clientX: 25, clientY: 320});
+  t.equal(preview.css('left'), '15px');
+  t.equal(preview.css('top'), '310px');
+
+  clearTrack();
+
+  //hover over tbox_big2 move 700px to the right, move 10px down
+  fireEvent(documentElement, 'mousemove', {which: 1, clientX: 721, clientY: 330});
+
+  t.ok(target1.dnd.isProcessing);
+  t.notOk(target1.dnd.isHoveringShallowly);
+  t.notOk(target1.dnd.isHovering);
+  t.notOk(target1.dnd.canDrop);
+  t.deepEqual(target1.dnd.model, m);
+
+  t.ok(target2.dnd.isProcessing);
+  t.notOk(target2.dnd.isHoveringShallowly);
+  t.notOk(target2.dnd.isHovering);
+  t.ok(target2.dnd.canDrop);
+  t.deepEqual(target2.dnd.model, m);
+
+  t.ok(target3.dnd.isProcessing);
+  t.ok(target3.dnd.isHoveringShallowly);
+  t.ok(target3.dnd.isHovering);
+  t.ok(target3.dnd.canDrop);
+  t.deepEqual(target3.dnd.model, m);
+
+  t.deepEqual(_track, [
+    {
+      event: 'hover on tbox_big2',
+      location: {
+        mouseEndPointOffsetInTargetElement: { x: 21, y: 330 },
+        mouseEndPointPageOffset: { x: 721, y: 330 },
+        mouseMovement: { x: 700, y: 10 },
+        mouseStartPointPageOffset: { x: 21, y: 320 },
+        previewElementOffsetInTargetElement: { x: 11, y: 320 },
+        previewElementPageOffset: { x: 711, y: 320 },
+        sourceElementPageOffset: { x: 0, y: 300 },
+        targetElementPageOffset: { x: 700, y: 0 }
+      }
+    }
+  ]);
+
+  clearTrack();
+
+  //drop on tbox_big2
+  fireEvent(documentElement, 'mouseup', {which: 1, clientX: 721, clientY: 330});
+
+  // finished
+  t.notOk(dndService.isProcessing);
+  t.notOk(dndService.model);
+
+  t.notOk(target1.dnd.isProcessing);
+  t.notOk(target1.dnd.isHoveringShallowly);
+  t.notOk(target1.dnd.isHovering);
+  t.notOk(target1.dnd.canDrop);
+  t.notOk(target1.dnd.model);
+
+  t.notOk(target2.dnd.isProcessing);
+  t.notOk(target2.dnd.isHoveringShallowly);
+  t.notOk(target2.dnd.isHovering);
+  t.notOk(target2.dnd.canDrop);
+  t.notOk(target2.dnd.model);
+
+  t.notOk(target3.dnd.isProcessing);
+  t.notOk(target3.dnd.isHoveringShallowly);
+  t.notOk(target3.dnd.isHovering);
+  t.notOk(target3.dnd.canDrop);
+  t.notOk(target3.dnd.model);
+
+  t.deepEqual(_track, [
+    { event: 'dnd:willEnd', isProcessing: true, model: { name: 'model2', type: 'two' } },
+    {
+      event: 'drop on tbox_big2',
+      location: {
+        mouseEndPointOffsetInTargetElement: { x: 21, y: 330 },
+        mouseEndPointPageOffset: { x: 721, y: 330 },
+        mouseMovement: { x: 700, y: 10 },
+        mouseStartPointPageOffset: { x: 21, y: 320 },
+        previewElementOffsetInTargetElement: { x: 11, y: 320 },
+        previewElementPageOffset: { x: 711, y: 320 },
+        sourceElementPageOffset: { x: 0, y: 300 },
+        targetElementPageOffset: { x: 700, y: 0 }
+      }
+    },
+    { event: 'dnd:didEnd', isProcessing: undefined, model: undefined }
+  ]);
 
   clearTrack();
   t.end();

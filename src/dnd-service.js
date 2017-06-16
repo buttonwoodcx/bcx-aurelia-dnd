@@ -34,15 +34,19 @@ const css = `
 /* bcx-aurelia-dnd styles */
 
 .bcx-dnd-preview {
-  position: absolute;
+  /* position: absolute; // has been set on _preview.style */
   margin: 0;
   z-index: 9999;
-  opacity: 0.5;
+  opacity: 0.7;
   box-shadow: 0 0 16px gray;
 }
 
 .bcx-dnd-hide {
   display: none;
+}
+
+.bcx-dnd-hide-cursor .bcx-dnd-preview {
+  cursor: none;
 }
 
 .bcx-dnd-unselectable {
@@ -222,6 +226,14 @@ export class DndSource {
 
     if (options.noPreview) {
       this.noPreview = true;
+    }
+
+    if (options.hideCursor) {
+      this.hideCursor = true;
+    }
+
+    if (options.centerPreviewToMousePosition) {
+      this.centerPreviewToMousePosition = true;
     }
   }
 }
@@ -462,6 +474,16 @@ export class DndService {
       this._sourcePreview = dndSource.delegate.dndPreview(this.model);
     }
 
+    if (!this._noPreview) {
+      if (dndSource.hideCursor) {
+        this._hideCursor = true;
+      }
+
+      if (dndSource.centerPreviewToMousePosition) {
+        this._centerPreviewToMousePosition = true;
+      }
+    }
+
     this.dndTargets.forEach(dndTarget => {
       const canDrop = dndTarget.delegate.dndCanDrop(this.model);
       const dnd = dndTarget.delegate.dnd;
@@ -480,6 +502,8 @@ export class DndService {
     this.model = undefined;
     this._sourceElement = undefined;
     this._noPreview = undefined;
+    this._hideCursor = undefined;
+    this._centerPreviewToMousePosition = undefined;
     this._sourcePreview = undefined;
     this._sourceElementPageOffset = { x: 0, y: 0 };
     this._offsetX = 0;
@@ -577,36 +601,46 @@ export class DndService {
 
   _updatePreviewLocation(e) {
     if (this._preview) {
-      const clientX = getCoord('clientX', e);
-      const clientY = getCoord('clientY', e);
       const pageX = getCoord('pageX', e);
       const pageY = getCoord('pageY', e);
-      const x = pageX - this._offsetX;
-      const y = pageY - this._offsetY;
 
-      // TODO need to check _preview size vs source size
-      this._preview.style.left = x + 'px';
-      this._preview.style.top = y + 'px';
+      if (this._centerPreviewToMousePosition) {
+        const rect = this._preview.getBoundingClientRect();
+        const width = getRectWidth(rect);
+        const height = getRectHeight(rect);
+
+        // center around mouse position
+        this._preview.style.left = (pageX - Math.floor(width / 2)) + 'px';
+        this._preview.style.top = (pageY - Math.floor(height / 2)) + 'px';
+      } else {
+        // by default align preview to top-left corner of source element
+        this._preview.style.left = (pageX - this._offsetX) + 'px';
+        this._preview.style.top = (pageY - this._offsetY) + 'px';
+      }
     }
   }
 
   _locationInfo(targetElement, e) {
-    const clientX = getCoord('clientX', e);
-    const clientY = getCoord('clientY', e);
     const pageX = getCoord('pageX', e);
     const pageY = getCoord('pageY', e);
-    const x = pageX - this._offsetX;
-    const y = pageY - this._offsetY;
 
     const targetLocation = getOffset(targetElement);
     const mouseEndPointOffsetInTargetElement = {
       x: pageX - targetLocation.left,
       y: pageY - targetLocation.top
     };
-    const previewElementOffsetInTargetElement = {
-      x: x - targetLocation.left,
-      y: y - targetLocation.top
-    };
+
+    let previewX = 0, previewY = 0;
+
+    if (this._preview) {
+      const rect = this._preview.getBoundingClientRect();
+      previewX = rect.left;
+      previewY = rect.top;
+    } else {
+      // when no preview, assume using normal preview
+      previewX = pageX - this._offsetX;
+      previewY = pageY - this._offsetY;
+    }
 
     return {
       sourceElementPageOffset: this._sourceElementPageOffset,
@@ -621,11 +655,14 @@ export class DndService {
       mouseEndPointPageOffset: {x: pageX, y: pageY},
       mouseEndPointOffsetInTargetElement,
       mouseMovement: {
-        x: x - this._sourceElementPageOffset.x,
-        y: y - this._sourceElementPageOffset.y
+        x: pageX - this._sourceElementPageOffset.x - this._offsetX,
+        y: pageY - this._sourceElementPageOffset.y - this._offsetY
       },
-      previewElementPageOffset: {x, y},
-      previewElementOffsetInTargetElement,
+      previewElementPageOffset: {x: previewX, y: previewY},
+      previewElementOffsetInTargetElement: {
+        x: previewX - targetLocation.left,
+        y: previewY - targetLocation.top
+      }
     };
   }
 
@@ -646,15 +683,21 @@ export class DndService {
       this._preview.style.height = getRectHeight(rect) + 'px';
     }
 
+    this._preview.style.position = 'absolute';
+
     classes.add(this._preview, 'bcx-dnd-preview');
     doc.body.appendChild(this._preview);
     classes.add(doc.body, 'bcx-dnd-unselectable');
 
+    if (this._hideCursor) {
+      classes.add(doc.body, 'bcx-dnd-hide-cursor');
+    }
   }
 
   _removePreviewImage() {
     if (this._preview) {
       classes.rm(doc.body, 'bcx-dnd-unselectable');
+      classes.rm(doc.body, 'bcx-dnd-hide-cursor');
       getParent(this._preview).removeChild(this._preview);
       this._preview = null;
     }

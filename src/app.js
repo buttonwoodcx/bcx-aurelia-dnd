@@ -56,10 +56,17 @@ export class App {
       },
       {
         route: 'order-simple', name: 'order-simple',
-        title: 'Order list with fixed item height',
+        title: 'Re-order list with fixed item height',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-list-with-fixed-item-height/index'
+      },
+      {
+        route: 'order-flex', name: 'order-flex',
+        title: 'Re-order list with unknown item height',
+        nav: true,
+        settings: {section: 'examples'},
+        moduleId: 'order-list-with-unknown-item-height/index'
       },
       {
         route: '',

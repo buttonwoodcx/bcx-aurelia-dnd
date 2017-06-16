@@ -1,0 +1,16 @@
+.list-flex-item {
+  position: relative;
+  display: block;
+  background-color: white;
+  border: 1px solid #333;
+  width: 100%;
+  padding: 10px;
+}
+
+.list-flex-item:not(:last-child) {
+  margin-bottom: -1px;
+}
+
+.list-flex-item.dragging {
+  background-color: lightgrey;
+}

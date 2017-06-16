@@ -1,0 +1,8 @@
+<template>
+  <require from="./list-container.css"></require>
+  <require from="./item"></require>
+
+  <ul ref="dndElement" class="list-container">
+    <li as-element="item" repeat.for="item of patchedItems" item.bind="item" update-intention.call="updateIntention(targetId, beforeTarget)"></li>
+  </ul>
+</template>

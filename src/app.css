@@ -108,6 +108,20 @@ a.link.active {
   padding: 5px;
 }
 
+.doc-source-code display-sources.full-screen {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+}
+
 display-source pre {
+  font-size: 0.9rem;
+}
+
+button.btn {
   font-size: 0.9rem;
 }

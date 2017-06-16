@@ -1,6 +1,7 @@
-<template>
+<template class.bind="fullScreen ? 'full-screen' : ''">
   <select  value.bind="selected">
     <option repeat.for="filename of filenames" model.bind="filename">${filename}</option>
   </select>
+  <button class="btn" click.delegate="fullScreen = !fullScreen">${fullScreen ? 'Exit full screen' : 'Full screen'}</button>
   <display-source if.bind="selected" filename.bind="selected"></display-source>
 </template>

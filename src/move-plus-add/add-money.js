@@ -10,7 +10,7 @@ export class AddMoney {
   }
 
   attached() {
-    this.dndService.addSource(this);
+    this.dndService.addSource(this, {centerPreviewToMousePosition: true, hideCursor: true});
   }
 
   detached() {
@@ -25,10 +25,8 @@ export class AddMoney {
 
   dndPreview() {
     const jq = $(`
-      <div class="example-box">A dollar!</div>
+      <div class="dollar"></div>
     `);
-    jq.css('width', 'auto');
-    jq.css('height', 'auto');
 
     return jq.get(0);
   }

@@ -4,3 +4,21 @@
   box-sizing: border-box;
   padding: 5px;
 }
+
+.dollar {
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
+  width: auto;
+  height: auto;
+}
+
+.dollar:before {
+  content: '$';
+}
+
+/* overwrite default style of dnd preview */
+.bcx-dnd-preview.dollar {
+  opacity: 1;
+  box-shadow: none;
+}

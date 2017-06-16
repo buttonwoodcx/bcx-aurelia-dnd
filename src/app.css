@@ -14,7 +14,7 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 150px;
+  width: 200px;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #eee;
@@ -22,7 +22,6 @@ body {
 }
 
 .doc-navigation .title {
-  text-align: center;
   font-weight: bold;
   margin-top: 10px;
 }
@@ -48,8 +47,7 @@ a.link {
 a.link, a.link:visited {
   display: block;
   color: black;
-  padding: 5px;
-  padding-left: 10px;
+  padding: 4px 5px 4px 10px;
   margin: 8px 0;
 }
 
@@ -66,7 +64,7 @@ a.link.active {
 .doc-content {
   position: absolute;
   top: 0;
-  left: 150px;
+  left: 200px;
   bottom: 0;
   right: 0;
   padding: 10px;

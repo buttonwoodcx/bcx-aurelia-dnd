@@ -55,6 +55,13 @@ export class App {
         moduleId: 'draw/index'
       },
       {
+        route: 'order-simple', name: 'order-simple',
+        title: 'Order list with fixed item height',
+        nav: true,
+        settings: {section: 'examples'},
+        moduleId: 'order-list-with-fixed-item-height/index'
+      },
+      {
         route: '',
         redirect: 'tutorial/overview.md'
       }

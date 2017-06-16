@@ -1,0 +1,10 @@
+<template>
+  <require from="./list-container.css"></require>
+  <require from="./item2"></require>
+
+  <p>Array of objects</p>
+
+  <div ref="dndElement" class="list-container">
+    <item2 repeat.for="item of patchedItems" item.bind="item"></item2>
+  </div>
+</template>

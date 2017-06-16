@@ -48,7 +48,9 @@ export class Container {
       const newItem = {...this.items[idx], ...newLoc};
 
       // replace old item with new item
-      this.items.splice(idx, 1, newItem);
+      // add new item to the end
+      this.items.splice(idx, 1);
+      this.items.push(newItem);
     } else if (type === 'addItem') {
       this.items.push({
         id: '' + this.items.length,
@@ -79,13 +81,15 @@ export class Container {
     const {items, intention} = this;
     if (!intention) return items;
 
-    return _.map(items, item => {
-      if (item.id === intention.id) {
-        // patch location
-        return {...item, x: intention.x, y: intention.y};
-      }
-      return item;
-    });
+    let patched = _.reject(items, {id: intention.id});
+    const item = _.find(this.items, {id: intention.id});
+
+    if (item) {
+      // always show current moving item on top
+      patched.push({...item, x: intention.x, y: intention.y});
+    }
+
+    return patched;
   }
 
   @computedFrom('dnd', 'dnd.model', 'dnd.isProcessing', 'dnd.canDrop', 'dnd.isHoveringShallowly')

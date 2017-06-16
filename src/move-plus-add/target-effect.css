@@ -1,4 +1,4 @@
-.can-drop {
+.can-drop, .example-box.can-drop {
   background-color: lightgreen;
 }
 
@@ -6,6 +6,6 @@
   outline: 3px solid green;
 }
 
-.can-not-drop {
+.can-not-drop, .example-box.can-not-drop {
   background-color: lightgrey;
 }

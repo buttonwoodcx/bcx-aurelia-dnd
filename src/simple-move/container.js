@@ -30,5 +30,12 @@ export class Container {
     const newLoc = location.previewElementOffsetInTargetElement;
     item.x = newLoc.x;
     item.y = newLoc.y;
+
+    // move the item to end of array, in order to show it above others
+    const idx = this.items.indexOf(item);
+    if (idx >= 0) {
+      this.items.splice(idx, 1);
+      this.items.push(item);
+    }
   }
 }

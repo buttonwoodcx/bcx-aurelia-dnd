@@ -34,23 +34,26 @@ const css = `
 /* bcx-aurelia-dnd styles */
 
 .bcx-dnd-preview {
-  /* position: absolute; // has been set on _preview.style */
-  margin: 0;
-  z-index: 9999;
-  opacity: 0.7;
+  position: absolute !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
   box-shadow: 0 0 16px gray;
 }
 
 .bcx-dnd-hide {
-  display: none;
+  display: none !important;
 }
 
 .bcx-dnd-hide-cursor .bcx-dnd-preview {
-  cursor: none;
+  cursor: none !important;
 }
 
 .bcx-dnd-unselectable {
-  user-select: none;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
 }
 `;
 
@@ -682,8 +685,6 @@ export class DndService {
       this._preview.style.width = getRectWidth(rect) + 'px';
       this._preview.style.height = getRectHeight(rect) + 'px';
     }
-
-    this._preview.style.position = 'absolute';
 
     classes.add(this._preview, 'bcx-dnd-preview');
     doc.body.appendChild(this._preview);

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 - 17/Jun/2017
+
+  * got css class issue. fixed with "!important".
+
 ## 0.1.2 - 15/Jun/2017
 
   * add option hideCursor, centerPreviewToMousePosition.

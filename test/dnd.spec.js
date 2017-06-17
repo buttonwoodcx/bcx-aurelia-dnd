@@ -326,14 +326,11 @@ test('drag type one, hover over 2 targets, drop on inner target', t => {
     {
       event: 'hover on tbox_big',
       location: {
-        mouseEndPointOffsetInTargetElement: { x: 61, y: 30 },
-        mouseEndPointPageOffset: { x: 261, y: 30 },
-        mouseMovement: { x: 250, y: 10 },
-        mouseStartPointPageOffset: { x: 11, y: 20 },
-        previewElementOffsetInTargetElement: { x: 50, y: 10 },
-        previewElementPageOffset: { x: 250, y: 10 },
-        sourceElementPageOffset: { x: 0, y: 0 },
-        targetElementPageOffset: { x: 200, y: 0 }
+        mouseEndAt: { x: 261, y: 30 },
+        mouseStartAt: { x: 11, y: 20 },
+        previewElementRect: { x: 250, y: 10, width: 100, height: 100 },
+        sourceElementRect: { x: 0, y: 0, width: 100, height: 100 },
+        targetElementRect: { x: 200, y: 0, width: 500, height: 500 }
       }
     }
   ]);
@@ -358,27 +355,21 @@ test('drag type one, hover over 2 targets, drop on inner target', t => {
     {
       event: 'hover on tbox_big',
       location: {
-        mouseEndPointOffsetInTargetElement: { x: 111, y: 130 },
-        mouseEndPointPageOffset: { x: 311, y: 130 },
-        mouseMovement: { x: 300, y: 110 },
-        mouseStartPointPageOffset: { x: 11, y: 20 },
-        previewElementOffsetInTargetElement: { x: 100, y: 110 },
-        previewElementPageOffset: { x: 300, y: 110 },
-        sourceElementPageOffset: { x: 0, y: 0 },
-        targetElementPageOffset: { x: 200, y: 0 }
+        mouseEndAt: { x: 311, y: 130 },
+        mouseStartAt: { x: 11, y: 20 },
+        previewElementRect: { x: 300, y: 110, width: 100, height: 100 },
+        sourceElementRect: { x: 0, y: 0, width: 100, height: 100 },
+        targetElementRect: { x: 200, y: 0, width: 500, height: 500 }
       }
     },
     {
       event: 'hover on tbox_small_inner',
       location: {
-        mouseEndPointOffsetInTargetElement: { x: 11, y: 30 },
-        mouseEndPointPageOffset: { x: 311, y: 130 },
-        mouseMovement: { x: 300, y: 110 },
-        mouseStartPointPageOffset: { x: 11, y: 20 },
-        previewElementOffsetInTargetElement: { x: 0, y: 10 },
-        previewElementPageOffset: { x: 300, y: 110 },
-        sourceElementPageOffset: { x: 0, y: 0 },
-        targetElementPageOffset: { x: 300, y: 100 }
+        mouseEndAt: { x: 311, y: 130 },
+        mouseStartAt: { x: 11, y: 20 },
+        previewElementRect: { x: 300, y: 110, width: 100, height: 100 },
+        sourceElementRect: { x: 0, y: 0, width: 100, height: 100 },
+        targetElementRect: { x: 300, y: 100, width: 200, height: 200 }
       }
     }
   ]);
@@ -415,14 +406,11 @@ test('drag type one, hover over 2 targets, drop on inner target', t => {
     {
       event: 'drop on tbox_small_inner',
       location: {
-        mouseEndPointOffsetInTargetElement: { x: 11, y: 30 },
-        mouseEndPointPageOffset: { x: 311, y: 130 },
-        mouseMovement: { x: 300, y: 110 },
-        mouseStartPointPageOffset: { x: 11, y: 20 },
-        previewElementOffsetInTargetElement: { x: 0, y: 10 },
-        previewElementPageOffset: { x: 300, y: 110 },
-        sourceElementPageOffset: { x: 0, y: 0 },
-        targetElementPageOffset: { x: 300, y: 100 }
+        mouseEndAt: { x: 311, y: 130 },
+        mouseStartAt: { x: 11, y: 20 },
+        previewElementRect: { x: 300, y: 110, width: 100, height: 100 },
+        sourceElementRect: { x: 0, y: 0, width: 100, height: 100 },
+        targetElementRect: { x: 300, y: 100, width: 200, height: 200 }
       }
     },
     { event: 'dnd:didEnd', isProcessing: undefined, model: undefined }
@@ -470,14 +458,11 @@ test('drag type one with no preview, drop on outer target', t => {
     {
       event: 'hover on tbox_big',
       location: {
-        mouseEndPointOffsetInTargetElement: { x: 61, y: 130 },
-        mouseEndPointPageOffset: { x: 261, y: 130 },
-        mouseMovement: { x: 250, y: 10 },
-        mouseStartPointPageOffset: { x: 11, y: 120 },
-        previewElementOffsetInTargetElement: { x: 50, y: 110 },
-        previewElementPageOffset: { x: 250, y: 110 },
-        sourceElementPageOffset: { x: 0, y: 100 },
-        targetElementPageOffset: { x: 200, y: 0 }
+        mouseEndAt: { x: 261, y: 130 },
+        mouseStartAt: { x: 11, y: 120 },
+        previewElementRect: { x: 250, y: 110, width: 100, height: 100 },
+        sourceElementRect: { x: 0, y: 100, width: 100, height: 100 },
+        targetElementRect: { x: 200, y: 0, width: 500, height: 500 }
       }
     }
   ]);
@@ -514,14 +499,11 @@ test('drag type one with no preview, drop on outer target', t => {
     {
       event: 'drop on tbox_big',
       location: {
-        mouseEndPointOffsetInTargetElement: { x: 61, y: 130 },
-        mouseEndPointPageOffset: { x: 261, y: 130 },
-        mouseMovement: { x: 250, y: 10 },
-        mouseStartPointPageOffset: { x: 11, y: 120 },
-        previewElementOffsetInTargetElement: { x: 50, y: 110 },
-        previewElementPageOffset: { x: 250, y: 110 },
-        sourceElementPageOffset: { x: 0, y: 100 },
-        targetElementPageOffset: { x: 200, y: 0 }
+        mouseEndAt: { x: 261, y: 130 },
+        mouseStartAt: { x: 11, y: 120 },
+        previewElementRect: { x: 250, y: 110, width: 100, height: 100 },
+        sourceElementRect: { x: 0, y: 100, width: 100, height: 100 },
+        targetElementRect: { x: 200, y: 0, width: 500, height: 500 }
       }
     },
     { event: 'dnd:didEnd', isProcessing: undefined, model: undefined }
@@ -660,14 +642,11 @@ test('drag type two with customised preview, hideCursor, centerPreviewToMousePos
     {
       event: 'hover on tbox_big2',
       location: {
-        mouseEndPointOffsetInTargetElement: { x: 21, y: 330 },
-        mouseEndPointPageOffset: { x: 721, y: 330 },
-        mouseMovement: { x: 700, y: 10 },
-        mouseStartPointPageOffset: { x: 21, y: 320 },
-        previewElementOffsetInTargetElement: { x: 11, y: 320 },
-        previewElementPageOffset: { x: 711, y: 320 },
-        sourceElementPageOffset: { x: 0, y: 300 },
-        targetElementPageOffset: { x: 700, y: 0 }
+        mouseEndAt: { x: 721, y: 330 },
+        mouseStartAt: { x: 21, y: 320 },
+        previewElementRect: { x: 711, y: 320, width: 20, height: 20 },
+        sourceElementRect: { x: 0, y: 300, width: 100, height: 100 },
+        targetElementRect: { x: 700, y: 0, width: 500, height: 500 }
       }
     }
   ]);
@@ -704,14 +683,11 @@ test('drag type two with customised preview, hideCursor, centerPreviewToMousePos
     {
       event: 'drop on tbox_big2',
       location: {
-        mouseEndPointOffsetInTargetElement: { x: 21, y: 330 },
-        mouseEndPointPageOffset: { x: 721, y: 330 },
-        mouseMovement: { x: 700, y: 10 },
-        mouseStartPointPageOffset: { x: 21, y: 320 },
-        previewElementOffsetInTargetElement: { x: 11, y: 320 },
-        previewElementPageOffset: { x: 711, y: 320 },
-        sourceElementPageOffset: { x: 0, y: 300 },
-        targetElementPageOffset: { x: 700, y: 0 }
+        mouseEndAt: { x: 721, y: 330 },
+        mouseStartAt: { x: 21, y: 320 },
+        previewElementRect: { x: 711, y: 320, width: 20, height: 20 },
+        sourceElementRect: { x: 0, y: 300, width: 100, height: 100 },
+        targetElementRect: { x: 700, y: 0, width: 500, height: 500 }
       }
     },
     { event: 'dnd:didEnd', isProcessing: undefined, model: undefined }

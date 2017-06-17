@@ -149,6 +149,16 @@ function getOffset (el) {
   };
 }
 
+function getPageRect (el) {
+  var rect = el.getBoundingClientRect();
+  return {
+    x: rect.left + getScroll('scrollLeft', 'pageXOffset'),
+    y: rect.top + getScroll('scrollTop', 'pageYOffset'),
+    width: getRectWidth(rect),
+    height: getRectHeight(rect)
+  };
+}
+
 function getScroll (scrollProp, offsetProp) {
   if (typeof window[offsetProp] !== 'undefined') {
     return window[offsetProp];
@@ -455,10 +465,9 @@ export class DndService {
     if (this.isProcessing) this._cleanup();
     this._start(grabbed);
 
-    var offset = getOffset(this._sourceElement);
-    this._sourceElementPageOffset = {x: offset.left, y: offset.top};
-    this._offsetX = getCoord('pageX', e) - offset.left;
-    this._offsetY = getCoord('pageY', e) - offset.top;
+    this._sourceElementRect = getPageRect(this._sourceElement);
+    this._offsetX = getCoord('pageX', e) - this._sourceElementRect.x;
+    this._offsetY = getCoord('pageY', e) - this._sourceElementRect.y;
 
     this._renderPreviewImage();
     this._drag(e);
@@ -508,7 +517,7 @@ export class DndService {
     this._hideCursor = undefined;
     this._centerPreviewToMousePosition = undefined;
     this._sourcePreview = undefined;
-    this._sourceElementPageOffset = { x: 0, y: 0 };
+    this._sourceElementRect = undefined;
     this._offsetX = 0;
     this._offsetY = 0;
 
@@ -624,48 +633,37 @@ export class DndService {
   }
 
   _locationInfo(targetElement, e) {
-    const pageX = getCoord('pageX', e);
-    const pageY = getCoord('pageY', e);
-
-    const targetLocation = getOffset(targetElement);
-    const mouseEndPointOffsetInTargetElement = {
-      x: pageX - targetLocation.left,
-      y: pageY - targetLocation.top
+    const mouseStartAt = {
+      x: this._sourceElementRect.x + this._offsetX,
+      y: this._sourceElementRect.y + this._offsetY,
     };
 
-    let previewX = 0, previewY = 0;
+    const pageX = getCoord('pageX', e);
+    const pageY = getCoord('pageY', e);
+    const mouseEndAt = {x: pageX, y: pageY};
+
+    const targetElementRect = getPageRect(targetElement);
+
+    let previewElementRect;
 
     if (this._preview) {
-      const previewLocation = getOffset(this._preview);
-      previewX = previewLocation.left;
-      previewY = previewLocation.top;
+      previewElementRect = getPageRect(this._preview);
     } else {
       // when no preview, assume using normal preview
-      previewX = pageX - this._offsetX;
-      previewY = pageY - this._offsetY;
+      previewElementRect = {
+        x: pageX - this._offsetX,
+        y: pageY - this._offsetY,
+        width: this._sourceElementRect.width,
+        height: this._sourceElementRect.height
+      };
     }
 
     return {
-      sourceElementPageOffset: this._sourceElementPageOffset,
-      targetElementPageOffset: {
-        x: targetLocation.left,
-        y: targetLocation.top
-      },
-      mouseStartPointPageOffset: {
-        x: this._sourceElementPageOffset.x + this._offsetX,
-        y: this._sourceElementPageOffset.y + this._offsetY,
-      },
-      mouseEndPointPageOffset: {x: pageX, y: pageY},
-      mouseEndPointOffsetInTargetElement,
-      mouseMovement: {
-        x: pageX - this._sourceElementPageOffset.x - this._offsetX,
-        y: pageY - this._sourceElementPageOffset.y - this._offsetY
-      },
-      previewElementPageOffset: {x: previewX, y: previewY},
-      previewElementOffsetInTargetElement: {
-        x: previewX - targetLocation.left,
-        y: previewY - targetLocation.top
-      }
+      mouseStartAt,
+      mouseEndAt,
+      sourceElementRect: this._sourceElementRect,
+      targetElementRect,
+      previewElementRect
     };
   }
 

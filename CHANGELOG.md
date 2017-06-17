@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 - 17/Jun/2017
+
+  * support dynamic target added during a dnd session.
+
 ## 0.2.0 - 17/Jun/2017
 
   * changed location payload: `{mouseStartAt: {x,y}, mouseEndAt: {x,y}, sourceElementRect: {x,y,width,height}, targetElementRect: {x,y,width,height}, previewElementRect: {x,y,width,height}}`.

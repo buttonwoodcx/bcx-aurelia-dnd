@@ -125,3 +125,7 @@ display-source pre {
 button.btn {
   font-size: 0.9rem;
 }
+
+table.table-align-top td {
+  vertical-align: top;
+}

@@ -1,0 +1,9 @@
+<template>
+  <require from="./list-container.css"></require>
+  <require from="./item2"></require>
+
+  <p>With special drag handler</p>
+  <ul ref="dndElement" class="list-container">
+    <li as-element="item2" repeat.for="item of patchedItems" item.bind="item" update-intention.call="updateIntention(targetId, beforeTarget)"></li>
+  </ul>
+</template>

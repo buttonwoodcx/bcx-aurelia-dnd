@@ -4,7 +4,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import _ from 'lodash';
 
 @inject(DndService, EventAggregator)
-export class ListContainer {
+export class ListContainer2 {
   items = [
     {id: '0', value: 'lorem'},
     {id: '1', value: 'Lorem ipsum dolor sit amet. consectetur adipisicing elit.'},
@@ -34,14 +34,10 @@ export class ListContainer {
     this.intention = null;
   }
 
-  dndCanDrop(model) {
-    return model.type === 'orderItem';
-  }
-
   updateIntention(targetId, beforeTarget) {
     const {isProcessing, model} = this.dndService;
     if (!isProcessing) return;
-    if (model.type !== 'orderItem') return;
+    if (model.type !== 'orderItem2') return;
 
     const {patchedItems} = this;
     const targetIndex = _.findIndex(patchedItems, {id: targetId});

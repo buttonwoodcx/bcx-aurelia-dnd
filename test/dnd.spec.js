@@ -62,6 +62,7 @@ const box_0_3 = addBox('03', 0, 300, 100, 100);
 const tbox_big = addBox('tbox_big', 200, 0, 500, 500);
 const tbox_small_inner = addBox('tbox_small_inner', 300, 100, 200, 200);
 const tbox_big2 = addBox('tbox_big2', 700, 0, 500, 500);
+const tbox_small_inner2 = addBox('tbox_small_inner2', 800, 100, 200, 200);
 
 let _track = [];
 
@@ -122,6 +123,23 @@ const target3 = {
   dndHover(location) {
     track({
       event: 'hover on tbox_big2',
+      location,
+    });
+  }
+};
+
+const target4 = {
+  dndElement: tbox_small_inner2,
+  dndCanDrop(model) { return model && model.type === 'two'; },
+  dndDrop(location) {
+    track({
+      event: 'drop on tbox_small_inner2',
+      location,
+    });
+  },
+  dndHover(location) {
+    track({
+      event: 'hover on tbox_small_inner2',
       location,
     });
   }
@@ -593,7 +611,7 @@ test('drag type two with customised preview, drop on invalid target', t => {
   t.end();
 });
 
-test('drag type two with customised preview, hideCursor, centerPreviewToMousePosition, drop on target', t => {
+test('drag type two with customised preview, hideCursor, centerPreviewToMousePosition, dynamicly add new target, drop on target', t => {
   const m = {type: 'two', name: 'model2'};
 
   fireEvent(box_0_3, 'mousedown', {which: 1, clientX: 20, clientY: 320});
@@ -653,6 +671,14 @@ test('drag type two with customised preview, hideCursor, centerPreviewToMousePos
 
   clearTrack();
 
+  dndService.addTarget(target4);
+  // new target has dnd inited.
+  t.ok(target4.dnd.isProcessing);
+  t.notOk(target4.dnd.isHoveringShallowly);
+  t.notOk(target4.dnd.isHovering);
+  t.ok(target4.dnd.canDrop);
+  t.deepEqual(target4.dnd.model, m);
+
   //drop on tbox_big2
   fireEvent(documentElement, 'mouseup', {which: 1, clientX: 721, clientY: 330});
 
@@ -677,6 +703,12 @@ test('drag type two with customised preview, hideCursor, centerPreviewToMousePos
   t.notOk(target3.dnd.isHovering);
   t.notOk(target3.dnd.canDrop);
   t.notOk(target3.dnd.model);
+
+  t.notOk(target4.dnd.isProcessing);
+  t.notOk(target4.dnd.isHoveringShallowly);
+  t.notOk(target4.dnd.isHovering);
+  t.notOk(target4.dnd.canDrop);
+  t.notOk(target4.dnd.model);
 
   t.deepEqual(_track, [
     { event: 'dnd:willEnd', isProcessing: true, model: { name: 'model2', type: 'two' } },

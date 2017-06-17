@@ -48,16 +48,17 @@ export class CanvasContainer {
   }
 
   dndHover(location) {
-    const {mouseStartPointPageOffset,
-           targetElementPageOffset,
-           mouseEndPointOffsetInTargetElement} = location;
+    const {mouseStartAt, targetElementRect, mouseEndAt} = location;
 
     const start = {
-      x: mouseStartPointPageOffset.x - targetElementPageOffset.x,
-      y: mouseStartPointPageOffset.y - targetElementPageOffset.y
+      x: mouseStartAt.x - targetElementRect.x,
+      y: mouseStartAt.y - targetElementRect.y
     };
 
-    const end = mouseEndPointOffsetInTargetElement;
+    const end = {
+      x: mouseEndAt.x - targetElementRect.x,
+      y: mouseEndAt.y - targetElementRect.y
+    };
 
     if (this.dnd.model.type === 'drawLine') {
       this.drawingShape = {type: 'line', from: start, to: end};

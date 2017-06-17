@@ -27,7 +27,11 @@ export class Container {
 
   dndDrop(location) {
     const {item} = this.dnd.model;
-    const newLoc = location.previewElementOffsetInTargetElement;
+    const {previewElementRect, targetElementRect} = location;
+    const newLoc = {
+      x: previewElementRect.x - targetElementRect.x,
+      y: previewElementRect.y - targetElementRect.y
+    };
     item.x = newLoc.x;
     item.y = newLoc.y;
 

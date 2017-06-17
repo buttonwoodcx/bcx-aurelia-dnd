@@ -1,6 +1,5 @@
 import {inject, bindable, computedFrom} from 'aurelia-framework';
 import {DndService} from 'bcx-aurelia-dnd';
-import $ from 'jquery';
 
 @inject(DndService)
 export class Item {
@@ -37,12 +36,12 @@ export class Item {
   dndDrop() {}
 
   dndHover(location) {
-    const height = $(this.dndElement).height();
-    const {y} = location.mouseEndPointOffsetInTargetElement;
+    const {mouseEndAt, targetElementRect} = location;
+    const y = mouseEndAt.y - targetElementRect.y;
 
     // because of unknown size diff between items,
     // check half size to avoid endless bouncing of swapping two items.
-    if (y < (height / 2)) {
+    if (y < (targetElementRect.height / 2)) {
       // hover over top half, user wants to move smth before this item.
       this.updateIntention({targetId: this.item.id, beforeTarget: true});
     } else {

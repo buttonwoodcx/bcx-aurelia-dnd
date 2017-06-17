@@ -41,7 +41,8 @@ export class ListContainer2 {
   }
 
   dndHover(location) {
-    const {y} = location.mouseEndPointOffsetInTargetElement;
+    const {mouseEndAt, targetElementRect} = location;
+    const y = mouseEndAt.y - targetElementRect.y;
     const {id, elementHeight} = this.dnd.model;
 
     const idx = _.findIndex(this.items, {id});

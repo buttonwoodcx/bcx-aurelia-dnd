@@ -37,8 +37,11 @@ export class Container {
 
   dndDrop(location) {
     const {id} = this.dnd.model;
-    // newLoc has 'x' and 'y'
-    const newLoc = location.previewElementOffsetInTargetElement;
+    const {previewElementRect, targetElementRect} = location;
+    const newLoc = {
+      x: previewElementRect.x - targetElementRect.x,
+      y: previewElementRect.y - targetElementRect.y
+    };
 
     const idx = _.findIndex(this.items, {id});
     if (idx < 0) return;
@@ -53,7 +56,11 @@ export class Container {
 
   dndHover(location) {
     const {id} = this.dnd.model;
-    const newLoc = location.previewElementOffsetInTargetElement;
+    const {previewElementRect, targetElementRect} = location;
+    const newLoc = {
+      x: previewElementRect.x - targetElementRect.x,
+      y: previewElementRect.y - targetElementRect.y
+    };
 
     const item = _.find(this.items, {id});
     if (!item) return;

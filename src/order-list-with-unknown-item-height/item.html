@@ -2,6 +2,6 @@
   <require from="./item.css"></require>
 
   <!-- cannot use show.bind here, it changes outer element size-->
-  <!-- user visibility: hidden; to retain size -->
+  <!-- use visibility: hidden; to retain size -->
   <span css="visibility: ${draggingMe ? 'hidden': 'inherit'}">${item.value}</span>
 </template>

@@ -7,6 +7,7 @@
   text-align: center;
   line-height: 50px;
   overflow: hidden;
+  background: white;
 }
 
 .list-item.dragging {

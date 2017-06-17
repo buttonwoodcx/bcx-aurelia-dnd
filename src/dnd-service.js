@@ -332,7 +332,18 @@ export class DndService {
 
   addTarget(delegate, options) {
     delegate.dnd = {};
-    this.dndTargets.push(new DndTarget(delegate, options));
+    const dndTarget = new DndTarget(delegate, options);
+
+    // init delegate.dnd if there is a dnd session
+    if (this.isProcessing) {
+      const canDrop = dndTarget.delegate.dndCanDrop(this.model);
+      const dnd = dndTarget.delegate.dnd;
+      dnd.canDrop = canDrop;
+      dnd.isProcessing = true;
+      dnd.model = this.model;
+    }
+
+    this.dndTargets.push(dndTarget);
   }
 
   removeTarget(delegateOrElement) {
@@ -587,7 +598,6 @@ export class DndService {
 
     this.dndTargets.forEach(dndTarget => {
       const dnd = dndTarget.delegate.dnd;
-      // newly added target during a dnd won't receive processing state.
       if (!dnd.isProcessing) return;
 
       if (dndTarget === shallowTarget) {

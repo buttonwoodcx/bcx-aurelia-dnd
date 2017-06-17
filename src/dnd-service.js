@@ -636,9 +636,9 @@ export class DndService {
     let previewX = 0, previewY = 0;
 
     if (this._preview) {
-      const rect = this._preview.getBoundingClientRect();
-      previewX = rect.left;
-      previewY = rect.top;
+      const previewLocation = getOffset(this._preview);
+      previewX = previewLocation.left;
+      previewY = previewLocation.top;
     } else {
       // when no preview, assume using normal preview
       previewX = pageX - this._offsetX;

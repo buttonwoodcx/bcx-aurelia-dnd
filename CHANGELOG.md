@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4 - 17/Jun/2017
+
+  * fix a regression on preview location.
+
 ## 0.1.3 - 17/Jun/2017
 
   * got css class issue. fixed with "!important".

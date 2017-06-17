@@ -9,6 +9,15 @@ import {DndService} from '../src/dnd-service';
 const doc = document;
 const documentElement = doc.documentElement;
 
+let node = doc.createElement('style');
+node.innerHTML = `
+.test-class {
+  display: block;
+}
+`;
+node.type = 'text/css';
+doc.head.appendChild(node);
+
 // fix sizing.
 const jBody = $('body');
 jBody.css('margin', '0');
@@ -45,6 +54,7 @@ const model1 = () => ({type: 'one', name: 'model1'});
 const model2 = () => ({type: 'two', name: 'model2'});
 
 const box_0_0 = addBox('00', 0, 0, 100, 100);
+box_0_0.className = 'test-class';
 const box_0_1 = addBox('01', 0, 100, 100, 100);
 const box_0_2 = addBox('02', 0, 200, 100, 100);
 const box_0_3 = addBox('03', 0, 300, 100, 100);

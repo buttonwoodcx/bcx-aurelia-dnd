@@ -6,24 +6,40 @@ export class App {
     // config.options.pushState = true;
     config.map([
       {
-        route: 'tutorial/overview.md', name: 'overview',
+        route: 'overview', name: 'overview',
         title: 'Overview',
         nav: true,
-        settings: {section: 'tutorial'},
+        settings: {
+          section: 'tutorial',
+          trunks: [
+            'tutorial/overview.md'
+          ]
+        },
         moduleId: 'show-tutorial'
       },
       {
-        route: 'tutorial/source-and-target.md', name: 'source-and-target',
+        route: 'source-and-target', name: 'source-and-target',
         title: 'Source and Target',
         nav: true,
-        settings: {section: 'tutorial'},
+        settings: {
+          section: 'tutorial',
+          trunks: [
+            'tutorial/source-and-target.md',
+            // 'simple-move-step-1/index'
+          ]
+        },
         moduleId: 'show-tutorial'
       },
       {
-        route: 'tutorial/testing.md', name: 'testing',
+        route: 'testing', name: 'testing',
         title: 'Testing',
         nav: true,
-        settings: {section: 'tutorial'},
+        settings: {
+          section: 'tutorial',
+          trunks: [
+            'tutorial/testing.md'
+          ]
+        },
         moduleId: 'show-tutorial'
       },
       {
@@ -70,7 +86,7 @@ export class App {
       },
       {
         route: '',
-        redirect: 'tutorial/overview.md'
+        redirect: 'overview'
       }
     ]);
   }

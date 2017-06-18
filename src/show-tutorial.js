@@ -2,7 +2,7 @@ import {activationStrategy} from 'aurelia-router';
 
 export class ShowTutorial {
   activate(params, routeConfig) {
-    this.filename = routeConfig.route;
+    this.trunks = routeConfig.settings.trunks;
   }
 
   determineActivationStrategy() {

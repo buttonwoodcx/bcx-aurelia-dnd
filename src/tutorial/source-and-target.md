@@ -7,7 +7,7 @@ Influenced by React DnD, `bcx-aurelia-dnd`'s `DndService` has concept of:
 
 Since the source and target are bounded to DOM element, you need to register and de-register them to `DndService` at the right Aurelia component livecycle. The common practice is to `addSource`/`addTarget` in `attached()`, and do `removeSource`/`removeTarget` in `detached()`.
 
-Let's look at the first example ["move object"](#/simple), there is a container of three boxes inside. To implement moving box, we register every box as a source which we want to drag, and register the container as the target which will retrieve a drop callback.
+Let's look at the first example ["move object"](#/simple), there is a container of three boxes inside. To implement moving box, we register every box as a source which we want to drag, and register the container as the target which will receive a drop callback.
 
 ## Implement a source
 

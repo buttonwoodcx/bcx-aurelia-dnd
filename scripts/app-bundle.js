@@ -22,22 +22,31 @@ define('app',['exports'], function (exports) {
       config.title = 'bcx-aurelia-dnd examples';
 
       config.map([{
-        route: 'tutorial/overview.md', name: 'overview',
+        route: 'overview', name: 'overview',
         title: 'Overview',
         nav: true,
-        settings: { section: 'tutorial' },
+        settings: {
+          section: 'tutorial',
+          trunks: ['tutorial/overview.md']
+        },
         moduleId: 'show-tutorial'
       }, {
-        route: 'tutorial/source-and-target.md', name: 'source-and-target',
+        route: 'source-and-target', name: 'source-and-target',
         title: 'Source and Target',
         nav: true,
-        settings: { section: 'tutorial' },
+        settings: {
+          section: 'tutorial',
+          trunks: ['tutorial/source-and-target.md']
+        },
         moduleId: 'show-tutorial'
       }, {
-        route: 'tutorial/testing.md', name: 'testing',
+        route: 'testing', name: 'testing',
         title: 'Testing',
         nav: true,
-        settings: { section: 'tutorial' },
+        settings: {
+          section: 'tutorial',
+          trunks: ['tutorial/testing.md']
+        },
         moduleId: 'show-tutorial'
       }, {
         route: 'simple', name: 'simple',
@@ -77,7 +86,7 @@ define('app',['exports'], function (exports) {
         moduleId: 'order-list-with-unknown-item-height/index'
       }, {
         route: '',
-        redirect: 'tutorial/overview.md'
+        redirect: 'overview'
       }]);
     };
 
@@ -143,7 +152,7 @@ define('show-tutorial',['exports', 'aurelia-router'], function (exports, _aureli
     }
 
     ShowTutorial.prototype.activate = function activate(params, routeConfig) {
-      this.filename = routeConfig.route;
+      this.trunks = routeConfig.settings.trunks;
     };
 
     ShowTutorial.prototype.determineActivationStrategy = function determineActivationStrategy() {
@@ -2050,7 +2059,7 @@ define('resources/index',['exports'], function (exports) {
   });
   exports.configure = configure;
   function configure(config) {
-    config.globalResources(['./elements/display-source', './elements/display-sources', './elements/mark-down', './elements/show-mark-down-file', './value-converters/nav-section']);
+    config.globalResources(['./elements/display-source', './elements/display-sources', './elements/mark-down', './elements/show-mark-down-file', './value-converters/nav-section', './value-converters/ends-with', './attributes/if-not']);
   }
 });
 define('simple-move/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
@@ -2573,6 +2582,62 @@ define('simple-move-hover-no-preview/index',['exports'], function (exports) {
     this.sourceFilenames = ['src/simple-move-hover-no-preview/container.js', 'src/simple-move-hover-no-preview/container.html', 'src/simple-move-hover-no-preview/container.css', 'src/simple-move-hover-no-preview/box.js', 'src/simple-move-hover-no-preview/box.html', 'src/simple-move-hover-no-preview/box.css'];
   };
 });
+define('resources/attributes/if-not',['exports', 'aurelia-framework', 'aurelia-templating', 'aurelia-templating-resources'], function (exports, _aureliaFramework, _aureliaTemplating, _aureliaTemplatingResources) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.IfNotCustomAttribute = undefined;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  var _dec, _class;
+
+  var IfNotCustomAttribute = exports.IfNotCustomAttribute = (_dec = (0, _aureliaFramework.inject)(_aureliaTemplating.BoundViewFactory, _aureliaTemplating.ViewSlot), (0, _aureliaTemplating.templateController)(_class = _dec(_class = function (_If) {
+    _inherits(IfNotCustomAttribute, _If);
+
+    function IfNotCustomAttribute(viewFactory, viewSlot) {
+      _classCallCheck(this, IfNotCustomAttribute);
+
+      return _possibleConstructorReturn(this, _If.call(this, viewFactory, viewSlot));
+    }
+
+    IfNotCustomAttribute.prototype.valueChanged = function valueChanged(newValue) {
+      _If.prototype.valueChanged.call(this, !newValue);
+    };
+
+    return IfNotCustomAttribute;
+  }(_aureliaTemplatingResources.If)) || _class) || _class);
+});
 define('resources/elements/display-source',['exports', 'aurelia-framework'], function (exports, _aureliaFramework) {
   'use strict';
 
@@ -2919,6 +2984,40 @@ define('resources/elements/show-mark-down-file',['exports', 'aurelia-framework']
     initializer: null
   })), _class);
 });
+define('resources/value-converters/ends-with',['exports', 'lodash'], function (exports, _lodash) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.EndsWithValueConverter = undefined;
+
+  var _lodash2 = _interopRequireDefault(_lodash);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var EndsWithValueConverter = exports.EndsWithValueConverter = function () {
+    function EndsWithValueConverter() {
+      _classCallCheck(this, EndsWithValueConverter);
+    }
+
+    EndsWithValueConverter.prototype.toView = function toView(str, subfix) {
+      return _lodash2.default.endsWith(str, subfix);
+    };
+
+    return EndsWithValueConverter;
+  }();
+});
 define('resources/value-converters/nav-section',['exports', 'lodash'], function (exports, _lodash) {
   'use strict';
 
@@ -2957,7 +3056,7 @@ define('resources/value-converters/nav-section',['exports', 'lodash'], function 
 });
 define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"normalize.css\"></require>\n  <require from=\"./app.css\"></require>\n\n  <div class=\"doc-navigation\">\n    <div class=\"title\">bcx-aurelia-dnd v0.2.1</div>\n\n    <a href=\"https://github.com/buttonwoodcx/bcx-aurelia-dnd\" class=\"remote-link\">» GitHub Repository</a>\n\n    <h4><em>Tutorial</em></h4>\n\n    <a\n      repeat.for=\"row of router.navigation | navSection:'tutorial'\"\n      class=\"link ${row.isActive ? 'active' : ''}\"\n      href.bind=\"row.href\"\n    >${row.title}</a>\n\n    <h4><em>Examples</em></h4>\n\n    <a\n      repeat.for=\"row of router.navigation | navSection:'examples'\"\n      class=\"link ${row.isActive ? 'active' : ''}\"\n      href.bind=\"row.href\"\n    >${row.title}</a>\n  </div>\n\n  <div class=\"doc-content\">\n    <router-view></router-view>\n  </div>\n</template>\n"; });
 define('text!app.css', ['module'], function(module) { module.exports = "html, body {\n  height :100%;\n  font-family: Helvetica, Arial;\n}\n\nbody {\n  position: relative;\n  min-width: 750px;\n}\n\n.doc-navigation {\n  box-sizing: border-box;\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 200px;\n  overflow-x: hidden;\n  overflow-y: auto;\n  background-color: #eee;\n  padding: 5px;\n}\n\n.doc-navigation .title {\n  font-weight: bold;\n  margin-top: 10px;\n}\n\n.doc-navigation a.remote-link,\n.doc-navigation a.remote-link:visited {\n  display: block;\n  text-decoration: none;\n  color: black;\n  padding: 2px;\n  padding-left: 10px;\n  font-size: 0.7rem;\n  margin: 4px 0;\n}\n\n\na.link {\n  display: block;\n  text-decoration: none;\n  font-size: 0.8rem;\n}\n\na.link, a.link:visited {\n  display: block;\n  color: black;\n  padding: 4px 5px 4px 10px;\n  margin: 8px 0;\n}\n\n.doc-navigation a.remote-link:hover,\na.link:hover {\n  text-decoration: underline;\n}\n\na.link.active {\n  background-color: #555;\n  color: white;\n}\n\n.doc-content {\n  position: absolute;\n  top: 0;\n  left: 200px;\n  bottom: 0;\n  right: 0;\n  padding: 10px;\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n\n.doc-demo {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  height: 400px;\n  padding: 10px;\n  box-sizing: border-box;\n}\n\n.doc-source-code {\n  position: absolute;\n  top: 400px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  border-top: 2px solid #eee;\n  box-sizing: border-box;\n}\n\n.doc-source-code select {\n  margin: 5px 0 0 5px;\n}\n\n.doc-source-code display-source {\n  display: block;\n  position: absolute;\n  top: 30px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow-x: hidden;\n  overflow-y: auto;\n  padding: 5px;\n}\n\n.doc-source-code display-sources.full-screen {\n  display: block;\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: white;\n}\n\ndisplay-source pre {\n  font-size: 0.9rem;\n}\n\nbutton.btn {\n  font-size: 0.9rem;\n}\n\ntable.table-align-top td {\n  vertical-align: top;\n}\n\nmark-down {\n  line-height: 1.5;\n}\n\nmark-down blockquote {\n  margin: 0;\n  padding: 0;\n}\n\nmark-down blockquote p {\n  border-left: 0.5rem solid #aaa;\n  margin: 0.5rem 0;\n  padding: 0.5rem 1rem 0.5rem 1.5rem;\n  color: #555;\n  background-color: #eee;\n}\n\nmark-down code, mark-down pre {\n  background-color: #eee;\n}\n\nmark-down pre {\n  font-size: 0.8rem;\n  padding: 1rem;\n}\n\n"; });
-define('text!show-tutorial.html', ['module'], function(module) { module.exports = "<template>\n  <show-mark-down-file filename.bind=\"filename\"></show-mark-down-file>\n</template>"; });
+define('text!show-tutorial.html', ['module'], function(module) { module.exports = "<template>\n  <div repeat.for=\"trunk of trunks\">\n    <show-mark-down-file if.bind=\"trunk | endsWith:'.md'\" filename.bind=\"trunk\"></show-mark-down-file>\n    <!-- if-not.bind is not provided by aurelia -->\n    <!-- implemented in ./resources/attributes/if-not.js -->\n    <compose if-not.bind=\"trunk | endsWith:'.md'\" view-model=\"./${trunk}\"></compose>\n  </div>\n</template>\n"; });
 define('text!normalize.css', ['module'], function(module) { module.exports = "/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */\n\n/* Document\n   ========================================================================== */\n\n/**\n * 1. Correct the line height in all browsers.\n * 2. Prevent adjustments of font size after orientation changes in\n *    IE on Windows Phone and in iOS.\n */\n\nhtml {\n  line-height: 1.15; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/* Sections\n   ========================================================================== */\n\n/**\n * Remove the margin in all browsers (opinionated).\n */\n\nbody {\n  margin: 0;\n}\n\n/**\n * Add the correct display in IE 9-.\n */\n\narticle,\naside,\nfooter,\nheader,\nnav,\nsection {\n  display: block;\n}\n\n/**\n * Correct the font size and margin on `h1` elements within `section` and\n * `article` contexts in Chrome, Firefox, and Safari.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n * 1. Add the correct display in IE.\n */\n\nfigcaption,\nfigure,\nmain { /* 1 */\n  display: block;\n}\n\n/**\n * Add the correct margin in IE 8.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * 1. Add the correct box sizing in Firefox.\n * 2. Show the overflow in Edge and IE.\n */\n\nhr {\n  box-sizing: content-box; /* 1 */\n  height: 0; /* 1 */\n  overflow: visible; /* 2 */\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\npre {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * 1. Remove the gray background on active links in IE 10.\n * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.\n */\n\na {\n  background-color: transparent; /* 1 */\n  -webkit-text-decoration-skip: objects; /* 2 */\n}\n\n/**\n * 1. Remove the bottom border in Chrome 57- and Firefox 39-.\n * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n */\n\nabbr[title] {\n  border-bottom: none; /* 1 */\n  text-decoration: underline; /* 2 */\n  text-decoration: underline dotted; /* 2 */\n}\n\n/**\n * Prevent the duplicate application of `bolder` by the next rule in Safari 6.\n */\n\nb,\nstrong {\n  font-weight: inherit;\n}\n\n/**\n * Add the correct font weight in Chrome, Edge, and Safari.\n */\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\ncode,\nkbd,\nsamp {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/**\n * Add the correct font style in Android 4.3-.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Add the correct background and color in IE 9-.\n */\n\nmark {\n  background-color: #ff0;\n  color: #000;\n}\n\n/**\n * Add the correct font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` elements from affecting the line height in\n * all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n */\n\naudio,\nvideo {\n  display: inline-block;\n}\n\n/**\n * Add the correct display in iOS 4-7.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Remove the border on images inside links in IE 10-.\n */\n\nimg {\n  border-style: none;\n}\n\n/**\n * Hide the overflow in IE.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * 1. Change the font styles in all browsers (opinionated).\n * 2. Remove the margin in Firefox and Safari.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: sans-serif; /* 1 */\n  font-size: 100%; /* 1 */\n  line-height: 1.15; /* 1 */\n  margin: 0; /* 2 */\n}\n\n/**\n * Show the overflow in IE.\n * 1. Show the overflow in Edge.\n */\n\nbutton,\ninput { /* 1 */\n  overflow: visible;\n}\n\n/**\n * Remove the inheritance of text transform in Edge, Firefox, and IE.\n * 1. Remove the inheritance of text transform in Firefox.\n */\n\nbutton,\nselect { /* 1 */\n  text-transform: none;\n}\n\n/**\n * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`\n *    controls in Android 4.\n * 2. Correct the inability to style clickable types in iOS and Safari.\n */\n\nbutton,\nhtml [type=\"button\"], /* 1 */\n[type=\"reset\"],\n[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n}\n\n/**\n * Remove the inner border and padding in Firefox.\n */\n\nbutton::-moz-focus-inner,\n[type=\"button\"]::-moz-focus-inner,\n[type=\"reset\"]::-moz-focus-inner,\n[type=\"submit\"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\n\n/**\n * Restore the focus styles unset by the previous rule.\n */\n\nbutton:-moz-focusring,\n[type=\"button\"]:-moz-focusring,\n[type=\"reset\"]:-moz-focusring,\n[type=\"submit\"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\n\n/**\n * Correct the padding in Firefox.\n */\n\nfieldset {\n  padding: 0.35em 0.75em 0.625em;\n}\n\n/**\n * 1. Correct the text wrapping in Edge and IE.\n * 2. Correct the color inheritance from `fieldset` elements in IE.\n * 3. Remove the padding so developers are not caught out when they zero out\n *    `fieldset` elements in all browsers.\n */\n\nlegend {\n  box-sizing: border-box; /* 1 */\n  color: inherit; /* 2 */\n  display: table; /* 1 */\n  max-width: 100%; /* 1 */\n  padding: 0; /* 3 */\n  white-space: normal; /* 1 */\n}\n\n/**\n * 1. Add the correct display in IE 9-.\n * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.\n */\n\nprogress {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Remove the default vertical scrollbar in IE.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * 1. Add the correct box sizing in IE 10-.\n * 2. Remove the padding in IE 10-.\n */\n\n[type=\"checkbox\"],\n[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Correct the cursor style of increment and decrement buttons in Chrome.\n */\n\n[type=\"number\"]::-webkit-inner-spin-button,\n[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Correct the odd appearance in Chrome and Safari.\n * 2. Correct the outline style in Safari.\n */\n\n[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/**\n * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.\n */\n\n[type=\"search\"]::-webkit-search-cancel-button,\n[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * 1. Correct the inability to style clickable types in iOS and Safari.\n * 2. Change font properties to `inherit` in Safari.\n */\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/* Interactive\n   ========================================================================== */\n\n/*\n * Add the correct display in IE 9-.\n * 1. Add the correct display in Edge, IE, and Firefox.\n */\n\ndetails, /* 1 */\nmenu {\n  display: block;\n}\n\n/*\n * Add the correct display in all browsers.\n */\n\nsummary {\n  display: list-item;\n}\n\n/* Scripting\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n */\n\ncanvas {\n  display: inline-block;\n}\n\n/**\n * Add the correct display in IE.\n */\n\ntemplate {\n  display: none;\n}\n\n/* Hidden\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 10-.\n */\n\n[hidden] {\n  display: none;\n}"; });
 define('text!draw/canvas-container.html', ['module'], function(module) { module.exports = "<template>\n  <p>Draw\n    <select value.bind=\"selectedType\">\n      <option repeat.for=\"type of drawingTypes\" model.bind=\"type.value\">${type.label}</option>\n    </select>\n  </p>\n\n\n  <svg ref=\"dndElement\" width=\"300\" height=\"300\">\n    <!-- draw border of svg -->\n    <rect\n      x=\"0\"\n      y=\"0\"\n      width=\"300\"\n      height=\"300\"\n      stroke=\"#555\"\n      stroke-width=\"1\"\n      fill=\"transparent\"\n    ></rect>\n\n    <g repeat.for=\"shape of shapes\">\n      <line\n        if.bind=\"shape.type == 'line'\"\n        x1.bind=\"shape.from.x\"\n        y1.bind=\"shape.from.y\"\n        x2.bind=\"shape.to.x\"\n        y2.bind=\"shape.to.y\"\n        stroke=\"#333\"\n      ></line>\n\n      <rect\n        if.bind=\"shape.type == 'rect'\"\n        x.bind=\"shape.x\"\n        y.bind=\"shape.y\"\n        width.bind=\"shape.width\"\n        height.bind=\"shape.height\"\n        stroke=\"#333\"\n        stroke-width=\"1\"\n        fill=\"transparent\"\n      ></rect>\n    </g>\n\n\n    <line\n      if.bind=\"drawingShape.type == 'line'\"\n      x1.bind=\"drawingShape.from.x\"\n      y1.bind=\"drawingShape.from.y\"\n      x2.bind=\"drawingShape.to.x\"\n      y2.bind=\"drawingShape.to.y\"\n      stroke=\"blue\"\n    ></line>\n\n    <rect\n      if.bind=\"drawingShape.type == 'rect'\"\n      x.bind=\"drawingShape.x\"\n      y.bind=\"drawingShape.y\"\n      width.bind=\"drawingShape.width\"\n      height.bind=\"drawingShape.height\"\n      stroke=\"blue\"\n      stroke-width=\"1\"\n      fill=\"transparent\"\n    ></rect>\n  </svg>\n</template>\n"; });
 define('text!move-plus-add/add-source.css', ['module'], function(module) { module.exports = ".example-add-source {\n  display: inline-block;\n  border: 1px solid #555;\n  box-sizing: border-box;\n  padding: 5px;\n  cursor: pointer;\n}\n\n.dollar {\n  display: block;\n  font-size: 2rem;\n  font-weight: bold;\n  width: auto;\n  height: auto;\n}\n\n.dollar:before {\n  content: '$';\n}\n\n/* overwrite default style of dnd preview */\n.bcx-dnd-preview.dollar {\n  opacity: 1;\n  box-shadow: none;\n}\n"; });

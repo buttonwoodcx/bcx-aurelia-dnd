@@ -32,7 +32,7 @@ export class Item {
     return model.type === 'orderItem' && model.id !== this.item.id;
   }
 
-  // noop
+  // no-op
   dndDrop() {}
 
   dndHover(location) {

@@ -129,3 +129,30 @@ button.btn {
 table.table-align-top td {
   vertical-align: top;
 }
+
+mark-down {
+  line-height: 1.5;
+}
+
+mark-down blockquote {
+  margin: 0;
+  padding: 0;
+}
+
+mark-down blockquote p {
+  border-left: 0.5rem solid #aaa;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem 0.5rem 1.5rem;
+  color: #555;
+  background-color: #eee;
+}
+
+mark-down code, mark-down pre {
+  background-color: #eee;
+}
+
+mark-down pre {
+  font-size: 0.8rem;
+  padding: 1rem;
+}
+

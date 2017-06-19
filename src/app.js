@@ -24,8 +24,23 @@ export class App {
         settings: {
           section: 'tutorial',
           trunks: [
-            'tutorial/source-and-target.md',
-            // 'simple-move-step-1/index'
+            'tutorial/source-and-target-part1.md',
+            'simple-move-step-1/index',
+            'tutorial/source-and-target-part2.md',
+            'simple-move-step-2/index',
+            'tutorial/source-and-target-part3.md'
+          ]
+        },
+        moduleId: 'show-tutorial'
+      },
+      {
+        route: 'customize-preview-and-hover', name: 'customize-preview-and-hover',
+        title: 'Customize preview and respond to dndHover',
+        nav: true,
+        settings: {
+          section: 'tutorial',
+          trunks: [
+            'tutorial/customize-preview-and-hover-part1.md'
           ]
         },
         moduleId: 'show-tutorial'

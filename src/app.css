@@ -96,7 +96,8 @@ a.link.active {
   margin: 5px 0 0 5px;
 }
 
-.doc-source-code display-source {
+.doc-source-code display-source,
+.inline-demo-source-code display-source {
   display: block;
   position: absolute;
   top: 30px;
@@ -108,7 +109,7 @@ a.link.active {
   padding: 5px;
 }
 
-.doc-source-code display-sources.full-screen {
+display-sources.full-screen {
   display: block;
   position: fixed;
   top: 0;
@@ -154,5 +155,30 @@ mark-down code, mark-down pre {
 mark-down pre {
   font-size: 0.8rem;
   padding: 1rem;
+}
+
+.inline-demo {
+  box-shadow: 0 0 12px lightgrey;
+  overflow: hidden;
+  position: relative;
+}
+
+.inline-demo-app {
+  width: 320px;
+  height: 320px;
+  padding-left: 10px;
+  padding-top: 10px;
+  box-sizing: border-box;
+}
+
+.inline-demo-source-code {
+  position: absolute;
+  top: 0;
+  left: 320px;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  padding: 5px;
+  border-left: 10px solid #eee;
 }
 

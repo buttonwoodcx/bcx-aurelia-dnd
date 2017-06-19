@@ -4,7 +4,7 @@
   box-sizing: border-box;
   width: 80px;
   height: 40px;
-  border: 1px dotted #555;
+  border: 1px solid #555;
   padding: 0.5rem;
   background: white;
 }

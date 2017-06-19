@@ -4,6 +4,17 @@
 
 Documentation in progress, view [examples](#simple) for now.
 
+First, If you want to play with the source code of included examples.
+
+```
+git clone git@github.com:buttonwoodcx/bcx-aurelia-dnd.git
+cd bcx-aurelia-dnd
+git checkout origin/gh-pages # it's our GitHub pages. Of course, an Aurelia app.
+npm install --global aurelia-cli # if you have not installed aurelia-cli
+npm install # or yarn install
+au run --watch
+```
+
 ## Why bcx-aurelia-dnd was created
 
 When [Aurelia](http://aurelia.io) released v1.0.0 in July 2016, we quickly decided to convert our [Buttonwood Broker](http://www.buttonwood.com.au/products/cloud-broker/cloud-broker/) front-end from React to Aurelia. The whole conversion only took us (one front-end developer, actually) less than three weeks, which tells you how easy Aurelia is.

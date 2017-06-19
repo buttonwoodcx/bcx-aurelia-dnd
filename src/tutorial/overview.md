@@ -55,4 +55,4 @@ export class YourComponent {
 
 > Here we rely on default behavior of Aurelia DI (dependency injection). Aurelia DI creates a singleton `dndService` instance for all components to share.
 
-That's all you need to bring `DndService` to an Aurelia component. There is no step to set it up as plugin. Now let's get started to add [source and target](#/tutorial/source-and-target.md).
+That's all you need to bring `DndService` to an Aurelia component. There is no step to set it up as plugin. Now let's get started to add [source and target](#/source-and-target).

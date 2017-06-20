@@ -3,8 +3,14 @@ import {DndService} from 'bcx-aurelia-dnd';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 @inject(DndService, EventAggregator)
-export class ListContainer {
-  items = ['first', 'second', 'third', 'fourth'];
+export class TableContainer {
+  items = [
+    {name: 'Bob', age: 23},
+    {name: 'Ali', age: 37},
+    {name: 'Tom', age: 12},
+    {name: 'Emma', age: 18}
+  ];
+
   intention;
 
   constructor(dndService, ea) {

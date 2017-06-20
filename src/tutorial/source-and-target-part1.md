@@ -49,6 +49,8 @@ The first thing a source delegate needs to provide, is a reference to the DOM el
 
 > When you use `ref="dndElement"` in view template, Aurelia (not `DndService`) creates a property `dndElement` in your component pointing to the DOM element, you can access `this.dndElement` inside your component code.
 
+> Note, `removeSource()` and `removeTarget()` can be called with either delegate object or element object. So in here, `this.dndService.removeSource(this.dndElement)` works too.
+
 Now DOM is hooked up, source delegate needs to provide `dndModel()` callback, it should return a model which describes the meaning of the drag. When `DndService` detected user started a drag, it asks (only once) the source delegate `dndModel()` callback to return a model.
 
 ```javascript

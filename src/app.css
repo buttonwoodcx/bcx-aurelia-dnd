@@ -164,10 +164,9 @@ mark-down pre {
 }
 
 .inline-demo-app {
-  width: 320px;
-  height: 320px;
-  padding-left: 10px;
-  padding-top: 10px;
+  width: auto;
+  height: auto;
+  padding: 10px;
   box-sizing: border-box;
 }
 
@@ -180,5 +179,9 @@ mark-down pre {
   box-sizing: border-box;
   padding: 5px;
   border-left: 10px solid #eee;
+}
+
+.inline-demo-source-code.inline-demo-source-code-for-reorder {
+  left: 430px;
 }
 

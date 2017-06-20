@@ -1,0 +1,8 @@
+<template>
+  <require from="./container.css"></require>
+  <require from="./box"></require>
+
+  <div ref="dndElement" class="example-container">
+    <box repeat.for="item of patchedItems" item.bind="item"></box>
+  </div>
+</template>

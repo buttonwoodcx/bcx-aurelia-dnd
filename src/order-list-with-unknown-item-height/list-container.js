@@ -34,10 +34,6 @@ export class ListContainer {
     this.intention = null;
   }
 
-  dndCanDrop(model) {
-    return model.type === 'orderItem';
-  }
-
   updateIntention(targetId, beforeTarget) {
     const {isProcessing, model} = this.dndService;
     if (!isProcessing) return;

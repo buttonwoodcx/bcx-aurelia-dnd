@@ -28,7 +28,9 @@ export class App {
             'simple-move-step-1/index',
             'tutorial/source-and-target-part2.md',
             'simple-move-step-2/index',
-            'tutorial/source-and-target-part3.md'
+            'tutorial/source-and-target-part3.md',
+            'simple-move/inline',
+            'tutorial/source-and-target-part4.md'
           ]
         },
         moduleId: 'show-tutorial'
@@ -40,7 +42,29 @@ export class App {
         settings: {
           section: 'tutorial',
           trunks: [
-            'tutorial/customize-preview-and-hover-part1.md'
+            'tutorial/customize-preview-and-hover-part1.md',
+            'simple-move-hover-no-preview-with-clock/index',
+            'tutorial/customize-preview-and-hover-part2.md',
+            'move-plus-add/inline',
+            'tutorial/customize-preview-and-hover-part3.md',
+            'order-table/inline',
+            'tutorial/customize-preview-and-hover-part4.md'
+          ]
+        },
+        moduleId: 'show-tutorial'
+      },
+      {
+        route: 're-order-list', name: 're-order-list',
+        title: 'Re-order a list',
+        nav: true,
+        settings: {
+          section: 'tutorial',
+          trunks: [
+            'tutorial/re-order-list-part1.md',
+            'order-list-with-fixed-item-height/inline',
+            'tutorial/re-order-list-part2.md',
+            'order-list-with-unknown-item-height/inline',
+            'tutorial/re-order-list-part3.md'
           ]
         },
         moduleId: 'show-tutorial'
@@ -98,6 +122,13 @@ export class App {
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-list-with-unknown-item-height/index'
+      },
+      {
+        route: 'order-table', name: 'order-table',
+        title: 'Customize preview for <tr>',
+        nav: true,
+        settings: {section: 'examples'},
+        moduleId: 'order-table/index'
       },
       {
         route: '',

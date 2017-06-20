@@ -41,16 +41,16 @@ export class ListContainer2 {
   }
 
   dndHover(location) {
-    const {mouseEndAt, targetElementRect} = location;
+    const {mouseEndAt, sourceElementRect, targetElementRect} = location;
     const y = mouseEndAt.y - targetElementRect.y;
-    const {id, elementHeight} = this.dnd.model;
+    const {id} = this.dnd.model;
 
     const idx = _.findIndex(this.items, {id});
     if (idx < 0) return;
 
     // we have zero margin between item elements.
-    // otherwise has to do (y / (margin + elementHeight))
-    const newIdx = Math.floor(y / elementHeight);
+    // otherwise has to do (y / (margin + sourceElementRect.height))
+    const newIdx = Math.floor(y / sourceElementRect.height);
     this.intention = {fromIndex: idx, toIndex: newIdx};
   }
 

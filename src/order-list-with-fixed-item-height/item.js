@@ -1,6 +1,5 @@
 import {inject, bindable, computedFrom} from 'aurelia-framework';
 import {DndService} from 'bcx-aurelia-dnd';
-import $ from 'jquery';
 
 @inject(DndService)
 export class Item {
@@ -21,8 +20,7 @@ export class Item {
   dndModel() {
     return {
       type: 'orderItem',
-      item: this.item,
-      elementHeight: $(this.dndElement).height()
+      item: this.item
     };
   }
 

@@ -36,6 +36,7 @@ While source delegate has a mandatory method `dndModel()`, target delegate has t
 ```javascript
 export class Container {
   // ... add/removeTarget in attached/detached
+  // ... hook up dndElement in container.html
 
   dndCanDrop(model) {
     return model.type === 'moveItem';
@@ -63,12 +64,12 @@ export class Container {
 
 When a drag started, `DndService` got a model from source element (`dndModel()`), then use the model to ask (only once) every target's `dndCanDrop(model)`, it also injects a special property `dnd` onto target delegate.
 
-* __dnd.isProcessing__, `true` during a dnd session, no matter whether can drop on this target or not.
+* __dnd.isProcessing__, `true` during a DnD session, no matter whether can drop on this target or not.
 * __dnd.canDrop__, a boolean, it's the cached result of `dndCanDrop(model)`.
-* __dnd.model__, the model of the dnd session, no matter whether can drop on this target or not.
+* __dnd.model__, the model of the DnD session, no matter whether can drop on this target or not.
 * __dnd.isHoveringShallowly__, `true` when mouse is hovering directly over target element.
 * __dnd.isHovering__, `true` when mouse is hovering within target element region.
-* all of above have value `undefined` when not in a dnd session.
+* all of above have value `undefined` when not in a DnD session.
 
 
 Only when `canDrop` is true, the target delegate have chance of receiving `dndDrop(location)`. In it, we got the `dnd.model.item`. You also got some location information passed as argument.
@@ -84,11 +85,11 @@ There are few objects in location payload.
 
 > For convenience, `previewElementRect` always presents. Even if you turn off the preview (you will see that in [customize preview](#/customize-preview-and-hover)), it still reports location and size as if you were using default preview.
 
-Be ware, `sourceElementRect` is not current location of source element. It is a cached location for the source element when dnd session was started.
+Be ware, `sourceElementRect` is not current location of source element. It is a cached location for the source element when DnD session was started.
 
-The reason behind this, is that `DndService` doesn't retain the source delegate/element during a dnd session. Even when the source was removed by `removeSource(...)` during a dnd session, `DndService` would not care. `DndService` gets the dnd model, and caches source element location at start of a dnd session, that's the only time it ever uses that source delegate/element.
+The reason behind this, is that `DndService` doesn't retain the source delegate/element during a DnD session. Even when the source was removed by `removeSource(...)` during a DnD session, `DndService` would not care. `DndService` gets the dnd model, and caches source element location at start of a DnD session, that's the only time it ever uses that source delegate/element.
 
-> In fact, `addSource()`, `removeSource()`, `addTarget()`, `removeTarget()` are all allowed anytime, within or out of a dnd session. `DndService` thrives on dynamic sources and targets. This will likely happen in your app without your notice, we will elaborate on this when examining dndHover.
+> In fact, `addSource()`, `removeSource()`, `addTarget()`, `removeTarget()` are all allowed anytime, within or out of a DnD session. `DndService` thrives on dynamic sources and targets. This will likely happen in your app without your notice, we will elaborate on this when examining dndHover.
 
 With that much of coding, we got movable boxes.
 

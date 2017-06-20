@@ -1,4 +1,4 @@
-## Style based on DnD state
+## Style source element based on DnD state
 
 There is one more thing we want to fix. During dragging a box, the original source box still presents. How about making it disappear.
 
@@ -39,5 +39,3 @@ Now hide the element when dragging me.
 > Notice we use `show.bind`, not `if.bind` here. Aurelia `if.bind` add/remove the element from DOM tree, while `show.bind` simplify toggle css `visibility`. Because we have a reference "dndElement" on this DOM node, we don't want `if.bind` add/remove it, that will skip our `dndService.addSource(...)` and `dndService.removeSource(...)` in component's `attached()` and `detached()` callbacks.
 
 That is the full version of the first example [move object](#/simple).
-
-Next, let's see how to [customize preview and respond to dndHover](#/customize-preview-and-hover).

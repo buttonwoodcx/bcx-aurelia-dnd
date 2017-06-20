@@ -23,7 +23,7 @@ export class Item2 {
 
   dndModel() {
     return {
-      type: 'orderItem2',
+      type: 'orderItemFlex2',
       id: this.item.id
     };
   }
@@ -40,7 +40,7 @@ export class Item2 {
 
   // set canDrop true to receive dndHover, but do nothing in dndDrop
   dndCanDrop(model) {
-    return model.type === 'orderItem2' && model.id !== this.item.id;
+    return model.type === 'orderItemFlex2' && model.id !== this.item.id;
   }
 
   // noop
@@ -66,7 +66,7 @@ export class Item2 {
   get draggingMe() {
     const {item, dndService} = this;
     return dndService.isProcessing &&
-           dndService.model.type === 'orderItem2' &&
+           dndService.model.type === 'orderItemFlex2' &&
            dndService.model.id === item.id;
   }
 }

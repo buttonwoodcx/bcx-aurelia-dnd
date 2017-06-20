@@ -77,43 +77,43 @@ define('app',['exports'], function (exports) {
         moduleId: 'show-tutorial'
       }, {
         route: 'simple', name: 'simple',
-        title: 'Move object',
+        title: '1. Move object',
         nav: true,
         settings: { section: 'examples' },
         moduleId: 'simple-move/index'
       }, {
         route: 'simple-move-hover-no-preview', name: 'simple-move-hover-no-preview',
-        title: 'Move object, no preview, use dndHover',
+        title: '2. Move object, no preview, use dndHover',
         nav: true,
         settings: { section: 'examples' },
         moduleId: 'simple-move-hover-no-preview/index'
       }, {
         route: 'move-plus-add', name: 'move-plus-add',
-        title: 'Move object, add object, customize preview',
+        title: '3. Move object, add object, customize preview',
         nav: true,
         settings: { section: 'examples' },
         moduleId: 'move-plus-add/index'
       }, {
         route: 'draw', name: 'draw',
-        title: 'Draw object',
+        title: '4. Draw object',
         nav: true,
         settings: { section: 'examples' },
         moduleId: 'draw/index'
       }, {
         route: 'order-simple', name: 'order-simple',
-        title: 'Re-order list with fixed item height',
+        title: '5. Re-order list with fixed item height',
         nav: true,
         settings: { section: 'examples' },
         moduleId: 'order-list-with-fixed-item-height/index'
       }, {
         route: 'order-flex', name: 'order-flex',
-        title: 'Re-order list with unknown item height',
+        title: '6. Re-order list with unknown item height',
         nav: true,
         settings: { section: 'examples' },
         moduleId: 'order-list-with-unknown-item-height/index'
       }, {
         route: 'order-table', name: 'order-table',
-        title: 'Customize preview for <tr>',
+        title: '7. Customize preview for <tr>',
         nav: true,
         settings: { section: 'examples' },
         moduleId: 'order-table/index'
@@ -308,6 +308,523 @@ define('draw/index',['exports'], function (exports) {
     _classCallCheck(this, Index);
 
     this.sourceFilenames = ['src/draw/canvas-container.js', 'src/draw/canvas-container.html'];
+  };
+});
+define('move-plus-add/add-box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'jquery'], function (exports, _aureliaFramework, _bcxAureliaDnd, _jquery) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.AddBox = undefined;
+
+  var _jquery2 = _interopRequireDefault(_jquery);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _dec, _class;
+
+  var AddBox = exports.AddBox = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec(_class = function () {
+    function AddBox(dndService) {
+      _classCallCheck(this, AddBox);
+
+      this.dndService = dndService;
+    }
+
+    AddBox.prototype.attached = function attached() {
+      this.dndService.addSource(this);
+    };
+
+    AddBox.prototype.detached = function detached() {
+      this.dndService.removeSource(this);
+    };
+
+    AddBox.prototype.dndModel = function dndModel() {
+      return {
+        type: 'addItem'
+      };
+    };
+
+    AddBox.prototype.dndPreview = function dndPreview() {
+      var jq = (0, _jquery2.default)('\n      <div class="example-box">new box</div>\n    ');
+
+
+      return jq.get(0);
+    };
+
+    return AddBox;
+  }()) || _class);
+});
+define('move-plus-add/add-money',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'jquery'], function (exports, _aureliaFramework, _bcxAureliaDnd, _jquery) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.AddMoney = undefined;
+
+  var _jquery2 = _interopRequireDefault(_jquery);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _dec, _class;
+
+  var AddMoney = exports.AddMoney = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec(_class = function () {
+    function AddMoney(dndService) {
+      _classCallCheck(this, AddMoney);
+
+      this.dndService = dndService;
+    }
+
+    AddMoney.prototype.attached = function attached() {
+      this.dndService.addSource(this, { centerPreviewToMousePosition: true, hideCursor: true });
+    };
+
+    AddMoney.prototype.detached = function detached() {
+      this.dndService.removeSource(this);
+    };
+
+    AddMoney.prototype.dndModel = function dndModel() {
+      return {
+        type: 'addDollar'
+      };
+    };
+
+    AddMoney.prototype.dndPreview = function dndPreview() {
+      var jq = (0, _jquery2.default)('\n      <div class="dollar"></div>\n    ');
+
+      return jq.get(0);
+    };
+
+    return AddMoney;
+  }()) || _class);
+});
+define('move-plus-add/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Box = undefined;
+
+  function _initDefineProp(target, property, descriptor, context) {
+    if (!descriptor) return;
+    Object.defineProperty(target, property, {
+      enumerable: descriptor.enumerable,
+      configurable: descriptor.configurable,
+      writable: descriptor.writable,
+      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+    });
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+      desc[key] = descriptor[key];
+    });
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
+
+    if ('value' in desc || desc.initializer) {
+      desc.writable = true;
+    }
+
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+      return decorator(target, property, desc) || desc;
+    }, desc);
+
+    if (context && desc.initializer !== void 0) {
+      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+      desc.initializer = undefined;
+    }
+
+    if (desc.initializer === void 0) {
+      Object['define' + 'Property'](target, property, desc);
+      desc = null;
+    }
+
+    return desc;
+  }
+
+  function _initializerWarningHelper(descriptor, context) {
+    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+  }
+
+  var _dec, _dec2, _dec3, _class, _desc, _value, _class2, _descriptor;
+
+  var Box = exports.Box = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec2 = (0, _aureliaFramework.computedFrom)('item', 'item.x', 'item.y'), _dec3 = (0, _aureliaFramework.computedFrom)('dnd', 'dnd.model', 'dnd.isProcessing', 'dnd.canDrop', 'dnd.isHoveringShallowly'), _dec(_class = (_class2 = function () {
+    function Box(dndService) {
+      _classCallCheck(this, Box);
+
+      _initDefineProp(this, 'item', _descriptor, this);
+
+      this.dndService = dndService;
+    }
+
+    Box.prototype.attached = function attached() {
+      this.dndService.addSource(this, { noPreview: true });
+      this.dndService.addTarget(this);
+    };
+
+    Box.prototype.detached = function detached() {
+      this.dndService.removeSource(this);
+      this.dndService.removeTarget(this);
+    };
+
+    Box.prototype.dndModel = function dndModel() {
+      return {
+        type: 'moveItem',
+        id: this.item.id
+      };
+    };
+
+    Box.prototype.dndCanDrop = function dndCanDrop(model) {
+      return model.type === 'addDollar';
+    };
+
+    Box.prototype.dndDrop = function dndDrop() {
+      var type = this.dnd.model.type;
+
+
+      if (type === 'addDollar') {
+        this.item.dollars += 1;
+      }
+    };
+
+    _createClass(Box, [{
+      key: 'positionCss',
+      get: function get() {
+        var x = this.item && this.item.x || 0;
+        var y = this.item && this.item.y || 0;
+
+        return {
+          left: x + 'px',
+          top: y + 'px'
+        };
+      }
+    }, {
+      key: 'dndCss',
+      get: function get() {
+        if (!this.dnd) return '';
+        var _dnd = this.dnd,
+            model = _dnd.model,
+            isProcessing = _dnd.isProcessing,
+            canDrop = _dnd.canDrop,
+            isHoveringShallowly = _dnd.isHoveringShallowly;
+
+        if (!isProcessing) return '';
+
+        if (model.type === 'moveItem') return '';
+        var css = '';
+        if (canDrop) {
+          css += 'can-drop';
+        } else {
+          css += 'can-not-drop';
+        }
+        if (isHoveringShallowly) css += ' shallow-hover';
+        return css;
+      }
+    }]);
+
+    return Box;
+  }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'item', [_aureliaFramework.bindable], {
+    enumerable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class2.prototype, 'positionCss', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'positionCss'), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, 'dndCss', [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, 'dndCss'), _class2.prototype)), _class2)) || _class);
+});
+define('move-plus-add/container',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'aurelia-event-aggregator', 'lodash'], function (exports, _aureliaFramework, _bcxAureliaDnd, _aureliaEventAggregator, _lodash) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Container = undefined;
+
+  var _lodash2 = _interopRequireDefault(_lodash);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
+
+  var _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+      desc[key] = descriptor[key];
+    });
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
+
+    if ('value' in desc || desc.initializer) {
+      desc.writable = true;
+    }
+
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+      return decorator(target, property, desc) || desc;
+    }, desc);
+
+    if (context && desc.initializer !== void 0) {
+      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+      desc.initializer = undefined;
+    }
+
+    if (desc.initializer === void 0) {
+      Object['define' + 'Property'](target, property, desc);
+      desc = null;
+    }
+
+    return desc;
+  }
+
+  var _dec, _dec2, _dec3, _class, _desc, _value, _class2;
+
+  var Container = exports.Container = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService, _aureliaEventAggregator.EventAggregator), _dec2 = (0, _aureliaFramework.computedFrom)('items', 'intention'), _dec3 = (0, _aureliaFramework.computedFrom)('dnd', 'dnd.model', 'dnd.isProcessing', 'dnd.canDrop', 'dnd.isHoveringShallowly'), _dec(_class = (_class2 = function () {
+    function Container(dndService, ea) {
+      _classCallCheck(this, Container);
+
+      this.items = [{ id: '0', dollars: 1, x: 20, y: 20 }, { id: '1', dollars: 1, x: 50, y: 200 }, { id: '2', dollars: 1, x: 200, y: 100 }];
+
+      this.dndService = dndService;
+      this.ea = ea;
+    }
+
+    Container.prototype.attached = function attached() {
+      var _this = this;
+
+      this.dndService.addTarget(this);
+      this.subscribers = [this.ea.subscribe('dnd:willStart', function () {
+        return _this.resetIntention();
+      }), this.ea.subscribe('dnd:didEnd', function () {
+        return _this.resetIntention();
+      })];
+    };
+
+    Container.prototype.detached = function detached() {
+      this.dndService.removeTarget(this);
+      this.subscribers.forEach(function (s) {
+        return s.dispose();
+      });
+    };
+
+    Container.prototype.dndCanDrop = function dndCanDrop(model) {
+      return model.type === 'moveItem' || model.type === 'addItem';
+    };
+
+    Container.prototype.dndDrop = function dndDrop(location) {
+      var _dnd$model = this.dnd.model,
+          type = _dnd$model.type,
+          id = _dnd$model.id;
+      var previewElementRect = location.previewElementRect,
+          targetElementRect = location.targetElementRect;
+
+      var newLoc = {
+        x: previewElementRect.x - targetElementRect.x,
+        y: previewElementRect.y - targetElementRect.y
+      };
+
+      if (type === 'moveItem') {
+        var idx = _lodash2.default.findIndex(this.items, { id: id });
+        if (idx < 0) return;
+
+        var newItem = _extends({}, this.items[idx], newLoc);
+
+        this.items.splice(idx, 1);
+        this.items.push(newItem);
+      } else if (type === 'addItem') {
+        this.items.push(_extends({
+          id: '' + this.items.length,
+          dollars: 1
+        }, newLoc));
+      }
+    };
+
+    Container.prototype.dndHover = function dndHover(location) {
+      var _dnd$model2 = this.dnd.model,
+          type = _dnd$model2.type,
+          id = _dnd$model2.id;
+      var previewElementRect = location.previewElementRect,
+          targetElementRect = location.targetElementRect;
+
+      var newLoc = {
+        x: previewElementRect.x - targetElementRect.x,
+        y: previewElementRect.y - targetElementRect.y
+      };
+
+      if (type === 'moveItem') {
+        var item = _lodash2.default.find(this.items, { id: id });
+        if (!item) return;
+
+        this.intention = { id: id, x: newLoc.x, y: newLoc.y };
+      }
+    };
+
+    Container.prototype.resetIntention = function resetIntention() {
+      this.intention = null;
+    };
+
+    _createClass(Container, [{
+      key: 'patchedItems',
+      get: function get() {
+        var items = this.items,
+            intention = this.intention;
+
+        if (!intention) return items;
+
+        var patched = _lodash2.default.reject(items, { id: intention.id });
+        var item = _lodash2.default.find(this.items, { id: intention.id });
+
+        if (item) {
+          patched.push(_extends({}, item, { x: intention.x, y: intention.y }));
+        }
+
+        return patched;
+      }
+    }, {
+      key: 'dndCss',
+      get: function get() {
+        if (!this.dnd) return '';
+        var _dnd = this.dnd,
+            model = _dnd.model,
+            isProcessing = _dnd.isProcessing,
+            canDrop = _dnd.canDrop,
+            isHoveringShallowly = _dnd.isHoveringShallowly;
+
+        if (!isProcessing) return '';
+
+        if (model.type === 'moveItem') return '';
+        var css = '';
+        if (canDrop) {
+          css += 'can-drop';
+        } else {
+          css += 'can-not-drop';
+        }
+        if (isHoveringShallowly) css += ' shallow-hover';
+        return css;
+      }
+    }]);
+
+    return Container;
+  }(), (_applyDecoratedDescriptor(_class2.prototype, 'patchedItems', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'patchedItems'), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, 'dndCss', [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, 'dndCss'), _class2.prototype)), _class2)) || _class);
+});
+define('move-plus-add/index',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Index = exports.Index = function Index() {
+    _classCallCheck(this, Index);
+
+    this.sourceFilenames = ['src/move-plus-add/container.js', 'src/move-plus-add/container.html', 'src/move-plus-add/container.css', 'src/move-plus-add/target-effect.css', 'src/move-plus-add/box.js', 'src/move-plus-add/box.html', 'src/move-plus-add/box.css', 'src/move-plus-add/add-box.js', 'src/move-plus-add/add-box.html', 'src/move-plus-add/add-source.css', 'src/move-plus-add/add-money.js', 'src/move-plus-add/add-money.html'];
+  };
+});
+define('move-plus-add/inline',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Inline = exports.Inline = function Inline() {
+    _classCallCheck(this, Inline);
+
+    this.sourceFilenames = ['src/move-plus-add/container.js', 'src/move-plus-add/container.html', 'src/move-plus-add/container.css', 'src/move-plus-add/target-effect.css', 'src/move-plus-add/box.js', 'src/move-plus-add/box.html', 'src/move-plus-add/box.css', 'src/move-plus-add/add-box.js', 'src/move-plus-add/add-box.html', 'src/move-plus-add/add-source.css', 'src/move-plus-add/add-money.js', 'src/move-plus-add/add-money.html'];
   };
 });
 define('order-list-with-fixed-item-height/index',['exports'], function (exports) {
@@ -892,523 +1409,6 @@ define('order-list-with-fixed-item-height/list-container2',['exports', 'aurelia-
     return ListContainer2;
   }(), (_applyDecoratedDescriptor(_class2.prototype, 'patchedItems', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'patchedItems'), _class2.prototype)), _class2)) || _class);
 });
-define('move-plus-add/add-box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'jquery'], function (exports, _aureliaFramework, _bcxAureliaDnd, _jquery) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.AddBox = undefined;
-
-  var _jquery2 = _interopRequireDefault(_jquery);
-
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var _dec, _class;
-
-  var AddBox = exports.AddBox = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec(_class = function () {
-    function AddBox(dndService) {
-      _classCallCheck(this, AddBox);
-
-      this.dndService = dndService;
-    }
-
-    AddBox.prototype.attached = function attached() {
-      this.dndService.addSource(this);
-    };
-
-    AddBox.prototype.detached = function detached() {
-      this.dndService.removeSource(this);
-    };
-
-    AddBox.prototype.dndModel = function dndModel() {
-      return {
-        type: 'addItem'
-      };
-    };
-
-    AddBox.prototype.dndPreview = function dndPreview() {
-      var jq = (0, _jquery2.default)('\n      <div class="example-box">new box</div>\n    ');
-
-
-      return jq.get(0);
-    };
-
-    return AddBox;
-  }()) || _class);
-});
-define('move-plus-add/add-money',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'jquery'], function (exports, _aureliaFramework, _bcxAureliaDnd, _jquery) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.AddMoney = undefined;
-
-  var _jquery2 = _interopRequireDefault(_jquery);
-
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var _dec, _class;
-
-  var AddMoney = exports.AddMoney = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec(_class = function () {
-    function AddMoney(dndService) {
-      _classCallCheck(this, AddMoney);
-
-      this.dndService = dndService;
-    }
-
-    AddMoney.prototype.attached = function attached() {
-      this.dndService.addSource(this, { centerPreviewToMousePosition: true, hideCursor: true });
-    };
-
-    AddMoney.prototype.detached = function detached() {
-      this.dndService.removeSource(this);
-    };
-
-    AddMoney.prototype.dndModel = function dndModel() {
-      return {
-        type: 'addDollar'
-      };
-    };
-
-    AddMoney.prototype.dndPreview = function dndPreview() {
-      var jq = (0, _jquery2.default)('\n      <div class="dollar"></div>\n    ');
-
-      return jq.get(0);
-    };
-
-    return AddMoney;
-  }()) || _class);
-});
-define('move-plus-add/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.Box = undefined;
-
-  function _initDefineProp(target, property, descriptor, context) {
-    if (!descriptor) return;
-    Object.defineProperty(target, property, {
-      enumerable: descriptor.enumerable,
-      configurable: descriptor.configurable,
-      writable: descriptor.writable,
-      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-    });
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-    var desc = {};
-    Object['ke' + 'ys'](descriptor).forEach(function (key) {
-      desc[key] = descriptor[key];
-    });
-    desc.enumerable = !!desc.enumerable;
-    desc.configurable = !!desc.configurable;
-
-    if ('value' in desc || desc.initializer) {
-      desc.writable = true;
-    }
-
-    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-      return decorator(target, property, desc) || desc;
-    }, desc);
-
-    if (context && desc.initializer !== void 0) {
-      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-      desc.initializer = undefined;
-    }
-
-    if (desc.initializer === void 0) {
-      Object['define' + 'Property'](target, property, desc);
-      desc = null;
-    }
-
-    return desc;
-  }
-
-  function _initializerWarningHelper(descriptor, context) {
-    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
-  }
-
-  var _dec, _dec2, _dec3, _class, _desc, _value, _class2, _descriptor;
-
-  var Box = exports.Box = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec2 = (0, _aureliaFramework.computedFrom)('item', 'item.x', 'item.y'), _dec3 = (0, _aureliaFramework.computedFrom)('dnd', 'dnd.model', 'dnd.isProcessing', 'dnd.canDrop', 'dnd.isHoveringShallowly'), _dec(_class = (_class2 = function () {
-    function Box(dndService) {
-      _classCallCheck(this, Box);
-
-      _initDefineProp(this, 'item', _descriptor, this);
-
-      this.dndService = dndService;
-    }
-
-    Box.prototype.attached = function attached() {
-      this.dndService.addSource(this, { noPreview: true });
-      this.dndService.addTarget(this);
-    };
-
-    Box.prototype.detached = function detached() {
-      this.dndService.removeSource(this);
-      this.dndService.removeTarget(this);
-    };
-
-    Box.prototype.dndModel = function dndModel() {
-      return {
-        type: 'moveItem',
-        id: this.item.id
-      };
-    };
-
-    Box.prototype.dndCanDrop = function dndCanDrop(model) {
-      return model.type === 'addDollar';
-    };
-
-    Box.prototype.dndDrop = function dndDrop() {
-      var type = this.dnd.model.type;
-
-
-      if (type === 'addDollar') {
-        this.item.dollars += 1;
-      }
-    };
-
-    _createClass(Box, [{
-      key: 'positionCss',
-      get: function get() {
-        var x = this.item && this.item.x || 0;
-        var y = this.item && this.item.y || 0;
-
-        return {
-          left: x + 'px',
-          top: y + 'px'
-        };
-      }
-    }, {
-      key: 'dndCss',
-      get: function get() {
-        if (!this.dnd) return '';
-        var _dnd = this.dnd,
-            model = _dnd.model,
-            isProcessing = _dnd.isProcessing,
-            canDrop = _dnd.canDrop,
-            isHoveringShallowly = _dnd.isHoveringShallowly;
-
-        if (!isProcessing) return '';
-
-        if (model.type === 'moveItem') return '';
-        var css = '';
-        if (canDrop) {
-          css += 'can-drop';
-        } else {
-          css += 'can-not-drop';
-        }
-        if (isHoveringShallowly) css += ' shallow-hover';
-        return css;
-      }
-    }]);
-
-    return Box;
-  }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'item', [_aureliaFramework.bindable], {
-    enumerable: true,
-    initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, 'positionCss', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'positionCss'), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, 'dndCss', [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, 'dndCss'), _class2.prototype)), _class2)) || _class);
-});
-define('move-plus-add/container',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'aurelia-event-aggregator', 'lodash'], function (exports, _aureliaFramework, _bcxAureliaDnd, _aureliaEventAggregator, _lodash) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.Container = undefined;
-
-  var _lodash2 = _interopRequireDefault(_lodash);
-
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
-
-  var _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-    var desc = {};
-    Object['ke' + 'ys'](descriptor).forEach(function (key) {
-      desc[key] = descriptor[key];
-    });
-    desc.enumerable = !!desc.enumerable;
-    desc.configurable = !!desc.configurable;
-
-    if ('value' in desc || desc.initializer) {
-      desc.writable = true;
-    }
-
-    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-      return decorator(target, property, desc) || desc;
-    }, desc);
-
-    if (context && desc.initializer !== void 0) {
-      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-      desc.initializer = undefined;
-    }
-
-    if (desc.initializer === void 0) {
-      Object['define' + 'Property'](target, property, desc);
-      desc = null;
-    }
-
-    return desc;
-  }
-
-  var _dec, _dec2, _dec3, _class, _desc, _value, _class2;
-
-  var Container = exports.Container = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService, _aureliaEventAggregator.EventAggregator), _dec2 = (0, _aureliaFramework.computedFrom)('items', 'intention'), _dec3 = (0, _aureliaFramework.computedFrom)('dnd', 'dnd.model', 'dnd.isProcessing', 'dnd.canDrop', 'dnd.isHoveringShallowly'), _dec(_class = (_class2 = function () {
-    function Container(dndService, ea) {
-      _classCallCheck(this, Container);
-
-      this.items = [{ id: '0', dollars: 1, x: 20, y: 20 }, { id: '1', dollars: 1, x: 50, y: 200 }, { id: '2', dollars: 1, x: 200, y: 100 }];
-
-      this.dndService = dndService;
-      this.ea = ea;
-    }
-
-    Container.prototype.attached = function attached() {
-      var _this = this;
-
-      this.dndService.addTarget(this);
-      this.subscribers = [this.ea.subscribe('dnd:willStart', function () {
-        return _this.resetIntention();
-      }), this.ea.subscribe('dnd:didEnd', function () {
-        return _this.resetIntention();
-      })];
-    };
-
-    Container.prototype.detached = function detached() {
-      this.dndService.removeTarget(this);
-      this.subscribers.forEach(function (s) {
-        return s.dispose();
-      });
-    };
-
-    Container.prototype.dndCanDrop = function dndCanDrop(model) {
-      return model.type === 'moveItem' || model.type === 'addItem';
-    };
-
-    Container.prototype.dndDrop = function dndDrop(location) {
-      var _dnd$model = this.dnd.model,
-          type = _dnd$model.type,
-          id = _dnd$model.id;
-      var previewElementRect = location.previewElementRect,
-          targetElementRect = location.targetElementRect;
-
-      var newLoc = {
-        x: previewElementRect.x - targetElementRect.x,
-        y: previewElementRect.y - targetElementRect.y
-      };
-
-      if (type === 'moveItem') {
-        var idx = _lodash2.default.findIndex(this.items, { id: id });
-        if (idx < 0) return;
-
-        var newItem = _extends({}, this.items[idx], newLoc);
-
-        this.items.splice(idx, 1);
-        this.items.push(newItem);
-      } else if (type === 'addItem') {
-        this.items.push(_extends({
-          id: '' + this.items.length,
-          dollars: 1
-        }, newLoc));
-      }
-    };
-
-    Container.prototype.dndHover = function dndHover(location) {
-      var _dnd$model2 = this.dnd.model,
-          type = _dnd$model2.type,
-          id = _dnd$model2.id;
-      var previewElementRect = location.previewElementRect,
-          targetElementRect = location.targetElementRect;
-
-      var newLoc = {
-        x: previewElementRect.x - targetElementRect.x,
-        y: previewElementRect.y - targetElementRect.y
-      };
-
-      if (type === 'moveItem') {
-        var item = _lodash2.default.find(this.items, { id: id });
-        if (!item) return;
-
-        this.intention = { id: id, x: newLoc.x, y: newLoc.y };
-      }
-    };
-
-    Container.prototype.resetIntention = function resetIntention() {
-      this.intention = null;
-    };
-
-    _createClass(Container, [{
-      key: 'patchedItems',
-      get: function get() {
-        var items = this.items,
-            intention = this.intention;
-
-        if (!intention) return items;
-
-        var patched = _lodash2.default.reject(items, { id: intention.id });
-        var item = _lodash2.default.find(this.items, { id: intention.id });
-
-        if (item) {
-          patched.push(_extends({}, item, { x: intention.x, y: intention.y }));
-        }
-
-        return patched;
-      }
-    }, {
-      key: 'dndCss',
-      get: function get() {
-        if (!this.dnd) return '';
-        var _dnd = this.dnd,
-            model = _dnd.model,
-            isProcessing = _dnd.isProcessing,
-            canDrop = _dnd.canDrop,
-            isHoveringShallowly = _dnd.isHoveringShallowly;
-
-        if (!isProcessing) return '';
-
-        if (model.type === 'moveItem') return '';
-        var css = '';
-        if (canDrop) {
-          css += 'can-drop';
-        } else {
-          css += 'can-not-drop';
-        }
-        if (isHoveringShallowly) css += ' shallow-hover';
-        return css;
-      }
-    }]);
-
-    return Container;
-  }(), (_applyDecoratedDescriptor(_class2.prototype, 'patchedItems', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'patchedItems'), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, 'dndCss', [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, 'dndCss'), _class2.prototype)), _class2)) || _class);
-});
-define('move-plus-add/index',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Index = exports.Index = function Index() {
-    _classCallCheck(this, Index);
-
-    this.sourceFilenames = ['src/move-plus-add/container.js', 'src/move-plus-add/container.html', 'src/move-plus-add/container.css', 'src/move-plus-add/target-effect.css', 'src/move-plus-add/box.js', 'src/move-plus-add/box.html', 'src/move-plus-add/box.css', 'src/move-plus-add/add-box.js', 'src/move-plus-add/add-box.html', 'src/move-plus-add/add-source.css', 'src/move-plus-add/add-money.js', 'src/move-plus-add/add-money.html'];
-  };
-});
-define('move-plus-add/inline',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Inline = exports.Inline = function Inline() {
-    _classCallCheck(this, Inline);
-
-    this.sourceFilenames = ['src/move-plus-add/container.js', 'src/move-plus-add/container.html', 'src/move-plus-add/container.css', 'src/move-plus-add/target-effect.css', 'src/move-plus-add/box.js', 'src/move-plus-add/box.html', 'src/move-plus-add/box.css', 'src/move-plus-add/add-box.js', 'src/move-plus-add/add-box.html', 'src/move-plus-add/add-source.css', 'src/move-plus-add/add-money.js', 'src/move-plus-add/add-money.html'];
-  };
-});
 define('order-list-with-unknown-item-height/index',['exports'], function (exports) {
   'use strict';
 
@@ -1547,13 +1547,13 @@ define('order-list-with-unknown-item-height/item',['exports', 'aurelia-framework
 
     Item.prototype.dndModel = function dndModel() {
       return {
-        type: 'orderItem',
+        type: 'orderItemFlex',
         id: this.item.id
       };
     };
 
     Item.prototype.dndCanDrop = function dndCanDrop(model) {
-      return model.type === 'orderItem' && model.id !== this.item.id;
+      return model.type === 'orderItemFlex' && model.id !== this.item.id;
     };
 
     Item.prototype.dndDrop = function dndDrop() {};
@@ -1577,7 +1577,7 @@ define('order-list-with-unknown-item-height/item',['exports', 'aurelia-framework
         var item = this.item,
             dndService = this.dndService;
 
-        return dndService.isProcessing && dndService.model.type === 'orderItem' && dndService.model.id === item.id;
+        return dndService.isProcessing && dndService.model.type === 'orderItemFlex' && dndService.model.id === item.id;
       }
     }]);
 
@@ -1698,7 +1698,7 @@ define('order-list-with-unknown-item-height/item2',['exports', 'aurelia-framewor
 
     Item2.prototype.dndModel = function dndModel() {
       return {
-        type: 'orderItem2',
+        type: 'orderItemFlex2',
         id: this.item.id
       };
     };
@@ -1712,7 +1712,7 @@ define('order-list-with-unknown-item-height/item2',['exports', 'aurelia-framewor
     };
 
     Item2.prototype.dndCanDrop = function dndCanDrop(model) {
-      return model.type === 'orderItem2' && model.id !== this.item.id;
+      return model.type === 'orderItemFlex2' && model.id !== this.item.id;
     };
 
     Item2.prototype.dndDrop = function dndDrop() {};
@@ -1736,7 +1736,7 @@ define('order-list-with-unknown-item-height/item2',['exports', 'aurelia-framewor
         var item = this.item,
             dndService = this.dndService;
 
-        return dndService.isProcessing && dndService.model.type === 'orderItem2' && dndService.model.id === item.id;
+        return dndService.isProcessing && dndService.model.type === 'orderItemFlex2' && dndService.model.id === item.id;
       }
     }]);
 
@@ -1856,7 +1856,7 @@ define('order-list-with-unknown-item-height/list-container',['exports', 'aurelia
           model = _dndService.model;
 
       if (!isProcessing) return;
-      if (model.type !== 'orderItem') return;
+      if (model.type !== 'orderItemFlex') return;
 
       var patchedItems = this.patchedItems;
 
@@ -2040,7 +2040,7 @@ define('order-list-with-unknown-item-height/list-container2',['exports', 'aureli
           model = _dndService.model;
 
       if (!isProcessing) return;
-      if (model.type !== 'orderItem2') return;
+      if (model.type !== 'orderItemFlex2') return;
 
       var patchedItems = this.patchedItems;
 
@@ -4143,10 +4143,10 @@ define('text!show-tutorial.html', ['module'], function(module) { module.exports 
 define('text!normalize.css', ['module'], function(module) { module.exports = "/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */\n\n/* Document\n   ========================================================================== */\n\n/**\n * 1. Correct the line height in all browsers.\n * 2. Prevent adjustments of font size after orientation changes in\n *    IE on Windows Phone and in iOS.\n */\n\nhtml {\n  line-height: 1.15; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/* Sections\n   ========================================================================== */\n\n/**\n * Remove the margin in all browsers (opinionated).\n */\n\nbody {\n  margin: 0;\n}\n\n/**\n * Add the correct display in IE 9-.\n */\n\narticle,\naside,\nfooter,\nheader,\nnav,\nsection {\n  display: block;\n}\n\n/**\n * Correct the font size and margin on `h1` elements within `section` and\n * `article` contexts in Chrome, Firefox, and Safari.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n * 1. Add the correct display in IE.\n */\n\nfigcaption,\nfigure,\nmain { /* 1 */\n  display: block;\n}\n\n/**\n * Add the correct margin in IE 8.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * 1. Add the correct box sizing in Firefox.\n * 2. Show the overflow in Edge and IE.\n */\n\nhr {\n  box-sizing: content-box; /* 1 */\n  height: 0; /* 1 */\n  overflow: visible; /* 2 */\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\npre {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * 1. Remove the gray background on active links in IE 10.\n * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.\n */\n\na {\n  background-color: transparent; /* 1 */\n  -webkit-text-decoration-skip: objects; /* 2 */\n}\n\n/**\n * 1. Remove the bottom border in Chrome 57- and Firefox 39-.\n * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n */\n\nabbr[title] {\n  border-bottom: none; /* 1 */\n  text-decoration: underline; /* 2 */\n  text-decoration: underline dotted; /* 2 */\n}\n\n/**\n * Prevent the duplicate application of `bolder` by the next rule in Safari 6.\n */\n\nb,\nstrong {\n  font-weight: inherit;\n}\n\n/**\n * Add the correct font weight in Chrome, Edge, and Safari.\n */\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\ncode,\nkbd,\nsamp {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/**\n * Add the correct font style in Android 4.3-.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Add the correct background and color in IE 9-.\n */\n\nmark {\n  background-color: #ff0;\n  color: #000;\n}\n\n/**\n * Add the correct font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` elements from affecting the line height in\n * all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n */\n\naudio,\nvideo {\n  display: inline-block;\n}\n\n/**\n * Add the correct display in iOS 4-7.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Remove the border on images inside links in IE 10-.\n */\n\nimg {\n  border-style: none;\n}\n\n/**\n * Hide the overflow in IE.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * 1. Change the font styles in all browsers (opinionated).\n * 2. Remove the margin in Firefox and Safari.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: sans-serif; /* 1 */\n  font-size: 100%; /* 1 */\n  line-height: 1.15; /* 1 */\n  margin: 0; /* 2 */\n}\n\n/**\n * Show the overflow in IE.\n * 1. Show the overflow in Edge.\n */\n\nbutton,\ninput { /* 1 */\n  overflow: visible;\n}\n\n/**\n * Remove the inheritance of text transform in Edge, Firefox, and IE.\n * 1. Remove the inheritance of text transform in Firefox.\n */\n\nbutton,\nselect { /* 1 */\n  text-transform: none;\n}\n\n/**\n * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`\n *    controls in Android 4.\n * 2. Correct the inability to style clickable types in iOS and Safari.\n */\n\nbutton,\nhtml [type=\"button\"], /* 1 */\n[type=\"reset\"],\n[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n}\n\n/**\n * Remove the inner border and padding in Firefox.\n */\n\nbutton::-moz-focus-inner,\n[type=\"button\"]::-moz-focus-inner,\n[type=\"reset\"]::-moz-focus-inner,\n[type=\"submit\"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\n\n/**\n * Restore the focus styles unset by the previous rule.\n */\n\nbutton:-moz-focusring,\n[type=\"button\"]:-moz-focusring,\n[type=\"reset\"]:-moz-focusring,\n[type=\"submit\"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\n\n/**\n * Correct the padding in Firefox.\n */\n\nfieldset {\n  padding: 0.35em 0.75em 0.625em;\n}\n\n/**\n * 1. Correct the text wrapping in Edge and IE.\n * 2. Correct the color inheritance from `fieldset` elements in IE.\n * 3. Remove the padding so developers are not caught out when they zero out\n *    `fieldset` elements in all browsers.\n */\n\nlegend {\n  box-sizing: border-box; /* 1 */\n  color: inherit; /* 2 */\n  display: table; /* 1 */\n  max-width: 100%; /* 1 */\n  padding: 0; /* 3 */\n  white-space: normal; /* 1 */\n}\n\n/**\n * 1. Add the correct display in IE 9-.\n * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.\n */\n\nprogress {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Remove the default vertical scrollbar in IE.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * 1. Add the correct box sizing in IE 10-.\n * 2. Remove the padding in IE 10-.\n */\n\n[type=\"checkbox\"],\n[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Correct the cursor style of increment and decrement buttons in Chrome.\n */\n\n[type=\"number\"]::-webkit-inner-spin-button,\n[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Correct the odd appearance in Chrome and Safari.\n * 2. Correct the outline style in Safari.\n */\n\n[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/**\n * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.\n */\n\n[type=\"search\"]::-webkit-search-cancel-button,\n[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * 1. Correct the inability to style clickable types in iOS and Safari.\n * 2. Change font properties to `inherit` in Safari.\n */\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/* Interactive\n   ========================================================================== */\n\n/*\n * Add the correct display in IE 9-.\n * 1. Add the correct display in Edge, IE, and Firefox.\n */\n\ndetails, /* 1 */\nmenu {\n  display: block;\n}\n\n/*\n * Add the correct display in all browsers.\n */\n\nsummary {\n  display: list-item;\n}\n\n/* Scripting\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 9-.\n */\n\ncanvas {\n  display: inline-block;\n}\n\n/**\n * Add the correct display in IE.\n */\n\ntemplate {\n  display: none;\n}\n\n/* Hidden\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 10-.\n */\n\n[hidden] {\n  display: none;\n}"; });
 define('text!draw/canvas-container.html', ['module'], function(module) { module.exports = "<template>\n  <p>Draw\n    <select value.bind=\"selectedType\">\n      <option repeat.for=\"type of drawingTypes\" model.bind=\"type.value\">${type.label}</option>\n    </select>\n  </p>\n\n\n  <svg ref=\"dndElement\" width=\"300\" height=\"300\">\n    <!-- draw border of svg -->\n    <rect\n      x=\"0\"\n      y=\"0\"\n      width=\"300\"\n      height=\"300\"\n      stroke=\"#555\"\n      stroke-width=\"1\"\n      fill=\"transparent\"\n    ></rect>\n\n    <g repeat.for=\"shape of shapes\">\n      <line\n        if.bind=\"shape.type == 'line'\"\n        x1.bind=\"shape.from.x\"\n        y1.bind=\"shape.from.y\"\n        x2.bind=\"shape.to.x\"\n        y2.bind=\"shape.to.y\"\n        stroke=\"#333\"\n      ></line>\n\n      <rect\n        if.bind=\"shape.type == 'rect'\"\n        x.bind=\"shape.x\"\n        y.bind=\"shape.y\"\n        width.bind=\"shape.width\"\n        height.bind=\"shape.height\"\n        stroke=\"#333\"\n        stroke-width=\"1\"\n        fill=\"transparent\"\n      ></rect>\n    </g>\n\n\n    <line\n      if.bind=\"drawingShape.type == 'line'\"\n      x1.bind=\"drawingShape.from.x\"\n      y1.bind=\"drawingShape.from.y\"\n      x2.bind=\"drawingShape.to.x\"\n      y2.bind=\"drawingShape.to.y\"\n      stroke=\"blue\"\n    ></line>\n\n    <rect\n      if.bind=\"drawingShape.type == 'rect'\"\n      x.bind=\"drawingShape.x\"\n      y.bind=\"drawingShape.y\"\n      width.bind=\"drawingShape.width\"\n      height.bind=\"drawingShape.height\"\n      stroke=\"blue\"\n      stroke-width=\"1\"\n      fill=\"transparent\"\n    ></rect>\n  </svg>\n</template>\n"; });
 define('text!move-plus-add/add-source.css', ['module'], function(module) { module.exports = ".example-add-source {\n  display: inline-block;\n  border: 1px solid #555;\n  box-sizing: border-box;\n  padding: 5px;\n  cursor: pointer;\n}\n\n.dollar {\n  display: block;\n  font-size: 2rem;\n  font-weight: bold;\n  width: auto;\n  height: auto;\n}\n\n.dollar:before {\n  content: '$';\n}\n\n/* overwrite default style of dnd preview */\n.bcx-dnd-preview.dollar {\n  opacity: 1;\n  box-shadow: none;\n}\n"; });
-define('text!draw/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./canvas-container\"></require>\n\n  <div class=\"doc-demo\">\n    <canvas-container></canvas-container>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!move-plus-add/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!move-plus-add/add-box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./add-source.css\"></require>\n  <div ref=\"dndElement\" class=\"example-add-source\">\n    Add Box\n  </div>\n</template>"; });
+define('text!draw/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./canvas-container\"></require>\n\n  <div class=\"doc-demo\">\n    <canvas-container></canvas-container>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!move-plus-add/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
+define('text!move-plus-add/add-box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./add-source.css\"></require>\n  <div ref=\"dndElement\" class=\"example-add-source\">\n    Add Box\n  </div>\n</template>"; });
 define('text!move-plus-add/add-money.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./add-source.css\"></require>\n  <div ref=\"dndElement\" class=\"example-add-source\">\n    Add money\n  </div>\n</template>\n"; });
 define('text!move-plus-add/target-effect.css', ['module'], function(module) { module.exports = ".can-drop, .example-box.can-drop {\n  background-color: lightgreen;\n}\n\n.can-drop.shallow-hover {\n  outline: 3px solid green;\n}\n\n.can-not-drop, .example-box.can-not-drop {\n  background-color: lightgrey;\n}"; });
 define('text!move-plus-add/box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./box.css\"></require>\n  <require from=\"./target-effect.css\"></require>\n\n  <div\n    ref=\"dndElement\"\n    class=\"example-box ${dndCss}\"\n    style.bind=\"positionCss\"\n  >\n    $${item.dollars}\n  </div>\n</template>"; });
@@ -4160,37 +4160,37 @@ define('text!order-list-with-unknown-item-height/list-container.css', ['module']
 define('text!order-list-with-fixed-item-height/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!order-table/table-container.css', ['module'], function(module) { module.exports = "table.table-container {\n  width: 100%;\n  background-color: white;\n  border-spacing: 0;\n}\n\ntable.table-container tr th {\n  border-bottom: 2px solid #555;\n}\n\ntable.table-container tr td {\n  border-bottom: 1px solid #555;\n}\n\ntable.table-container tr th,\ntable.table-container tr td {\n  text-align: left;\n  padding: 0.5rem;\n}\n\ntable.table-container tr.dragging td {\n  background-color: lightgrey;\n  color: lightgrey;\n}\n"; });
 define('text!order-list-with-fixed-item-height/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
-define('text!simple-move-hover-no-preview/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-fixed-item-height/item.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <span show.bind=\"!draggingMe\">${item}</span>\n</template>\n"; });
-define('text!simple-move-hover-no-preview/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!order-list-with-fixed-item-height/item2.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <span show.bind=\"!draggingMe\">#${item.id} ${item.value}</span>\n</template>\n"; });
 define('text!simple-move/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-fixed-item-height/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <p>Array of strings</p>\n\n  <div ref=\"dndElement\" class=\"list-container\">\n    <item repeat.for=\"item of patchedItems\" item.bind=\"item\"></item>\n  </div>\n</template>\n"; });
 define('text!simple-move/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!order-list-with-fixed-item-height/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item2\"></require>\n\n  <p>Array of objects</p>\n\n  <div ref=\"dndElement\" class=\"list-container\">\n    <item2 repeat.for=\"item of patchedItems\" item.bind=\"item\"></item2>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height/item.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <span show.bind=\"!draggingMe\">${item}</span>\n</template>\n"; });
+define('text!simple-move-hover-no-preview/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
+define('text!order-list-with-fixed-item-height/item2.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <span show.bind=\"!draggingMe\">#${item.id} ${item.value}</span>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <p>Array of strings</p>\n\n  <div ref=\"dndElement\" class=\"list-container\">\n    <item repeat.for=\"item of patchedItems\" item.bind=\"item\"></item>\n  </div>\n</template>\n"; });
+define('text!simple-move-hover-no-preview/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
 define('text!simple-move-hover-no-preview-with-clock/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-unknown-item-height/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview-with-clock/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!order-list-with-unknown-item-height/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-step-1/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-unknown-item-height/item.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });
 define('text!simple-move-step-1/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!order-list-with-unknown-item-height/item2.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item has-handler ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n  <div class=\"handler\" ref=\"handler\" show.bind=\"!draggingMe\"></div>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });
 define('text!simple-move-step-2/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-unknown-item-height/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <p>Item is draggable</p>\n  <ul ref=\"dndElement\" class=\"list-container\">\n    <li as-element=\"item\" repeat.for=\"item of patchedItems\" item.bind=\"item\" update-intention.call=\"updateIntention(targetId, beforeTarget)\"></li>\n  </ul>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item2\"></require>\n\n  <p>Array of objects</p>\n\n  <div ref=\"dndElement\" class=\"list-container\">\n    <item2 repeat.for=\"item of patchedItems\" item.bind=\"item\"></item2>\n  </div>\n</template>\n"; });
 define('text!simple-move-step-2/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
+define('text!order-list-with-unknown-item-height/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
+define('text!order-list-with-unknown-item-height/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-unknown-item-height/item.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });
+define('text!order-list-with-unknown-item-height/item2.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item has-handler ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n  <div class=\"handler\" ref=\"handler\" show.bind=\"!draggingMe\"></div>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });
+define('text!order-list-with-unknown-item-height/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <p>Item is draggable</p>\n  <ul ref=\"dndElement\" class=\"list-container\">\n    <li as-element=\"item\" repeat.for=\"item of patchedItems\" item.bind=\"item\" update-intention.call=\"updateIntention(targetId, beforeTarget)\"></li>\n  </ul>\n</template>\n"; });
 define('text!order-list-with-unknown-item-height/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item2\"></require>\n\n  <p>With special drag handler</p>\n  <ul ref=\"dndElement\" class=\"list-container\">\n    <li as-element=\"item2\" repeat.for=\"item of patchedItems\" item.bind=\"item\" update-intention.call=\"updateIntention(targetId, beforeTarget)\"></li>\n  </ul>\n</template>\n"; });
 define('text!order-table/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container\"></require>\n\n  <div class=\"doc-demo\">\n    <table-container></table-container>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!order-table/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <div style=\"width: 300px; height: 300px;\">\n        <table-container></table-container>\n      </div>\n    </div>\n    <div class=\"inline-demo-source-code\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!order-table/item.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"${draggingMe ? 'dragging' : ''}\">\n  <!-- remember you cannot do <require> css inside a tr, this is a limitation of DOM standard, not Aurelia's fault -->\n\n  <!-- we use css \"table.table-container tr.dragging td\" to hide context -->\n  <td>${item.name}</td>\n  <td>${item.age}</td>\n</template>\n"; });
 define('text!order-table/table-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <table class=\"table-container\">\n    <thead>\n      <tr>\n        <th>Name</th>\n        <th>Age</th>\n      </tr>\n    </thead>\n    <tbody ref=\"dndElement\">\n      <tr as-element=\"item\" repeat.for=\"item of patchedItems\" item.bind=\"item\"></tr>\n    </tbody>\n  </table>\n</template>\n"; });
-define('text!simple-move-hover-no-preview/box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./box.css\"></require>\n\n  <div\n    ref=\"dndElement\"\n    class=\"example-box\"\n    style.bind=\"positionCss\"\n  >\n    ${item.name}\n  </div>\n</template>"; });
-define('text!simple-move-hover-no-preview/container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container.css\"></require>\n  <require from=\"./box\"></require>\n\n  <div ref=\"dndElement\" class=\"example-container\">\n    <box repeat.for=\"item of patchedItems\" item.bind=\"item\"></box>\n  </div>\n</template>\n"; });
-define('text!simple-move-hover-no-preview/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"doc-demo\">\n    <container></container>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!simple-move/box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./box.css\"></require>\n\n  <div\n    ref=\"dndElement\"\n    class=\"example-box\"\n    style.bind=\"positionCss\"\n    show.bind=\"!draggingMe\"\n  >\n    ${item.name}\n  </div>\n</template>"; });
 define('text!simple-move/container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container.css\"></require>\n  <require from=\"./box\"></require>\n\n  <div ref=\"dndElement\" class=\"example-container\">\n    <box repeat.for=\"item of items\" item.bind=\"item\"></box>\n  </div>\n</template>\n"; });
 define('text!simple-move/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"doc-demo\">\n    <container></container>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!simple-move/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <container></container>\n    </div>\n    <div class=\"inline-demo-source-code\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
+define('text!simple-move-hover-no-preview/box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./box.css\"></require>\n\n  <div\n    ref=\"dndElement\"\n    class=\"example-box\"\n    style.bind=\"positionCss\"\n  >\n    ${item.name}\n  </div>\n</template>"; });
+define('text!simple-move-hover-no-preview/container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container.css\"></require>\n  <require from=\"./box\"></require>\n\n  <div ref=\"dndElement\" class=\"example-container\">\n    <box repeat.for=\"item of patchedItems\" item.bind=\"item\"></box>\n  </div>\n</template>\n"; });
+define('text!simple-move-hover-no-preview/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"doc-demo\">\n    <container></container>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview-with-clock/box.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./box.css\"></require>\n\n  <div\n    ref=\"dndElement\"\n    class=\"example-box\"\n    style.bind=\"positionCss\"\n  >\n    ${item.name}<br>${clock}\n  </div>\n</template>"; });
 define('text!simple-move-hover-no-preview-with-clock/container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container.css\"></require>\n  <require from=\"./box\"></require>\n\n  <div ref=\"dndElement\" class=\"example-container\">\n    <box repeat.for=\"item of patchedItems\" item.bind=\"item\"></box>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview-with-clock/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <container></container>\n    </div>\n    <div class=\"inline-demo-source-code\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });

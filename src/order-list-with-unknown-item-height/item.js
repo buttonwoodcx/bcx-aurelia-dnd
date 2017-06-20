@@ -22,14 +22,14 @@ export class Item {
 
   dndModel() {
     return {
-      type: 'orderItem',
+      type: 'orderItemFlex',
       id: this.item.id
     };
   }
 
   // set canDrop true to receive dndHover, but do nothing in dndDrop
   dndCanDrop(model) {
-    return model.type === 'orderItem' && model.id !== this.item.id;
+    return model.type === 'orderItemFlex' && model.id !== this.item.id;
   }
 
   // no-op
@@ -54,7 +54,7 @@ export class Item {
   get draggingMe() {
     const {item, dndService} = this;
     return dndService.isProcessing &&
-           dndService.model.type === 'orderItem' &&
+           dndService.model.type === 'orderItemFlex' &&
            dndService.model.id === item.id;
   }
 }

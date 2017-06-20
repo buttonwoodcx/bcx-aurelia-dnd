@@ -18,7 +18,7 @@ For the target delegate (container),
 During a DnD session, `DndService` publishes four events you can subscribe to.
 
 * __dnd:willStart__, just before starting of DnD session, all `isProcessing`, `model`, `isHovering` ... are still `undefined`.
-* __dnd:didStart__, just after starting of DnD session, all `isProcessing`, `model`, `isHovering` ... are been set. But none of any targets received `dndHover()`/`dndDrop()` callback.
+* __dnd:didStart__, just after starting of DnD session, all `isProcessing`, `model`, `isHovering` ... are been set. But none of any targets received `dndHover()` / `dndDrop()` callback.
 * __dnd:willEnd__, just before end of a DnD session, all `isProcessing`, `model`, `isHovering` ... are still been set. Just before a target (if there is valid one with canDrop:true under the mouse) receives `dndDrop()` callback.
 * __dnd:didEnd__, after a DnD session finished. all `isProcessing`, `model`, ... are set to `undefined`. Final `dndDrop()` callback has been fired if there is a valid target.
 

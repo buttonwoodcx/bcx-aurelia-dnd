@@ -75,11 +75,11 @@ When a drag started, `DndService` got a model from source element (`dndModel()`)
 Only when `canDrop` is true, the target delegate have chance of receiving `dndDrop(location)`. In it, we got the `dnd.model.item`. You also got some location information passed as argument.
 
 There are few objects in location payload.
-* __location.mouseStartAt__, drag start location {x, y} (not {left, top})
-* __location.mouseEndAt__, drop end location {x, y}
-* __location.sourceElementRect__, source element location and size {x, y, width, height}
-* __location.previewElementRect__, preview element location and size {x, y, width, height}
-* __location.targetElementRect__, target element location and size {x, y, width, height}
+* __location.mouseStartAt__, drag start mouse location {x, y} (not {left, top}).
+* __location.mouseEndAt__, drop end mouse location {x, y} for `dndDrop()`, or current mouse location for `dndHover()`.
+* __location.sourceElementRect__, source element location and size {x, y, width, height}.
+* __location.previewElementRect__, preview element location and size {x, y, width, height}.
+* __location.targetElementRect__, target element location and size {x, y, width, height}.
 
 > All `x` and `y`, are page offset (relative to whole HTML body), not client offset (relative to browser current view-port). Page offset is more stable to use than client offset, especially when there is scrolling or browser zooming.
 

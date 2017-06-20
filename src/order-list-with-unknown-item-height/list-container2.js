@@ -37,7 +37,7 @@ export class ListContainer2 {
   updateIntention(targetId, beforeTarget) {
     const {isProcessing, model} = this.dndService;
     if (!isProcessing) return;
-    if (model.type !== 'orderItem2') return;
+    if (model.type !== 'orderItemFlex2') return;
 
     const {patchedItems} = this;
     const targetIndex = _.findIndex(patchedItems, {id: targetId});

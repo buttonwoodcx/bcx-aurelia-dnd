@@ -95,49 +95,49 @@ export class App {
       },
       {
         route: 'simple', name: 'simple',
-        title: 'Move object',
+        title: '1. Move object',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'simple-move/index'
       },
       {
         route: 'simple-move-hover-no-preview', name: 'simple-move-hover-no-preview',
-        title: 'Move object, no preview, use dndHover',
+        title: '2. Move object, no preview, use dndHover',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'simple-move-hover-no-preview/index'
       },
       {
         route: 'move-plus-add', name: 'move-plus-add',
-        title: 'Move object, add object, customize preview',
+        title: '3. Move object, add object, customize preview',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'move-plus-add/index'
       },
       {
         route: 'draw', name: 'draw',
-        title: 'Draw object',
+        title: '4. Draw object',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'draw/index'
       },
       {
         route: 'order-simple', name: 'order-simple',
-        title: 'Re-order list with fixed item height',
+        title: '5. Re-order list with fixed item height',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-list-with-fixed-item-height/index'
       },
       {
         route: 'order-flex', name: 'order-flex',
-        title: 'Re-order list with unknown item height',
+        title: '6. Re-order list with unknown item height',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-list-with-unknown-item-height/index'
       },
       {
         route: 'order-table', name: 'order-table',
-        title: 'Customize preview for <tr>',
+        title: '7. Customize preview for <tr>',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-table/index'

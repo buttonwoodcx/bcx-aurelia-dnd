@@ -26,7 +26,7 @@ const dndService = new DndService(sharedEa);
 
 > `dnd:willStart`, just before starting of DnD session, all `isProcessing`, `model`, `isHovering` ... are still `undefined`.
 
-> `dnd:didStart`, just after starting of DnD session, all `isProcessing`, `model`, `isHovering` ... are been set. But none of any targets received `dndHover()`/`dndDrop()` callback.
+> `dnd:didStart`, just after starting of DnD session, all `isProcessing`, `model`, `isHovering` ... are been set. But none of any targets received `dndHover()` / `dndDrop()` callback.
 
 > `dnd:willEnd`, just before end of a DnD session, all `isProcessing`, `model`, `isHovering` ... are still been set. Just before a target (if there is valid one with canDrop:true under the mouse) receives `dndDrop()` callback.
 
@@ -105,15 +105,15 @@ const dndService = new DndService(sharedEa);
 
 #### Location payload for dndHover(location) and dndDrop(location)
 
-> `location.mouseStartAt`, drag start location {x, y} (not {left, top})
+> `location.mouseStartAt`, drag start mouse location {x, y} (not {left, top}).
 
-> `location.mouseEndAt`, drop end location {x, y}
+> `location.mouseEndAt`, drop end mouse location {x, y} for `dndDrop()`, or current mouse location for `dndHover()`.
 
-> `location.sourceElementRect`, source element location and size {x, y, width, height}
+> `location.sourceElementRect`, source element location and size {x, y, width, height}.
 
-> `location.previewElementRect`, preview element location and size {x, y, width, height}
+> `location.previewElementRect`, preview element location and size {x, y, width, height}.
 
-> `location.targetElementRect`, target element location and size {x, y, width, height}
+> `location.targetElementRect`, target element location and size {x, y, width, height}.
 
 > All `x` and `y`, are page offset (relative to whole HTML body), not client offset (relative to browser current view-port). Page offset is more stable to use than client offset, especially when there is scrolling or browser zooming.
 

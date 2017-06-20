@@ -82,6 +82,18 @@ export class App {
         moduleId: 'show-tutorial'
       },
       {
+        route: 'dnd-service-reference', name: 'dnd-service-reference',
+        title: 'DndService',
+        nav: true,
+        settings: {
+          section: 'reference',
+          trunks: [
+            'tutorial/dnd-service-reference.md'
+          ]
+        },
+        moduleId: 'show-tutorial'
+      },
+      {
         route: 'simple', name: 'simple',
         title: 'Move object',
         nav: true,

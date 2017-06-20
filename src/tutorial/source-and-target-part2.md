@@ -81,11 +81,11 @@ There are few objects in location payload.
 * __location.previewElementRect__, preview element location and size {x, y, width, height}
 * __location.targetElementRect__, target element location and size {x, y, width, height}
 
-> Because all `x` and `y`, are page offset (relative to whole HTML body), not client offset (relative to browser current view-port). Page offset is more stable to use than client offset, especially when there is scrolling or browser zooming.
+> All `x` and `y`, are page offset (relative to whole HTML body), not client offset (relative to browser current view-port). Page offset is more stable to use than client offset, especially when there is scrolling or browser zooming.
 
 > For convenience, `previewElementRect` always presents. Even if you turn off the preview (you will see that in [customize preview](#/customize-preview-and-hover)), it still reports location and size as if you were using default preview.
 
-Be ware, `sourceElementRect` is not current location of source element. It is a cached location for the source element when DnD session was started.
+Beware, `sourceElementRect` is not current location of source element. It is a cached location for the source element when DnD session started.
 
 The reason behind this, is that `DndService` doesn't retain the source delegate/element during a DnD session. Even when the source was removed by `removeSource(...)` during a DnD session, `DndService` would not care. `DndService` gets the dnd model, and caches source element location at start of a DnD session, that's the only time it ever uses that source delegate/element.
 

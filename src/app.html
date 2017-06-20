@@ -15,6 +15,14 @@
       href.bind="row.href"
     >${row.title}</a>
 
+    <h4><em>API Reference</em></h4>
+
+    <a
+      repeat.for="row of router.navigation | navSection:'reference'"
+      class="link ${row.isActive ? 'active' : ''}"
+      href.bind="row.href"
+    >${row.title}</a>
+
     <h4><em>Examples</em></h4>
 
     <a

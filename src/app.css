@@ -150,6 +150,11 @@ mark-down blockquote p {
 
 mark-down code, mark-down pre {
   background-color: #eee;
+  border-radius: 2px;
+}
+
+mark-down blockquote code {
+  background-color: white;
 }
 
 mark-down pre {

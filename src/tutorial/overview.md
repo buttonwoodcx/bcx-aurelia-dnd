@@ -13,7 +13,7 @@ au run --watch
 
 ## Why bcx-aurelia-dnd was created
 
-When [Aurelia](http://aurelia.io) released v1.0.0 in July 2016, we quickly decided to convert our [Buttonwood Broker](http://www.buttonwood.com.au/products/cloud-broker/cloud-broker/) front-end from React to Aurelia. The whole conversion only took us (one front-end developer, actually) less than three weeks, which tells you how easy Aurelia is.
+When [Aurelia](http://aurelia.io) released v1.0.0 in July 2016, we quickly decided to convert our [Buttonwood Cloud Broker](http://www.buttonwood.com.au/products/cloud-broker/cloud-broker/) front-end from React to Aurelia. The whole conversion only took us (one front-end developer, actually) less than three weeks, which tells you how easy Aurelia is.
 
 One obstacle of the re-write is missing drag-and-drop library for our blueprint composer. Previously we were using [React Dnd](http://react-dnd.github.io/react-dnd/), but there is no equivalent in Aurelia. There are plenty DOM based dnd libraries in JavaScript world, [dragula](https://bevacqua.github.io/dragula/) is the best in our eyes. We copied dragula code, removed all its DOM mutation code (we don't need that in Aurelia), wrote interface for it to talk with controller layer of MVC, made a working dnd library in one day. `bcx-aurelia-dnd` source code is largely unchanged since that first implementation.
 

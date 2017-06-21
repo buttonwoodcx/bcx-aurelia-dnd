@@ -76,7 +76,9 @@ export class App {
         settings: {
           section: 'tutorial',
           trunks: [
-            'tutorial/testing.md'
+            'tutorial/testing-part1.md',
+            'tutorial/test-example',
+            'tutorial/testing-part2.md'
           ]
         },
         moduleId: 'show-tutorial'

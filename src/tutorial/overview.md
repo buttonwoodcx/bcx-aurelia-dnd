@@ -1,9 +1,5 @@
 # bcx-aurelia-dnd
 
-[BUTTONWOODCX™ PTY LTD](http://www.buttonwood.com.au).
-
-Documentation in progress, view [examples](#simple) for now.
-
 First, If you want to play with the source code of included examples.
 
 ```
@@ -56,3 +52,5 @@ export class YourComponent {
 > Here we rely on default behavior of Aurelia DI (dependency injection). Aurelia DI creates a singleton `dndService` instance for all components to share.
 
 That's all you need to bring `DndService` to an Aurelia component. There is no step to set it up as plugin. Now let's get started to add [source and target](#/source-and-target).
+
+[BUTTONWOODCX™ PTY LTD](http://www.buttonwood.com.au).

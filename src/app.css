@@ -67,7 +67,7 @@ a.link.active {
   left: 200px;
   bottom: 0;
   right: 0;
-  padding: 10px;
+  padding: 1rem 2rem;
   overflow-x: hidden;
   overflow-y: auto;
 }

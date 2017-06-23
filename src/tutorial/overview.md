@@ -11,11 +11,11 @@ npm install # or yarn install
 au run --watch
 ```
 
-## Why bcx-aurelia-dnd was created
+## How bcx-aurelia-dnd was created
 
 When [Aurelia](http://aurelia.io) released v1.0.0 in July 2016, we quickly decided to convert our [Buttonwood Cloud Broker](http://www.buttonwood.com.au/products/cloud-broker/cloud-broker/) front-end from React to Aurelia. The whole conversion only took us (one front-end developer, actually) less than three weeks, which tells you how easy Aurelia is.
 
-One obstacle of the re-write is missing drag-and-drop library for our blueprint composer. Previously we were using [React Dnd](http://react-dnd.github.io/react-dnd/), but there is no equivalent in Aurelia. There are plenty DOM based dnd libraries in JavaScript world, [dragula](https://bevacqua.github.io/dragula/) is the best in our eyes. We copied dragula code, removed all its DOM mutation code (we don't need that in Aurelia), wrote interface for it to talk with controller layer of MVC, made a working dnd library in one day. `bcx-aurelia-dnd` source code is largely unchanged since that first implementation.
+One obstacle of the re-write is missing drag-and-drop library for our blueprint composer. Previously we were using [React DnD](http://react-dnd.github.io/react-dnd/), but there is no equivalent in Aurelia. There are plenty DOM based DnD libraries in JavaScript world, [dragula](https://bevacqua.github.io/dragula/) is the best in our eyes. We copied dragula code, removed all its DOM mutation code (we don't need that in Aurelia), wrote interface for it to talk with controller layer of MVC, made a working DnD library in one day. `bcx-aurelia-dnd` source code is largely unchanged since that first implementation.
 
 Thanks for Aurelia, `bcx-aurelia-dnd` implementation is very simple. As in v0.2.1, the source code is less than 600 lines of JavaScript, even most of it were copied from dragula to handle events and styling. As always, similar to most libraries, the [source code](https://github.com/buttonwoodcx/bcx-aurelia-dnd) is way shorter than documentation. Pick one to read on :-)
 
@@ -25,7 +25,7 @@ Thanks for Aurelia, `bcx-aurelia-dnd` implementation is very simple. As in v0.2.
 
 Another bonus of dragula, it supports iPad! All examples here works on iPad.
 
-> There is an annoying whole HTML body bouncing effect on iPad. I tried some solutions to disable it in this example repository, but none of them works so far. Even [dragula example page](https://bevacqua.github.io/dragula/) got the same issue.
+> There is an annoying whole HTML body bouncing effect on iPad. I tried some solutions to disable it, but none of them works so far. Even [dragula example page](https://bevacqua.github.io/dragula/) got the same issue.
 
 ## Use inside Aurelia app
 
@@ -33,9 +33,9 @@ To start with your Aurelia app.
 
 * For [aurelia-cli](https://github.com/aurelia/cli) user, just do `au install bcx-aurelia-dnd`.
 * For app built with jspm/webpack, just install npm package `npm install --save bcx-aurelia-dnd` and add it to your module config file if needed. `bcx-aurelia-dnd` is compiled in umd format (support both AMD and commonjs loader), you should have no trouble to get it working.
-* For Typescript user, there is no `.d.ts` file now. We will add the type definition file in future.
+* For TypeScript user, there is no `.d.ts` file now. We will add the type definition file in future.
 
-There is a single class `DndService` provided by `bcx-aurelia-dnd`. Inject it in your component.
+There is a single class `DndService` provided by `bcx-aurelia-dnd`. Inject it to your component.
 
 ```javascript
 import {inject} from 'aurelia-framework';

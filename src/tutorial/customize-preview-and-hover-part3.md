@@ -1,6 +1,6 @@
 For "Add Box" and "Add money" buttons, we use `dndPreview()` to customize preview.
 
-> In customized preview mode, `DndService` only sets `left` and `top` on the preview element, not `width` or `height`. Your preview element needs a reasonable size, at least not `{width: 100%; height: 100%;}`.
+> In customized preview mode, `DndService` only sets `left` and `top` on the preview element, not `width` or `height`. You need to provide the preview element a reasonable size, at least not `{width: 100%; height: 100%;}`.
 
 > By default, preview is aligned to source element's top left corner.
 
@@ -14,7 +14,7 @@ There is one more option you can pass to `addSource()`, that is `hideCursor`, wh
 
 ## Style target element based on DnD state
 
-In the above example code, both boxes and container are dnd targets. They got background color and outline change during a DnD session for "add box" or "add money".
+In the above example code, both boxes and container are DnD targets. They got background color and outline change during a DnD session for "add box" or "add money".
 
 Let's have a look on the implementation of box's property `dndCss`.
 

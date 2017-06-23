@@ -2,7 +2,7 @@
 
 > Fix preview width/height if needed. Beware the difference between jquery `$(el).width()` and `$(el).css('width')`, the previous one always returns the content width, regardless of the value of the CSS `box-sizing` property.
 
-> You can use this technique not only on `<tr>` tag, but also anything else. Refactor your years old css code to fit `bcx-aurelia-dnd` might be too much work, customized preview is way more easier and flexible.
+> You can use this technique not only on `<tr>` tag, but also anything else. Refactor your years old css code to fit `bcx-aurelia-dnd` might be too much work, customized preview can help.
 
 That concludes all features of `bcx-aurelia-dnd`.
 

@@ -1,6 +1,6 @@
 ## How preview was drawn
 
-Before we go onto target definition, let's have a look that happened with the preview when you drag a box.
+Before we go onto target definition, let's have a look what happened with the preview when you drag a box.
 
 If using native HTML5 DnD API, the preview would be provided by browser automatically, you have little control of its appearance. Instead, as copied from dragula, `DndService` draws the preview "image" by creating a DOM element.
 
@@ -21,7 +21,7 @@ If using native HTML5 DnD API, the preview would be provided by browser automati
 
 > Be clear, preview element lives outside of Aurelia. It's a static snapshot of source element.
 
-> Because preview is directly under HTML body, you need to make sure source element's css class works directly under body. If you strict the source element's css like `.example-container .example-box {...}`, the preview with class `.example-box` would not look right when `.example-container` is absent.
+> Because preview is directly under HTML body, you need to make sure source element's css class works directly under body. If you strict the source element's css like `.example-container .example-box {...}`, the preview with class `.example-box` would not look right when `.example-container` is absent. If refactoring your css to fit `bcx-aurelia-dnd` is too much work, you can also [customize preview](#/customize-preview-and-hover).
 
 > `bcx-aurelia-dnd` style sheet (for `.bcx-dnd-preview` and others) was injected to top of HTML head. You can overwrite them in your style sheet, for instance, overwrite the `opacity` and `box-shadow` on `.bcx-dnd-preview`. You can also apply special style to one type of your preview with `.bcx-dnd-preview.example-box {...}`. Comparing to native HTML5 DnD API, we have much better control on preview.
 

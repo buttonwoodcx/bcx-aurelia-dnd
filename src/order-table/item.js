@@ -1,5 +1,6 @@
 import {inject, bindable, computedFrom} from 'aurelia-framework';
 import {DndService} from 'bcx-aurelia-dnd';
+import $ from 'jquery';
 
 @inject(DndService)
 export class Item {

@@ -16,5 +16,4 @@ export class DisplaySource {
     this.fileContent = null;
     require([`text!../${this.filename}`], content => this.fileContent = content);
   }
-
 }

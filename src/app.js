@@ -150,5 +150,4 @@ export class App {
       }
     ]);
   }
-
 }

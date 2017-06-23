@@ -4,7 +4,6 @@ import $ from 'jquery';
 
 @inject(DndService)
 export class AddMoney {
-
   constructor(dndService) {
     this.dndService = dndService;
   }
@@ -30,5 +29,4 @@ export class AddMoney {
 
     return jq.get(0);
   }
-
 }

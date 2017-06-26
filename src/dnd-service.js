@@ -233,6 +233,15 @@ export class DndSource {
       this.element = delegate.dndElement;
     }
 
+    if (options.handler) {
+      if (! (options.handler instanceof _global.Element)) {
+        throw new Error("specified handler is not a DOM element");
+      }
+      this.handler = options.handler;
+    } else {
+      this.handler = this.element;
+    }
+
     if (! (this.element instanceof _global.Element)) {
       throw new Error("Missing dndElement or options.element on dnd source delegate.");
     }
@@ -288,6 +297,18 @@ function indexOfElementOrDelegate(array, delegateOrElement) {
   const test = (delegateOrElement instanceof _global.Element) ?
                (o => o.element === delegateOrElement) :
                (o => o.delegate === delegateOrElement);
+
+  const len = array.length;
+
+  for (let i = 0; i < len; i += 1) {
+    if (test(array[i])) return i;
+  };
+
+  return -1; // nothing found
+}
+
+function indexOfHandler(array, handler) {
+  const test = (o => o.handler === handler);
 
   const len = array.length;
 
@@ -357,7 +378,7 @@ export class DndService {
   }
 
   _sourceOf(element) {
-    const idx = indexOfElementOrDelegate(this.dndSources, element);
+    const idx = indexOfHandler(this.dndSources, element);
     return idx >= 0 ? this.dndSources[idx] : undefined;
   }
 

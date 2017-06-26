@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2 - 26/Jun/2017
+
+  * add optional option `handler` for dndSource.
+
 ## 0.2.1 - 17/Jun/2017
 
   * support dynamic target added during a dnd session.

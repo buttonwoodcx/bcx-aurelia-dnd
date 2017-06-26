@@ -61,6 +61,8 @@ const dndService = new DndService(sharedEa);
 
 > `options.element`, manually pass a DOM element as source element, instead of default `delegate.dndElement`.
 
+> `options.handler`, a DOM element as drag handler. It should be a decedent of source element. It limits where drag can start, doesn't affect preview.
+
 > `options.noPreview`, turn off preview.
 
 > `options.hideCursor`, hide cursor during a DnD session.

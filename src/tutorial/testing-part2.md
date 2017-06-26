@@ -12,6 +12,4 @@ Read either [dragula](https://bevacqua.github.io/dragula/) or [bcx-aurelia-dnd](
 
 `bcx-aurelia-dnd` listens mouse/touch events at top HTML document level. For most of your mouse event simulation, it doesn't matter what's the `event.target`. But `event.target` does matter for your first mouse event simulation, the `'mousedown'` event that starts a DnD session.
 
-The first `'mousedown'` `event.target` must be your intended source element (or its child element), `DndService` needs this information to find a matching DnD source delegate.
-
-> In [Buttonwood Cloud Broker](http://www.buttonwood.com.au/products/cloud-broker/cloud-broker/), we do not do view level test yet. At this stage, it's too much work for us to cover our ever changing layout and style. We only covers pure JS code, to give us at least the confidence on logic layer.
+The first `'mousedown'` `event.target` must be your intended source/handler(if defined) element (or its child element), `DndService` needs this information to find a matching DnD source delegate.

@@ -48,7 +48,9 @@ export class App {
             'move-plus-add/inline',
             'tutorial/customize-preview-and-hover-part3.md',
             'order-table/inline',
-            'tutorial/customize-preview-and-hover-part4.md'
+            'tutorial/customize-preview-and-hover-part4.md',
+            'order-table-with-handler/inline',
+            'tutorial/customize-preview-and-hover-part5.md'
           ]
         },
         moduleId: 'show-tutorial'
@@ -143,6 +145,13 @@ export class App {
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-table/index'
+      },
+      {
+        route: 'order-table-with-handler', name: 'order-table-with-handler',
+        title: '8. Customize preview for <tr> with handler',
+        nav: true,
+        settings: {section: 'examples'},
+        moduleId: 'order-table-with-handler/index'
       },
       {
         route: '',

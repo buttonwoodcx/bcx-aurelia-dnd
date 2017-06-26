@@ -4,6 +4,12 @@
 
 > You can use this technique not only on `<tr>` tag, but also anything else. Refactor your years old css code to fit `bcx-aurelia-dnd` might be too much work, customized preview can help.
 
-That concludes all features of `bcx-aurelia-dnd`.
+## Optional source handler
 
-Next, let's look at a common usage of DnD, already showed in the above `<tr>` example, [re-order a list](#/re-order-list)
+There is one more option for `addSource()`, you can pass a `handler` element in options. `handler` should be an DOM element within source element, it only limits where the drag can start, doesn't affect how preview was drawn.
+
+> Default preview still clones source element, not handler element.
+
+> Preview still aligns to source element, not handler element.
+
+Here is an example for using special handler for reordering a table.

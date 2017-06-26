@@ -12,12 +12,12 @@ export class Item2 {
   }
 
   attached() {
-    this.dndService.addSource(this, {element: this.handler});
+    this.dndService.addSource(this, {handler: this.handler});
     this.dndService.addTarget(this);
   }
 
   detached() {
-    this.dndService.removeSource(this); // or this.dndService.removeSource(this.handler);
+    this.dndService.removeSource(this);
     this.dndService.removeTarget(this);
   }
 
@@ -26,16 +26,6 @@ export class Item2 {
       type: 'orderItemFlex2',
       id: this.item.id
     };
-  }
-
-  // default preview only clone the handler.
-  // we need more than handle in preview.
-  dndPreview() {
-    const fullEl = $(this.dndElement);
-    const jq = fullEl.clone();
-    jq.css('width', fullEl.css('width'));
-    jq.css('height', fullEl.css('height'));
-    return jq.get(0);
   }
 
   // set canDrop true to receive dndHover, but do nothing in dndDrop

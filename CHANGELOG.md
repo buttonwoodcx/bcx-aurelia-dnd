@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3 - 27/Jun/2017
+
+  * add body margin 0 as css safe guard.
+
 ## 0.2.2 - 26/Jun/2017
 
   * add optional option `handler` for dndSource.

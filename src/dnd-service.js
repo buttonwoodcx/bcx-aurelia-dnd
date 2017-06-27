@@ -33,6 +33,15 @@ const documentElement = doc && doc.documentElement;
 const css = `
 /* bcx-aurelia-dnd styles */
 
+/*
+bcx-aurelia-dnd relies on body margin 0.
+Your css stack should have done this.
+Added here as safe guard.
+*/
+body {
+  margin: 0;
+}
+
 .bcx-dnd-preview {
   position: absolute !important;
   margin: 0 !important;

@@ -18,11 +18,6 @@ node.innerHTML = `
 node.type = 'text/css';
 doc.head.appendChild(node);
 
-// fix sizing.
-const jBody = $('body');
-jBody.css('margin', '0');
-jBody.css('padding', '0');
-
 const ea = new EventAggregator();
 const dndService = new DndService(ea);
 

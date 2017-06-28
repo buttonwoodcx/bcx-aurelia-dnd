@@ -14,15 +14,15 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 200px;
+  width: 250px;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #eee;
   padding: 5px;
 }
 
-.doc-navigation .title {
-  font-weight: bold;
+.doc-navigation .proj-title {
+  font-style: italic;
   margin-top: 10px;
 }
 
@@ -64,7 +64,7 @@ a.link.active {
 .doc-content {
   position: absolute;
   top: 0;
-  left: 200px;
+  left: 250px;
   bottom: 0;
   right: 0;
   padding: 1rem 2rem;

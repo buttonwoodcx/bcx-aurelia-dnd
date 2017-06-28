@@ -140,7 +140,12 @@
           },
           "bcx-aurelia-dnd",
           "lodash",
-          "showdown"
+          "showdown",
+          {
+            "name": "bcx-aurelia-reorderable-repeat",
+            "main": "index",
+            "path": "../node_modules/bcx-aurelia-reorderable-repeat/dist/amd"
+          }
         ]
       }
     ]

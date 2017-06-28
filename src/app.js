@@ -4,6 +4,10 @@ export class App {
 
     config.title = 'bcx-aurelia-dnd examples';
     // config.options.pushState = true;
+    config.mapUnknownRoutes((instruction) => {
+      console.log('mapUnknownRoutes', instruction);
+      return 'not-found';
+    });
     config.map([
       {
         route: 'overview', name: 'overview',
@@ -57,7 +61,7 @@ export class App {
       },
       {
         route: 're-order-list', name: 're-order-list',
-        title: 'Re-order a list',
+        title: '(deprecated) Re-order a list',
         nav: true,
         settings: {
           section: 'tutorial',
@@ -81,6 +85,30 @@ export class App {
             'tutorial/testing-part1.md',
             'tutorial/test-example',
             'tutorial/testing-part2.md'
+          ]
+        },
+        moduleId: 'show-tutorial'
+      },
+      {
+        route: 'bcx-aurelia-reorderable-repeat', name: 'bcx-aurelia-reorderable-repeat',
+        title: 'reorderable-repeat',
+        nav: true,
+        settings: {
+          section: 'tutorial',
+          trunks: [
+            'tutorial/bcx-aurelia-reorderable-repeat-part1.md',
+            'order-list-with-fixed-item-height-reorderable-repeat/inline',
+            'tutorial/bcx-aurelia-reorderable-repeat-part2.md',
+            'order-list-with-fixed-item-height-reorderable-repeat-step2/inline',
+            'tutorial/bcx-aurelia-reorderable-repeat-part3.md',
+            'order-list-with-unknown-item-height-reorderable-repeat/inline',
+            'tutorial/bcx-aurelia-reorderable-repeat-part4.md',
+            'order-table-with-handler-reorderable-repeat/inline',
+            'tutorial/bcx-aurelia-reorderable-repeat-part5.md',
+            'order-table-with-handler-reorderable-repeat-step2/inline',
+            'tutorial/bcx-aurelia-reorderable-repeat-part6.md',
+            'reorderable-direction/inline',
+            'tutorial/bcx-aurelia-reorderable-repeat-part7.md',
           ]
         },
         moduleId: 'show-tutorial'
@@ -127,31 +155,59 @@ export class App {
       },
       {
         route: 'order-simple', name: 'order-simple',
-        title: '5. Re-order list with fixed item height',
+        title: '5. (deprecated) Re-order list with fixed item height',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-list-with-fixed-item-height/index'
       },
       {
         route: 'order-flex', name: 'order-flex',
-        title: '6. Re-order list with unknown item height',
+        title: '6. (deprecated) Re-order list with unknown item height',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-list-with-unknown-item-height/index'
       },
       {
         route: 'order-table', name: 'order-table',
-        title: '7. Customize preview for <tr>',
+        title: '7. (deprecated) Customize preview for <tr>',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-table/index'
       },
       {
         route: 'order-table-with-handler', name: 'order-table-with-handler',
-        title: '8. Customize preview for <tr> with handler',
+        title: '8. (deprecated) Customize preview for <tr> with handler',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-table-with-handler/index'
+      },
+      {
+        route: 'order-simple-reorderable-repeat-step2', name: 'order-simple-reorderable-repeat-step2',
+        title: '1. Re-order list with fixed item height',
+        nav: true,
+        settings: {section: 'reorderable-repeat-examples'},
+        moduleId: 'order-list-with-fixed-item-height-reorderable-repeat-step2/index'
+      },
+      {
+        route: 'order-flex-reorderable-repeat-step2', name: 'order-flex-reorderable-repeat-step2',
+        title: '2. Re-order list with unknown item height',
+        nav: true,
+        settings: {section: 'reorderable-repeat-examples'},
+        moduleId: 'order-list-with-unknown-item-height-reorderable-repeat/index'
+      },
+      {
+        route: 'order-table-with-handler-reorderable-repeat', name: 'order-table-with-handler-reorderable-repeat',
+        title: '3. Customize preview for <tr> with handler',
+        nav: true,
+        settings: {section: 'reorderable-repeat-examples'},
+        moduleId: 'order-table-with-handler-reorderable-repeat-step2/index'
+      },
+      {
+        route: 'reorderable-direction', name: 'reorderable-direction',
+        title: '4. DOM flow direction',
+        nav: true,
+        settings: {section: 'reorderable-repeat-examples'},
+        moduleId: 'reorderable-direction/index'
       },
       {
         route: '',

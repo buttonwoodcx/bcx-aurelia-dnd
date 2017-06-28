@@ -1,0 +1,11 @@
+<template>
+  <require from="./list-container.css"></require>
+
+  <p>Array of strings</p>
+
+  <div class="list-container">
+    <div class="list-item" reorderable-repeat.for="item of items">
+      ${item}
+    </div>
+  </div>
+</template>

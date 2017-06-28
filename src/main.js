@@ -5,6 +5,7 @@ export function configure(aurelia) {
     .standardConfiguration()
     .feature('resources');
 
+  aurelia.use.plugin('bcx-aurelia-reorderable-repeat');
   // if (environment.debug) {
   //   aurelia.use.developmentLogging();
   // }

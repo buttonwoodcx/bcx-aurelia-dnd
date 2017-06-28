@@ -1,0 +1,14 @@
+<template>
+  <require from="./list-container.css"></require>
+
+  <p>Item is draggable</p>
+  <ul class="list-container">
+    <li
+      class="list-flex-item"
+      reorderable-repeat.for="item of items"
+    >
+      ${item.value}
+    </li>
+
+  </ul>
+</template>

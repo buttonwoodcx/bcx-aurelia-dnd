@@ -4,6 +4,4 @@
 
 > Note inside item's `dndHover(location)` , we carefully check half of target element height to avoid some endless swapping of two items. Very similar to what dragula does for re-ordering list.
 
-> All of this complexity is due to isolation. `DndService` doesn't know all those items are created by Aurelia repeater, and Aurelia repeater doesn't know `DndService` tries to order the item list. We will build a customized Aurelia repeater to bridge this gap.
-
 Finally, let's look at [testing](#/testing).

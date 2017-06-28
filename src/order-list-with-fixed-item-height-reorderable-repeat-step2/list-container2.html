@@ -1,0 +1,11 @@
+<template>
+  <require from="./list-container.css"></require>
+
+  <p>Array of objects</p>
+
+  <div class="list-container">
+    <div class="list-item2" reorderable-repeat.for="item of items">
+      #${item.id} ${item.value}
+    </div>
+  </div>
+</template>

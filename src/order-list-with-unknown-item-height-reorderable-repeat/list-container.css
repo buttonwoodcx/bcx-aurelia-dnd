@@ -1,0 +1,49 @@
+.list-container {
+  width: 200px;
+  margin: 0;
+  padding: 0;
+}
+
+.list-flex-item {
+  position: relative;
+  display: block;
+  background-color: white;
+  border: 1px solid #333;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.list-flex-item:not(:last-child) {
+  margin-bottom: -1px;
+}
+
+.list-flex-item.dragging {
+  background-color: lightgrey;
+}
+
+.list-flex-item .handler {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  margin-top: -10px;
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  border: 1px solid #333;
+  cursor: pointer;
+}
+
+.list-flex-item.has-handler {
+  padding-left: 40px;
+}
+
+.list-flex-item.reorderable-repeat-dragging-me {
+  visibility: visible;
+  background-color: lightgrey;
+  color: transparent;
+}
+
+.list-flex-item.reorderable-repeat-dragging-me .handler {
+  visibility: hidden;
+}

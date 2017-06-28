@@ -261,6 +261,121 @@ define('show-tutorial',['exports', 'aurelia-router'], function (exports, _aureli
     return ShowTutorial;
   }();
 });
+define('draw/canvas-container',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'aurelia-event-aggregator'], function (exports, _aureliaFramework, _bcxAureliaDnd, _aureliaEventAggregator) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.CanvasContainer = undefined;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _dec, _class;
+
+  var CanvasContainer = exports.CanvasContainer = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService, _aureliaEventAggregator.EventAggregator), _dec(_class = function () {
+    function CanvasContainer(dndService, ea) {
+      _classCallCheck(this, CanvasContainer);
+
+      this.shapes = [];
+      this.selectedType = 'drawLine';
+      this.drawingTypes = [{ value: 'drawLine', label: 'Line' }, { value: 'drawRect', label: 'Rectangular' }];
+
+      this.dndService = dndService;
+      this.ea = ea;
+    }
+
+    CanvasContainer.prototype.attached = function attached() {
+      var _this = this;
+
+      this.dndService.addSource(this, { noPreview: true });
+      this.dndService.addTarget(this);
+      this.subscribers = [this.ea.subscribe('dnd:willStart', function () {
+        return _this.resetDrawingShape();
+      }), this.ea.subscribe('dnd:didEnd', function () {
+        return _this.resetDrawingShape();
+      })];
+    };
+
+    CanvasContainer.prototype.detached = function detached() {
+      this.dndService.removeSource(this);
+      this.dndService.removeTarget(this);
+      this.subscribers.forEach(function (s) {
+        return s.dispose();
+      });
+    };
+
+    CanvasContainer.prototype.resetDrawingShape = function resetDrawingShape() {
+      this.drawingShape = null;
+    };
+
+    CanvasContainer.prototype.dndModel = function dndModel() {
+      return { type: this.selectedType };
+    };
+
+    CanvasContainer.prototype.dndCanDrop = function dndCanDrop(model) {
+      return model.type === 'drawLine' || model.type === 'drawRect';
+    };
+
+    CanvasContainer.prototype.dndHover = function dndHover(location) {
+      var mouseStartAt = location.mouseStartAt,
+          targetElementRect = location.targetElementRect,
+          mouseEndAt = location.mouseEndAt;
+
+
+      var start = {
+        x: mouseStartAt.x - targetElementRect.x,
+        y: mouseStartAt.y - targetElementRect.y
+      };
+
+      var end = {
+        x: mouseEndAt.x - targetElementRect.x,
+        y: mouseEndAt.y - targetElementRect.y
+      };
+
+      if (this.dnd.model.type === 'drawLine') {
+        this.drawingShape = { type: 'line', from: start, to: end };
+      } else if (this.dnd.model.type === 'drawRect') {
+        var x = Math.min(start.x, end.x);
+        var y = Math.min(start.y, end.y);
+        var width = Math.abs(start.x - end.x);
+        var height = Math.abs(start.y - end.y);
+        this.drawingShape = { type: 'rect', x: x, y: y, width: width, height: height };
+      }
+    };
+
+    CanvasContainer.prototype.dndDrop = function dndDrop() {
+      if (this.drawingShape) {
+        this.shapes.push(this.drawingShape);
+      }
+    };
+
+    return CanvasContainer;
+  }()) || _class);
+});
+define('draw/index',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Index = exports.Index = function Index() {
+    _classCallCheck(this, Index);
+
+    this.sourceFilenames = ['src/draw/canvas-container.js', 'src/draw/canvas-container.html'];
+  };
+});
 define('move-plus-add/add-box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'jquery'], function (exports, _aureliaFramework, _bcxAureliaDnd, _jquery) {
   'use strict';
 
@@ -776,121 +891,6 @@ define('move-plus-add/inline',['exports'], function (exports) {
     _classCallCheck(this, Inline);
 
     this.sourceFilenames = ['src/move-plus-add/container.js', 'src/move-plus-add/container.html', 'src/move-plus-add/container.css', 'src/move-plus-add/target-effect.css', 'src/move-plus-add/box.js', 'src/move-plus-add/box.html', 'src/move-plus-add/box.css', 'src/move-plus-add/add-box.js', 'src/move-plus-add/add-box.html', 'src/move-plus-add/add-source.css', 'src/move-plus-add/add-money.js', 'src/move-plus-add/add-money.html'];
-  };
-});
-define('draw/canvas-container',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'aurelia-event-aggregator'], function (exports, _aureliaFramework, _bcxAureliaDnd, _aureliaEventAggregator) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.CanvasContainer = undefined;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var _dec, _class;
-
-  var CanvasContainer = exports.CanvasContainer = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService, _aureliaEventAggregator.EventAggregator), _dec(_class = function () {
-    function CanvasContainer(dndService, ea) {
-      _classCallCheck(this, CanvasContainer);
-
-      this.shapes = [];
-      this.selectedType = 'drawLine';
-      this.drawingTypes = [{ value: 'drawLine', label: 'Line' }, { value: 'drawRect', label: 'Rectangular' }];
-
-      this.dndService = dndService;
-      this.ea = ea;
-    }
-
-    CanvasContainer.prototype.attached = function attached() {
-      var _this = this;
-
-      this.dndService.addSource(this, { noPreview: true });
-      this.dndService.addTarget(this);
-      this.subscribers = [this.ea.subscribe('dnd:willStart', function () {
-        return _this.resetDrawingShape();
-      }), this.ea.subscribe('dnd:didEnd', function () {
-        return _this.resetDrawingShape();
-      })];
-    };
-
-    CanvasContainer.prototype.detached = function detached() {
-      this.dndService.removeSource(this);
-      this.dndService.removeTarget(this);
-      this.subscribers.forEach(function (s) {
-        return s.dispose();
-      });
-    };
-
-    CanvasContainer.prototype.resetDrawingShape = function resetDrawingShape() {
-      this.drawingShape = null;
-    };
-
-    CanvasContainer.prototype.dndModel = function dndModel() {
-      return { type: this.selectedType };
-    };
-
-    CanvasContainer.prototype.dndCanDrop = function dndCanDrop(model) {
-      return model.type === 'drawLine' || model.type === 'drawRect';
-    };
-
-    CanvasContainer.prototype.dndHover = function dndHover(location) {
-      var mouseStartAt = location.mouseStartAt,
-          targetElementRect = location.targetElementRect,
-          mouseEndAt = location.mouseEndAt;
-
-
-      var start = {
-        x: mouseStartAt.x - targetElementRect.x,
-        y: mouseStartAt.y - targetElementRect.y
-      };
-
-      var end = {
-        x: mouseEndAt.x - targetElementRect.x,
-        y: mouseEndAt.y - targetElementRect.y
-      };
-
-      if (this.dnd.model.type === 'drawLine') {
-        this.drawingShape = { type: 'line', from: start, to: end };
-      } else if (this.dnd.model.type === 'drawRect') {
-        var x = Math.min(start.x, end.x);
-        var y = Math.min(start.y, end.y);
-        var width = Math.abs(start.x - end.x);
-        var height = Math.abs(start.y - end.y);
-        this.drawingShape = { type: 'rect', x: x, y: y, width: width, height: height };
-      }
-    };
-
-    CanvasContainer.prototype.dndDrop = function dndDrop() {
-      if (this.drawingShape) {
-        this.shapes.push(this.drawingShape);
-      }
-    };
-
-    return CanvasContainer;
-  }()) || _class);
-});
-define('draw/index',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Index = exports.Index = function Index() {
-    _classCallCheck(this, Index);
-
-    this.sourceFilenames = ['src/draw/canvas-container.js', 'src/draw/canvas-container.html'];
   };
 });
 define('order-list-with-fixed-item-height/index',['exports'], function (exports) {
@@ -3527,6 +3527,223 @@ define('simple-move/inline',['exports'], function (exports) {
     this.sourceFilenames = ['src/simple-move/container.js', 'src/simple-move/container.html', 'src/simple-move/container.css', 'src/simple-move/box.js', 'src/simple-move/box.html', 'src/simple-move/box.css'];
   };
 });
+define('simple-move-step-2/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Box = undefined;
+
+  function _initDefineProp(target, property, descriptor, context) {
+    if (!descriptor) return;
+    Object.defineProperty(target, property, {
+      enumerable: descriptor.enumerable,
+      configurable: descriptor.configurable,
+      writable: descriptor.writable,
+      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+    });
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+      desc[key] = descriptor[key];
+    });
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
+
+    if ('value' in desc || desc.initializer) {
+      desc.writable = true;
+    }
+
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+      return decorator(target, property, desc) || desc;
+    }, desc);
+
+    if (context && desc.initializer !== void 0) {
+      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+      desc.initializer = undefined;
+    }
+
+    if (desc.initializer === void 0) {
+      Object['define' + 'Property'](target, property, desc);
+      desc = null;
+    }
+
+    return desc;
+  }
+
+  function _initializerWarningHelper(descriptor, context) {
+    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+  }
+
+  var _dec, _dec2, _class, _desc, _value, _class2, _descriptor;
+
+  var Box = exports.Box = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec2 = (0, _aureliaFramework.computedFrom)('item', 'item.x', 'item.y'), _dec(_class = (_class2 = function () {
+    function Box(dndService) {
+      _classCallCheck(this, Box);
+
+      _initDefineProp(this, 'item', _descriptor, this);
+
+      this.dndService = dndService;
+    }
+
+    Box.prototype.attached = function attached() {
+      this.dndService.addSource(this);
+    };
+
+    Box.prototype.detached = function detached() {
+      this.dndService.removeSource(this);
+    };
+
+    Box.prototype.dndModel = function dndModel() {
+      return {
+        type: 'moveItem',
+        item: this.item
+      };
+    };
+
+    _createClass(Box, [{
+      key: 'positionCss',
+      get: function get() {
+        var x = this.item && this.item.x || 0;
+        var y = this.item && this.item.y || 0;
+
+        return {
+          left: x + 'px',
+          top: y + 'px'
+        };
+      }
+    }]);
+
+    return Box;
+  }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'item', [_aureliaFramework.bindable], {
+    enumerable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class2.prototype, 'positionCss', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'positionCss'), _class2.prototype)), _class2)) || _class);
+});
+define('simple-move-step-2/container',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Container = undefined;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _dec, _class;
+
+  var Container = exports.Container = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec(_class = function () {
+    function Container(dndService) {
+      _classCallCheck(this, Container);
+
+      this.items = [{ name: 'A', x: 20, y: 20 }, { name: 'B', x: 50, y: 200 }, { name: 'C', x: 200, y: 100 }];
+
+      this.dndService = dndService;
+    }
+
+    Container.prototype.attached = function attached() {
+      this.dndService.addTarget(this);
+    };
+
+    Container.prototype.detached = function detached() {
+      this.dndService.removeTarget(this);
+    };
+
+    Container.prototype.dndCanDrop = function dndCanDrop(model) {
+      return model.type === 'moveItem';
+    };
+
+    Container.prototype.dndDrop = function dndDrop(location) {
+      var item = this.dnd.model.item;
+      var previewElementRect = location.previewElementRect,
+          targetElementRect = location.targetElementRect;
+
+      var newLoc = {
+        x: previewElementRect.x - targetElementRect.x,
+        y: previewElementRect.y - targetElementRect.y
+      };
+      item.x = newLoc.x;
+      item.y = newLoc.y;
+
+      var idx = this.items.indexOf(item);
+      if (idx >= 0) {
+        this.items.splice(idx, 1);
+        this.items.push(item);
+      }
+    };
+
+    return Container;
+  }()) || _class);
+});
+define('simple-move-step-2/index',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Index = exports.Index = function Index() {
+    _classCallCheck(this, Index);
+
+    this.sourceFilenames = ['src/simple-move-step-2/container.js', 'src/simple-move-step-2/container.html', 'src/simple-move-step-2/container.css', 'src/simple-move-step-2/box.js', 'src/simple-move-step-2/box.html', 'src/simple-move-step-2/box.css'];
+  };
+});
+define('tutorial/test-example',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var TestExample = exports.TestExample = function TestExample() {
+    _classCallCheck(this, TestExample);
+
+    this.sourceFilenames = ['test/simple-move-hover-no-preview/container.spec.js', 'test/simple-move-hover-no-preview/box.spec.js', 'test/setup.js'];
+  };
+});
 define('simple-move-hover-no-preview/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
   'use strict';
 
@@ -4325,223 +4542,6 @@ define('simple-move-step-1/index',['exports'], function (exports) {
     this.sourceFilenames = ['src/simple-move-step-1/container.js', 'src/simple-move-step-1/container.html', 'src/simple-move-step-1/container.css', 'src/simple-move-step-1/box.js', 'src/simple-move-step-1/box.html', 'src/simple-move-step-1/box.css'];
   };
 });
-define('simple-move-step-2/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.Box = undefined;
-
-  function _initDefineProp(target, property, descriptor, context) {
-    if (!descriptor) return;
-    Object.defineProperty(target, property, {
-      enumerable: descriptor.enumerable,
-      configurable: descriptor.configurable,
-      writable: descriptor.writable,
-      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-    });
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-    var desc = {};
-    Object['ke' + 'ys'](descriptor).forEach(function (key) {
-      desc[key] = descriptor[key];
-    });
-    desc.enumerable = !!desc.enumerable;
-    desc.configurable = !!desc.configurable;
-
-    if ('value' in desc || desc.initializer) {
-      desc.writable = true;
-    }
-
-    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-      return decorator(target, property, desc) || desc;
-    }, desc);
-
-    if (context && desc.initializer !== void 0) {
-      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-      desc.initializer = undefined;
-    }
-
-    if (desc.initializer === void 0) {
-      Object['define' + 'Property'](target, property, desc);
-      desc = null;
-    }
-
-    return desc;
-  }
-
-  function _initializerWarningHelper(descriptor, context) {
-    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
-  }
-
-  var _dec, _dec2, _class, _desc, _value, _class2, _descriptor;
-
-  var Box = exports.Box = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec2 = (0, _aureliaFramework.computedFrom)('item', 'item.x', 'item.y'), _dec(_class = (_class2 = function () {
-    function Box(dndService) {
-      _classCallCheck(this, Box);
-
-      _initDefineProp(this, 'item', _descriptor, this);
-
-      this.dndService = dndService;
-    }
-
-    Box.prototype.attached = function attached() {
-      this.dndService.addSource(this);
-    };
-
-    Box.prototype.detached = function detached() {
-      this.dndService.removeSource(this);
-    };
-
-    Box.prototype.dndModel = function dndModel() {
-      return {
-        type: 'moveItem',
-        item: this.item
-      };
-    };
-
-    _createClass(Box, [{
-      key: 'positionCss',
-      get: function get() {
-        var x = this.item && this.item.x || 0;
-        var y = this.item && this.item.y || 0;
-
-        return {
-          left: x + 'px',
-          top: y + 'px'
-        };
-      }
-    }]);
-
-    return Box;
-  }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'item', [_aureliaFramework.bindable], {
-    enumerable: true,
-    initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, 'positionCss', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'positionCss'), _class2.prototype)), _class2)) || _class);
-});
-define('simple-move-step-2/container',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.Container = undefined;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var _dec, _class;
-
-  var Container = exports.Container = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec(_class = function () {
-    function Container(dndService) {
-      _classCallCheck(this, Container);
-
-      this.items = [{ name: 'A', x: 20, y: 20 }, { name: 'B', x: 50, y: 200 }, { name: 'C', x: 200, y: 100 }];
-
-      this.dndService = dndService;
-    }
-
-    Container.prototype.attached = function attached() {
-      this.dndService.addTarget(this);
-    };
-
-    Container.prototype.detached = function detached() {
-      this.dndService.removeTarget(this);
-    };
-
-    Container.prototype.dndCanDrop = function dndCanDrop(model) {
-      return model.type === 'moveItem';
-    };
-
-    Container.prototype.dndDrop = function dndDrop(location) {
-      var item = this.dnd.model.item;
-      var previewElementRect = location.previewElementRect,
-          targetElementRect = location.targetElementRect;
-
-      var newLoc = {
-        x: previewElementRect.x - targetElementRect.x,
-        y: previewElementRect.y - targetElementRect.y
-      };
-      item.x = newLoc.x;
-      item.y = newLoc.y;
-
-      var idx = this.items.indexOf(item);
-      if (idx >= 0) {
-        this.items.splice(idx, 1);
-        this.items.push(item);
-      }
-    };
-
-    return Container;
-  }()) || _class);
-});
-define('simple-move-step-2/index',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Index = exports.Index = function Index() {
-    _classCallCheck(this, Index);
-
-    this.sourceFilenames = ['src/simple-move-step-2/container.js', 'src/simple-move-step-2/container.html', 'src/simple-move-step-2/container.css', 'src/simple-move-step-2/box.js', 'src/simple-move-step-2/box.html', 'src/simple-move-step-2/box.css'];
-  };
-});
-define('tutorial/test-example',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var TestExample = exports.TestExample = function TestExample() {
-    _classCallCheck(this, TestExample);
-
-    this.sourceFilenames = ['test/simple-move-hover-no-preview/container.spec.js', 'test/simple-move-hover-no-preview/box.spec.js', 'test/setup.js'];
-  };
-});
 define('resources/attributes/if-not',['exports', 'aurelia-templating', 'aurelia-templating-resources'], function (exports, _aureliaTemplating, _aureliaTemplatingResources) {
   'use strict';
 
@@ -5068,8 +5068,8 @@ define('text!order-list-with-unknown-item-height/inline.html', ['module'], funct
 define('text!simple-move-step-1/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
 define('text!order-list-with-unknown-item-height/item.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });
 define('text!simple-move-step-2/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-unknown-item-height/item2.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item has-handler ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n  <div class=\"handler\" ref=\"handler\" show.bind=\"!draggingMe\"></div>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });
 define('text!simple-move-step-2/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
+define('text!order-list-with-unknown-item-height/item2.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item has-handler ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n  <div class=\"handler\" ref=\"handler\" show.bind=\"!draggingMe\"></div>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });
 define('text!order-list-with-unknown-item-height/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <p>Item is draggable</p>\n  <ul ref=\"dndElement\" class=\"list-container\">\n    <li as-element=\"item\" repeat.for=\"item of patchedItems\" item.bind=\"item\" update-intention.call=\"updateIntention(targetId, beforeTarget)\"></li>\n  </ul>\n</template>\n"; });
 define('text!order-list-with-unknown-item-height/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item2\"></require>\n\n  <p>With special drag handler</p>\n  <ul ref=\"dndElement\" class=\"list-container\">\n    <li as-element=\"item2\" repeat.for=\"item of patchedItems\" item.bind=\"item\" update-intention.call=\"updateIntention(targetId, beforeTarget)\"></li>\n  </ul>\n</template>\n"; });
 define('text!order-list-with-unknown-item-height-reorderable-repeat/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
@@ -5086,10 +5086,10 @@ define('text!order-table-with-handler/item.html', ['module'], function(module) {
 define('text!order-table-with-handler/table-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <table class=\"table-container\">\n    <thead>\n      <tr>\n        <th></th>\n        <th>Name</th>\n        <th>Age</th>\n      </tr>\n    </thead>\n    <tbody ref=\"dndElement\">\n      <tr as-element=\"item\" repeat.for=\"item of patchedItems\" item.bind=\"item\"></tr>\n    </tbody>\n  </table>\n</template>\n"; });
 define('text!order-table-with-handler-reorderable-repeat/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container\"></require>\n\n  <div class=\"doc-demo\">\n    <table-container></table-container>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!order-table-with-handler-reorderable-repeat/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <div style=\"width: 300px; height: 300px;\">\n        <table-container></table-container>\n      </div>\n    </div>\n    <div class=\"inline-demo-source-code\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
-define('text!order-table-with-handler-reorderable-repeat/table-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container.css\"></require>\n\n  <table class=\"table-container\">\n    <thead>\n      <tr>\n        <th></th>\n        <th>Name</th>\n        <th>Age</th>\n      </tr>\n    </thead>\n    <tbody ref=\"tableBody\">\n      <tr\n        reorderable-repeat.for=\"item of items\"\n        reorderable-dnd-preview=\"rowPreview\"\n      >\n        <td style=\"width:30px;\">\n          <div class=\"handler\"></div>\n        </td>\n        <td>${item.name}</td>\n        <td>${item.age}</td>\n      </tr>\n    </tbody>\n  </table>\n</template>\n"; });
+define('text!order-table-with-handler-reorderable-repeat/table-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container.css\"></require>\n\n  <table class=\"table-container\">\n    <thead>\n      <tr>\n        <th></th>\n        <th>Name</th>\n        <th>Age</th>\n      </tr>\n    </thead>\n    <tbody ref=\"tableBody\">\n      <tr\n        reorderable-repeat.for=\"item of items\"\n        reorderable-dnd-preview=\"rowPreview\"\n        reorderable-dnd-handler-selector=\".handler\"\n      >\n        <td style=\"width:30px;\">\n          <div class=\"handler\"></div>\n        </td>\n        <td>${item.name}</td>\n        <td>${item.age}</td>\n      </tr>\n    </tbody>\n  </table>\n</template>\n"; });
 define('text!order-table-with-handler-reorderable-repeat-step2/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container\"></require>\n\n  <div class=\"doc-demo\">\n    <table-container></table-container>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!order-table-with-handler-reorderable-repeat-step2/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <div style=\"width: 300px; height: 300px;\">\n        <table-container></table-container>\n      </div>\n    </div>\n    <div class=\"inline-demo-source-code\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
-define('text!order-table-with-handler-reorderable-repeat-step2/table-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container.css\"></require>\n\n  <table class=\"table-container\">\n    <thead>\n      <tr>\n        <th></th>\n        <th>Name</th>\n        <th>Age</th>\n      </tr>\n    </thead>\n    <tbody ref=\"tableBody\">\n      <tr\n        reorderable-repeat.for=\"item of items\"\n        reorderable-dnd-preview=\"rowPreview\"\n        reorderable-after-reordering=\"afterReordering\"\n      >\n        <td style=\"width:30px;\">\n          <div class=\"handler\"></div>\n        </td>\n        <td>${item.name}</td>\n        <td>${item.age}</td>\n      </tr>\n    </tbody>\n  </table>\n</template>\n"; });
+define('text!order-table-with-handler-reorderable-repeat-step2/table-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./table-container.css\"></require>\n\n  <table class=\"table-container\">\n    <thead>\n      <tr>\n        <th></th>\n        <th>Name</th>\n        <th>Age</th>\n      </tr>\n    </thead>\n    <tbody ref=\"tableBody\">\n      <tr\n        reorderable-repeat.for=\"item of items\"\n        reorderable-dnd-preview=\"rowPreview\"\n        reorderable-dnd-handler-selector=\".handler\"\n        reorderable-after-reordering=\"afterReordering\"\n      >\n        <td style=\"width:30px;\">\n          <div class=\"handler\"></div>\n        </td>\n        <td>${item.name}</td>\n        <td>${item.age}</td>\n      </tr>\n    </tbody>\n  </table>\n</template>\n"; });
 define('text!reorderable-direction/container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container.css\"></require>\n\n  <div class=\"floats-container\">\n    <div\n      class=\"float-left\"\n      reorderable-repeat.for=\"unit of leftToRight\"\n      reorderable-direction=\"right\"\n    >\n      ${unit}\n    </div>\n  </div>\n\n  <div class=\"floats-container\">\n   <div\n      class=\"float-right\"\n      reorderable-repeat.for=\"unit of rightToLeft\"\n      reorderable-direction=\"left\"\n    >\n      ${unit}\n    </div>\n  </div>\n</template>\n"; });
 define('text!reorderable-direction/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"doc-demo\">\n    <div style=\"max-width: 400px;\">\n      <container></container>\n    </div>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!reorderable-direction/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <div style=\"width: 300px; height: 300px;\">\n        <container></container>\n      </div>\n    </div>\n    <div class=\"inline-demo-source-code\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });

@@ -169,14 +169,14 @@ export class App {
       },
       {
         route: 'order-table', name: 'order-table',
-        title: '7. (deprecated) Customize preview for <tr>',
+        title: '7. Customize preview for <tr>',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-table/index'
       },
       {
         route: 'order-table-with-handler', name: 'order-table-with-handler',
-        title: '8. (deprecated) Customize preview for <tr> with handler',
+        title: '8. Customize preview for <tr> with handler',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-table-with-handler/index'

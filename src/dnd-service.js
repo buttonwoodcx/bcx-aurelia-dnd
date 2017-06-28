@@ -34,11 +34,11 @@ const css = `
 /* bcx-aurelia-dnd styles */
 
 /*
-bcx-aurelia-dnd relies on body margin 0.
+bcx-aurelia-dnd relies on html/body margin 0.
 Your css stack should have done this.
 Added here as safe guard.
 */
-body {
+html, body {
   margin: 0;
 }
 
@@ -720,8 +720,9 @@ export class DndService {
 
       const rect = el.getBoundingClientRect();
       this._preview = el.cloneNode(true);
-      this._preview.style.width = getRectWidth(rect) + 'px';
-      this._preview.style.height = getRectHeight(rect) + 'px';
+      const computed = _global.getComputedStyle(el);
+      this._preview.style.width = computed.width;
+      this._preview.style.height = computed.height;
     }
 
     classes.add(this._preview, 'bcx-dnd-preview');

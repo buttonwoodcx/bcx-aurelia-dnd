@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.4 - 28/Jun/2017
+
+  * fix preview size when box-sizing is not border-box.
+
 ## 0.2.3 - 27/Jun/2017
 
   * add body margin 0 as css safe guard.

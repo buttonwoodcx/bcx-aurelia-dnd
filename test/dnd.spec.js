@@ -49,7 +49,7 @@ const model1 = () => ({type: 'one', name: 'model1'});
 const model2 = () => ({type: 'two', name: 'model2'});
 
 const box_0_0 = addBox('00', 0, 0, 100, 100);
-box_0_0.className = 'test-class';
+box_0_0.className = 'test-class'; // make sure .bcx-dnd-hide change 'display' to 'none'
 const box_0_1 = addBox('01', 0, 100, 100, 100);
 const box_0_2 = addBox('02', 0, 200, 100, 100);
 const box_0_3 = addBox('03', 0, 300, 100, 100);
@@ -57,6 +57,19 @@ const box_0_3 = addBox('03', 0, 300, 100, 100);
 const box_0_4 = addBox('04', 0, 400, 100, 100);
 const box_0_4_handler = $('<div style="position:absolute;width:20px;height:20px;left:10px;bottom:10px"></div>').get(0);
 box_0_4.appendChild(box_0_4_handler);
+
+let box_content_box = $(`
+<div style="position:absolute;left:0;top:500px;width:50px;height:50px;margin:20px;padding:10px;border:1px solid black;box-sizing:content-box;"></div>
+`);
+box_content_box.appendTo('body');
+box_content_box =  box_content_box.get(0);
+
+let box_border_box = $(`
+<div style="position:absolute;left:100px;top:500px;width:50px;height:50px;margin:20px;padding:10px;border:1px solid black;box-sizing:border-box;"></div>
+`);
+box_border_box.appendTo('body');
+box_border_box =  box_border_box.get(0);
+
 
 const tbox_big = addBox('tbox_big', 200, 0, 500, 500);
 const tbox_small_inner = addBox('tbox_small_inner', 300, 100, 200, 200);
@@ -186,6 +199,10 @@ test('add source', t => {
   // source with handler
   dndService.addSource({dndModel: model2, dndElement: box_0_4}, {handler: box_0_4_handler});
 
+  // source with content-box box-sizing
+  dndService.addSource({dndModel: model1, dndElement: box_content_box});
+  // source with border-box box-sizing
+  dndService.addSource({dndModel: model1, dndElement: box_border_box});
   t.end();
 });
 
@@ -875,6 +892,43 @@ test('drag type two inside of handler, drop on target', t => {
   ]);
 
   clearTrack();
+
+  t.end();
+});
+
+test('preview size is correct no matter what box-sizing is in use', t => {
+
+  // box_content_box
+  fireEvent(box_content_box, 'mousedown', {which: 1, clientX: 40, clientY: 540});
+
+  // first small movement, this is where dnd starts
+  fireEvent(documentElement, 'mousemove', {which: 1, clientX: 41, clientY: 540});
+
+  let preview = $('.bcx-dnd-preview');
+  t.equal(preview.length, 1);
+  let boundingRect = preview.get(0).getBoundingClientRect();
+  t.equal(boundingRect.left, 20);
+  t.equal(boundingRect.top, 520);
+  t.equal(boundingRect.width, 50 + 10 * 2 + 1 * 2);
+  t.equal(boundingRect.height, 50 + 10 * 2 + 1 * 2);
+
+  fireEvent(documentElement, 'mouseup', {which: 1, clientX: 41, clientY: 540});
+
+  // box_border_box
+  fireEvent(box_border_box, 'mousedown', {which: 1, clientX: 140, clientY: 540});
+
+  // first small movement, this is where dnd starts
+  fireEvent(documentElement, 'mousemove', {which: 1, clientX: 141, clientY: 540});
+
+  preview = $('.bcx-dnd-preview');
+  t.equal(preview.length, 1);
+  boundingRect = preview.get(0).getBoundingClientRect();
+  t.equal(boundingRect.left, 120);
+  t.equal(boundingRect.top, 520);
+  t.equal(boundingRect.width, 50);
+  t.equal(boundingRect.height, 50);
+
+  fireEvent(documentElement, 'mouseup', {which: 1, clientX: 141, clientY: 540});
 
   t.end();
 });

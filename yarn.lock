@@ -1170,6 +1170,12 @@ bcx-aurelia-dnd@^0.2.4:
   dependencies:
     aurelia-event-aggregator "^1.0.1"
 
+bcx-aurelia-dnd@^0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/bcx-aurelia-dnd/-/bcx-aurelia-dnd-0.2.5.tgz#98e8767044427db9dc2d73de58624fc35a1ac684"
+  dependencies:
+    aurelia-event-aggregator "^1.0.1"
+
 bcx-aurelia-reorderable-repeat@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/bcx-aurelia-reorderable-repeat/-/bcx-aurelia-reorderable-repeat-0.1.2.tgz#ae3e52dfb67768c076caa885b4c6cde018a8794d"

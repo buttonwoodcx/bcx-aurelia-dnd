@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.5 - 29/Jun/2017
+
+  * fix a stupid bug on index check.
+
 ## 0.2.4 - 28/Jun/2017
 
   * fix preview size when box-sizing is not border-box.

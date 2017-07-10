@@ -355,7 +355,7 @@ export class DndService {
 
   removeSource(delegateOrElement) {
     const idx = indexOfElementOrDelegate(this.dndSources, delegateOrElement);
-    if (idx) {
+    if (idx >= 0) {
       this.dndSources.splice(idx, 1);
     }
   }
@@ -378,7 +378,7 @@ export class DndService {
 
   removeTarget(delegateOrElement) {
     const idx = indexOfElementOrDelegate(this.dndTargets, delegateOrElement);
-    if (idx) {
+    if (idx >= 0) {
       const dndTarget = this.dndTargets[idx];
       // if (dndTarget.dndHover) dndTarget.dndHover.cancel();
       dndTarget.delegate.dnd = null;

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.5 - 29/Jun/2017
+## 0.2.5 - 10/Jul/2017
 
   * fix a stupid bug on index check.
 

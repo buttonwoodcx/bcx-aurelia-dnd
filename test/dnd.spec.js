@@ -941,15 +941,15 @@ test('removeSource, removeTarget', t => {
   t.equal(dndService.dndSources.length, 6);
   t.equal(dndService.dndTargets.length, 4);
 
-  dndService.removeSource(box_0_1);
+  dndService.removeSource(box_0_0);
   t.equal(dndService.dndSources.length, 5);
   t.equal(dndService.dndTargets.length, 4);
 
-  dndService.removeTarget(target3);
+  dndService.removeTarget(tbox_small_inner);
   t.equal(dndService.dndSources.length, 5);
   t.equal(dndService.dndTargets.length, 3);
 
-  dndService.removeTarget(tbox_small_inner);
+  dndService.removeTarget(target1);
   t.equal(dndService.dndSources.length, 5);
   t.equal(dndService.dndTargets.length, 2);
   t.end();

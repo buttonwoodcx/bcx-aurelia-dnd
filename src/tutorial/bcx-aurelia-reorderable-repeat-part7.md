@@ -1,12 +1,17 @@
 That's all features of `bcx-aurelia-reorderable-repeat`.
 
-## The bad part
+## Limitation
 
-All feel magical, right?
+`bcx-aurelia-reorderable-repeat` doesn't support repeat on `template` element.
 
-Here is the bad part. The performance of this implementation is bad, I mean theoretically really bad on DOM. But you would not feel it, since the array you want to reorder is typically not an array of thousands.
+Following html generates an Aurelia error.
+```html
+<template reorderable-repeat.for="obj of array">
+  <!-- inner html -->
+</template>
+```
 
-The performance hit is not due to `bcx-aurelia-dnd`, it is my understanding on Aurelia's repeater. I had trouble to understand some details how Aurelia's repeater reuses view, so in order to make `bcx-aurelia-reorderable-repeat` work, I removed all DOM related optimization code from standard repeater. I will definitely revisit the repeater optimization code and bring it back.
+`bcx-aurelia-reorderable-repeat` only supports `Array` model, not `Set`, `Map` or `Object` (The 3 supported by standard Aurelia repeater). We are trying to reorder something, only array makes sense here.
 
 The other bad part is I have not written test code yet. I just started looking into how to setup testing Aurelia plugin with DOM. I will fill up this hole in near future, probably using tape instead of jasmine.
 

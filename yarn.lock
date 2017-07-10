@@ -1164,21 +1164,15 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-bcx-aurelia-dnd@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/bcx-aurelia-dnd/-/bcx-aurelia-dnd-0.2.4.tgz#41ce08248a9020a02723f61350e34f2c1200e07b"
-  dependencies:
-    aurelia-event-aggregator "^1.0.1"
-
 bcx-aurelia-dnd@^0.2.5:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/bcx-aurelia-dnd/-/bcx-aurelia-dnd-0.2.5.tgz#98e8767044427db9dc2d73de58624fc35a1ac684"
   dependencies:
     aurelia-event-aggregator "^1.0.1"
 
-bcx-aurelia-reorderable-repeat@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/bcx-aurelia-reorderable-repeat/-/bcx-aurelia-reorderable-repeat-0.1.2.tgz#ae3e52dfb67768c076caa885b4c6cde018a8794d"
+bcx-aurelia-reorderable-repeat@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/bcx-aurelia-reorderable-repeat/-/bcx-aurelia-reorderable-repeat-0.1.3.tgz#b91ac3cb39757217ddaff7346e5246f1cd75739a"
   dependencies:
     aurelia-binding "^1.0.0"
     aurelia-dependency-injection "^1.0.0"
@@ -1187,7 +1181,7 @@ bcx-aurelia-reorderable-repeat@^0.1.2:
     aurelia-task-queue "^1.0.0"
     aurelia-templating "^1.0.0"
     aurelia-templating-resources "^1.0.0"
-    bcx-aurelia-dnd "^0.2.4"
+    bcx-aurelia-dnd "^0.2.5"
 
 beeper@^1.0.0:
   version "1.1.1"

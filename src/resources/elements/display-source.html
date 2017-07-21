@@ -1,3 +1,4 @@
 <template>
-  <pre>${fileContent}</pre>
+  <p if.bind="loading">Loading ...</p>
+  <pre if-not.bind="loading">${fileContent}</pre>
 </template>

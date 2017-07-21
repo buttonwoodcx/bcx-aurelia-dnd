@@ -125,6 +125,7 @@ display-source pre {
 
 button.btn {
   font-size: 0.9rem;
+  white-space:nowrap;
 }
 
 table.table-align-top td {

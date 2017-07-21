@@ -48212,7 +48212,7 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat',['exports', 'aurelia-
       }
     };
 
-    ReorderableRepeat.prototype._dndHover = function _dndHover(location, item, direction) {
+    ReorderableRepeat.prototype._dndHover = function _dndHover(location, index, direction) {
       var mouseEndAt = location.mouseEndAt,
           targetElementRect = location.targetElementRect;
 
@@ -48232,9 +48232,9 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat',['exports', 'aurelia-
         }
 
       if (inLeastHalf) {
-        this._updateIntention(item, true);
+        this._updateIntention(index, true);
       } else {
-        this._updateIntention(item, false);
+        this._updateIntention(index, false);
       }
     };
 
@@ -48245,6 +48245,7 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat',['exports', 'aurelia-
 
       var el = view.firstChild;
       var item = view.bindingContext[local];
+      var index = view.overrideContext.$index;
       var handlerSelector = this._dndHandlerSelector(view);
       var handler = void 0;
       if (handlerSelector) {
@@ -48255,10 +48256,10 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat',['exports', 'aurelia-
 
       this.dndService.addSource({
         dndModel: function dndModel() {
-          return { type: _this6.type, item: item };
+          return { type: _this6.type, index: index };
         },
-        dndPreview: _previewFunc && function (model) {
-          return _previewFunc(model.item, view);
+        dndPreview: _previewFunc && function () {
+          return _previewFunc(item, view);
         },
         dndElement: el
       }, handler && { handler: handler });
@@ -48266,7 +48267,7 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat',['exports', 'aurelia-
       this.dndService.addTarget({
         dndElement: el,
         dndCanDrop: function dndCanDrop(model) {
-          var canDrop = model.type === _this6.type && model.item !== item;
+          var canDrop = model.type === _this6.type && (_this6.intention ? _this6.intention.toIndex !== index : model.index !== index);
 
           if (model.type === _this6.type && !canDrop) {
             _this6.taskQueue.queueMicroTask(function () {
@@ -48276,7 +48277,7 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat',['exports', 'aurelia-
           return canDrop;
         },
         dndHover: function dndHover(location) {
-          _this6._dndHover(location, item, direction);
+          _this6._dndHover(location, index, direction);
         },
         dndDrop: function dndDrop() {}
       });
@@ -48288,7 +48289,7 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat',['exports', 'aurelia-
       this.dndService.removeTarget(view.firstChild);
     };
 
-    ReorderableRepeat.prototype._updateIntention = function _updateIntention(target, beforeTarget) {
+    ReorderableRepeat.prototype._updateIntention = function _updateIntention(targetIndex, beforeTarget) {
       var _dndService = this.dndService,
           isProcessing = _dndService.isProcessing,
           model = _dndService.model;
@@ -48296,9 +48297,6 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat',['exports', 'aurelia-
       if (!isProcessing) return;
       if (model.type !== this.type) return;
 
-      var patchedItems = this.patchedItems;
-
-      var targetIndex = patchedItems.indexOf(target);
       if (targetIndex < 0) return;
 
       var originalIndex = void 0;
@@ -48308,7 +48306,7 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat',['exports', 'aurelia-
         originalIndex = this.intention.fromIndex;
         currentIndex = this.intention.toIndex;
       } else {
-        originalIndex = patchedItems.indexOf(model.item);
+        originalIndex = model.index;
         if (originalIndex < 0) return;
         currentIndex = originalIndex;
       }
@@ -48352,7 +48350,7 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat',['exports', 'aurelia-
     initializer: null
   })), _class2)) || _class) || _class) || _class);
 });
-define('bcx-aurelia-reorderable-repeat/reorderable-repeat-strategy-locator',['exports', 'aurelia-templating-resources'], function (exports, _aureliaTemplatingResources) {
+define('bcx-aurelia-reorderable-repeat/reorderable-repeat-strategy-locator',['exports', './simple-array-repeat-strategy'], function (exports, _simpleArrayRepeatStrategy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -48374,7 +48372,7 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat-strategy-locator',['ex
       this.strategies = [];
       this.addStrategy(function (items) {
         return items instanceof Array;
-      }, new _aureliaTemplatingResources.ArrayRepeatStrategy());
+      }, new _simpleArrayRepeatStrategy.SimpleArrayRepeatStrategy());
     }
 
     ReorderableRepeatStrategyLocator.prototype.addStrategy = function addStrategy(matcher, strategy) {
@@ -48395,6 +48393,48 @@ define('bcx-aurelia-reorderable-repeat/reorderable-repeat-strategy-locator',['ex
     };
 
     return ReorderableRepeatStrategyLocator;
+  }();
+});
+define('bcx-aurelia-reorderable-repeat/simple-array-repeat-strategy',['exports', 'aurelia-templating-resources'], function (exports, _aureliaTemplatingResources) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.SimpleArrayRepeatStrategy = undefined;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var SimpleArrayRepeatStrategy = exports.SimpleArrayRepeatStrategy = function () {
+    function SimpleArrayRepeatStrategy() {
+      _classCallCheck(this, SimpleArrayRepeatStrategy);
+    }
+
+    SimpleArrayRepeatStrategy.prototype.getCollectionObserver = function getCollectionObserver(observerLocator, items) {
+      return observerLocator.getArrayObserver(items);
+    };
+
+    SimpleArrayRepeatStrategy.prototype.instanceChanged = function instanceChanged(repeat, items) {
+      repeat.removeAllViews(true, !repeat.viewsRequireLifecycle);
+
+      var itemsLength = items.length;
+      if (items && itemsLength > 0) {
+        this._standardProcessInstanceChanged(repeat, items);
+      }
+    };
+
+    SimpleArrayRepeatStrategy.prototype._standardProcessInstanceChanged = function _standardProcessInstanceChanged(repeat, items) {
+      for (var i = 0, ii = items.length; i < ii; i++) {
+        var overrideContext = (0, _aureliaTemplatingResources.createFullOverrideContext)(repeat, items[i], i, ii);
+        repeat.addView(overrideContext.bindingContext, overrideContext);
+      }
+    };
+
+    return SimpleArrayRepeatStrategy;
   }();
 });
 define('bcx-aurelia-reorderable-repeat/reorderable-direction',['exports', 'aurelia-templating'], function (exports, _aureliaTemplating) {
@@ -48517,5 +48557,5 @@ define('bcx-aurelia-reorderable-repeat/reorderable-after-reordering',['exports',
     return ReorderableAfterReordering;
   }()) || _class);
 });
-function _aureliaConfigureModuleLoader(){requirejs.config({"baseUrl":"src/","paths":{"root":"src","resources":"resources","elements":"resources/elements","attributes":"resources/attributes","valueConverters":"resources/value-converters","bindingBehaviors":"resources/binding-behaviors","aurelia-binding":"../node_modules/aurelia-binding/dist/amd/aurelia-binding","aurelia-bootstrapper":"../node_modules/aurelia-bootstrapper/dist/amd/aurelia-bootstrapper","aurelia-dependency-injection":"../node_modules/aurelia-dependency-injection/dist/amd/aurelia-dependency-injection","aurelia-event-aggregator":"../node_modules/aurelia-event-aggregator/dist/amd/aurelia-event-aggregator","aurelia-framework":"../node_modules/aurelia-framework/dist/amd/aurelia-framework","aurelia-history":"../node_modules/aurelia-history/dist/amd/aurelia-history","aurelia-history-browser":"../node_modules/aurelia-history-browser/dist/amd/aurelia-history-browser","aurelia-loader":"../node_modules/aurelia-loader/dist/amd/aurelia-loader","aurelia-loader-default":"../node_modules/aurelia-loader-default/dist/amd/aurelia-loader-default","aurelia-logging":"../node_modules/aurelia-logging/dist/amd/aurelia-logging","aurelia-logging-console":"../node_modules/aurelia-logging-console/dist/amd/aurelia-logging-console","aurelia-metadata":"../node_modules/aurelia-metadata/dist/amd/aurelia-metadata","aurelia-pal":"../node_modules/aurelia-pal/dist/amd/aurelia-pal","aurelia-pal-browser":"../node_modules/aurelia-pal-browser/dist/amd/aurelia-pal-browser","aurelia-path":"../node_modules/aurelia-path/dist/amd/aurelia-path","aurelia-polyfills":"../node_modules/aurelia-polyfills/dist/amd/aurelia-polyfills","aurelia-route-recognizer":"../node_modules/aurelia-route-recognizer/dist/amd/aurelia-route-recognizer","aurelia-router":"../node_modules/aurelia-router/dist/amd/aurelia-router","aurelia-task-queue":"../node_modules/aurelia-task-queue/dist/amd/aurelia-task-queue","aurelia-templating":"../node_modules/aurelia-templating/dist/amd/aurelia-templating","aurelia-templating-binding":"../node_modules/aurelia-templating-binding/dist/amd/aurelia-templating-binding","text":"../node_modules/text/text","bcx-aurelia-dnd":"../node_modules/bcx-aurelia-dnd/dist/index","lodash":"../node_modules/lodash/lodash","showdown":"../node_modules/showdown/dist/showdown","app-bundle":"../scripts/app-bundle"},"packages":[{"name":"aurelia-templating-resources","location":"../node_modules/aurelia-templating-resources/dist/amd","main":"aurelia-templating-resources"},{"name":"aurelia-templating-router","location":"../node_modules/aurelia-templating-router/dist/amd","main":"aurelia-templating-router"},{"name":"aurelia-testing","location":"../node_modules/aurelia-testing/dist/amd","main":"aurelia-testing"},{"name":"jquery","location":"../node_modules/jquery/dist","main":"jquery.min"},{"name":"bcx-aurelia-reorderable-repeat","location":"../node_modules/bcx-aurelia-reorderable-repeat/dist/amd","main":"index"}],"stubModules":[],"shim":{},"bundles":{"app-bundle":["app","environment","main","not-found","show-tutorial","draw/canvas-container","draw/index","move-plus-add/add-box","move-plus-add/add-money","move-plus-add/box","move-plus-add/container","move-plus-add/index","move-plus-add/inline","order-list-with-fixed-item-height/index","order-list-with-fixed-item-height/inline","order-list-with-fixed-item-height/item","order-list-with-fixed-item-height/item2","order-list-with-fixed-item-height/list-container","order-list-with-fixed-item-height/list-container2","order-list-with-fixed-item-height-reorderable-repeat-step2/index","order-list-with-fixed-item-height-reorderable-repeat-step2/inline","order-list-with-fixed-item-height-reorderable-repeat-step2/list-container","order-list-with-fixed-item-height-reorderable-repeat-step2/list-container2","order-list-with-fixed-item-height-reorderable-repeat/index","order-list-with-fixed-item-height-reorderable-repeat/inline","order-list-with-fixed-item-height-reorderable-repeat/list-container","order-list-with-fixed-item-height-reorderable-repeat/list-container2","order-list-with-unknown-item-height/index","order-list-with-unknown-item-height/inline","order-list-with-unknown-item-height/item","order-list-with-unknown-item-height/item2","order-list-with-unknown-item-height/list-container","order-list-with-unknown-item-height/list-container2","order-list-with-unknown-item-height-reorderable-repeat/index","order-list-with-unknown-item-height-reorderable-repeat/inline","order-list-with-unknown-item-height-reorderable-repeat/list-container","order-list-with-unknown-item-height-reorderable-repeat/list-container2","order-table/index","order-table/inline","order-table/item","order-table/table-container","order-table-with-handler-reorderable-repeat/index","order-table-with-handler-reorderable-repeat/inline","order-table-with-handler-reorderable-repeat/table-container","order-table-with-handler/index","order-table-with-handler/inline","order-table-with-handler/item","order-table-with-handler/table-container","order-table-with-handler-reorderable-repeat-step2/index","order-table-with-handler-reorderable-repeat-step2/inline","order-table-with-handler-reorderable-repeat-step2/table-container","reorderable-direction/container","reorderable-direction/index","reorderable-direction/inline","resources/index","simple-move/box","simple-move/container","simple-move/index","simple-move/inline","simple-move-hover-no-preview/box","simple-move-hover-no-preview/container","simple-move-hover-no-preview/index","simple-move-hover-no-preview-with-clock/box","simple-move-hover-no-preview-with-clock/container","simple-move-hover-no-preview-with-clock/index","simple-move-step-1/box","simple-move-step-1/container","simple-move-step-1/index","simple-move-step-2/box","simple-move-step-2/container","simple-move-step-2/index","tutorial/test-example","resources/attributes/if-not","resources/elements/display-source","resources/elements/display-sources","resources/elements/mark-down","resources/elements/show-mark-down-file","resources/value-converters/ends-with","resources/value-converters/nav-section","normalize","move-plus-add/add-source","move-plus-add/target-effect"]}})}
+function _aureliaConfigureModuleLoader(){requirejs.config({"baseUrl":"src/","paths":{"root":"src","resources":"resources","elements":"resources/elements","attributes":"resources/attributes","valueConverters":"resources/value-converters","bindingBehaviors":"resources/binding-behaviors","aurelia-binding":"../node_modules/aurelia-binding/dist/amd/aurelia-binding","aurelia-bootstrapper":"../node_modules/aurelia-bootstrapper/dist/amd/aurelia-bootstrapper","aurelia-dependency-injection":"../node_modules/aurelia-dependency-injection/dist/amd/aurelia-dependency-injection","aurelia-event-aggregator":"../node_modules/aurelia-event-aggregator/dist/amd/aurelia-event-aggregator","aurelia-framework":"../node_modules/aurelia-framework/dist/amd/aurelia-framework","aurelia-history":"../node_modules/aurelia-history/dist/amd/aurelia-history","aurelia-history-browser":"../node_modules/aurelia-history-browser/dist/amd/aurelia-history-browser","aurelia-loader":"../node_modules/aurelia-loader/dist/amd/aurelia-loader","aurelia-loader-default":"../node_modules/aurelia-loader-default/dist/amd/aurelia-loader-default","aurelia-logging":"../node_modules/aurelia-logging/dist/amd/aurelia-logging","aurelia-logging-console":"../node_modules/aurelia-logging-console/dist/amd/aurelia-logging-console","aurelia-metadata":"../node_modules/aurelia-metadata/dist/amd/aurelia-metadata","aurelia-pal":"../node_modules/aurelia-pal/dist/amd/aurelia-pal","aurelia-pal-browser":"../node_modules/aurelia-pal-browser/dist/amd/aurelia-pal-browser","aurelia-path":"../node_modules/aurelia-path/dist/amd/aurelia-path","aurelia-polyfills":"../node_modules/aurelia-polyfills/dist/amd/aurelia-polyfills","aurelia-route-recognizer":"../node_modules/aurelia-route-recognizer/dist/amd/aurelia-route-recognizer","aurelia-router":"../node_modules/aurelia-router/dist/amd/aurelia-router","aurelia-task-queue":"../node_modules/aurelia-task-queue/dist/amd/aurelia-task-queue","aurelia-templating":"../node_modules/aurelia-templating/dist/amd/aurelia-templating","aurelia-templating-binding":"../node_modules/aurelia-templating-binding/dist/amd/aurelia-templating-binding","text":"../node_modules/text/text","bcx-aurelia-dnd":"../node_modules/bcx-aurelia-dnd/dist/index","lodash":"../node_modules/lodash/lodash","showdown":"../node_modules/showdown/dist/showdown","app-bundle":"../scripts/app-bundle"},"packages":[{"name":"aurelia-templating-resources","location":"../node_modules/aurelia-templating-resources/dist/amd","main":"aurelia-templating-resources"},{"name":"aurelia-templating-router","location":"../node_modules/aurelia-templating-router/dist/amd","main":"aurelia-templating-router"},{"name":"aurelia-testing","location":"../node_modules/aurelia-testing/dist/amd","main":"aurelia-testing"},{"name":"jquery","location":"../node_modules/jquery/dist","main":"jquery.min"},{"name":"bcx-aurelia-reorderable-repeat","location":"../node_modules/bcx-aurelia-reorderable-repeat/dist/amd","main":"index"}],"stubModules":[],"shim":{},"bundles":{"app-bundle":["app","environment","main","not-found","show-tutorial","draw/canvas-container","draw/index","move-plus-add/add-box","move-plus-add/add-money","move-plus-add/box","move-plus-add/container","move-plus-add/index","move-plus-add/inline","order-list-with-fixed-item-height/index","order-list-with-fixed-item-height/inline","order-list-with-fixed-item-height/item","order-list-with-fixed-item-height/item2","order-list-with-fixed-item-height/list-container","order-list-with-fixed-item-height/list-container2","order-list-with-fixed-item-height-reorderable-repeat/index","order-list-with-fixed-item-height-reorderable-repeat/inline","order-list-with-fixed-item-height-reorderable-repeat/list-container","order-list-with-fixed-item-height-reorderable-repeat/list-container2","order-list-with-fixed-item-height-reorderable-repeat-step2/index","order-list-with-fixed-item-height-reorderable-repeat-step2/inline","order-list-with-fixed-item-height-reorderable-repeat-step2/list-container","order-list-with-fixed-item-height-reorderable-repeat-step2/list-container2","order-list-with-unknown-item-height/index","order-list-with-unknown-item-height/inline","order-list-with-unknown-item-height/item","order-list-with-unknown-item-height/item2","order-list-with-unknown-item-height/list-container","order-list-with-unknown-item-height/list-container2","order-list-with-unknown-item-height-reorderable-repeat/index","order-list-with-unknown-item-height-reorderable-repeat/inline","order-list-with-unknown-item-height-reorderable-repeat/list-container","order-list-with-unknown-item-height-reorderable-repeat/list-container2","order-table/index","order-table/inline","order-table/item","order-table/table-container","order-table-with-handler/index","order-table-with-handler/inline","order-table-with-handler/item","order-table-with-handler/table-container","order-table-with-handler-reorderable-repeat/index","order-table-with-handler-reorderable-repeat/inline","order-table-with-handler-reorderable-repeat/table-container","order-table-with-handler-reorderable-repeat-step2/index","order-table-with-handler-reorderable-repeat-step2/inline","order-table-with-handler-reorderable-repeat-step2/table-container","reorderable-direction/container","reorderable-direction/index","reorderable-direction/inline","resources/index","simple-move/box","simple-move/container","simple-move/index","simple-move/inline","simple-move-hover-no-preview/box","simple-move-hover-no-preview/container","simple-move-hover-no-preview/index","simple-move-hover-no-preview-with-clock/box","simple-move-hover-no-preview-with-clock/container","simple-move-hover-no-preview-with-clock/index","simple-move-step-1/box","simple-move-step-1/container","simple-move-step-1/index","simple-move-step-2/box","simple-move-step-2/container","simple-move-step-2/index","tutorial/test-example","resources/attributes/if-not","resources/elements/display-source","resources/elements/display-sources","resources/elements/mark-down","resources/elements/show-mark-down-file","resources/value-converters/ends-with","resources/value-converters/nav-section","normalize","move-plus-add/add-source","move-plus-add/target-effect"]}})}
 //# sourceMappingURL=vendor-bundle.js.map

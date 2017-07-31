@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.6 - 31/Jul/2017
+
+  * add TypeScript support.
+
 ## 0.2.5 - 10/Jul/2017
 
   * fix a stupid bug on index check.

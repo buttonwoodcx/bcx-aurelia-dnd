@@ -114,6 +114,18 @@ export class App {
         moduleId: 'show-tutorial'
       },
       {
+        route: 'typescript-support', name: 'typescript-support',
+        title: 'TypeScript Support',
+        nav: true,
+        settings: {
+          section: 'reference',
+          trunks: [
+            'tutorial/typescript-support.md'
+          ]
+        },
+        moduleId: 'show-tutorial'
+      },
+      {
         route: 'dnd-service-reference', name: 'dnd-service-reference',
         title: 'DndService',
         nav: true,

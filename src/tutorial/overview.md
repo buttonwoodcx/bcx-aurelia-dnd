@@ -33,7 +33,6 @@ To start with your Aurelia app.
 
 * For [aurelia-cli](https://github.com/aurelia/cli) user, just do `au install bcx-aurelia-dnd`.
 * For app built with jspm/webpack, just install npm package `npm install --save bcx-aurelia-dnd` and add it to your module config file if needed. `bcx-aurelia-dnd` is compiled in umd format (support both AMD and commonjs loader), you should have no trouble to get it working.
-* For TypeScript user, there is no `.d.ts` file now. We will add the type definition file in future.
 
 There is a single class `DndService` provided by `bcx-aurelia-dnd`. Inject it to your component.
 
@@ -50,6 +49,8 @@ export class YourComponent {
 ```
 
 > Here we rely on default behavior of Aurelia DI (dependency injection). Aurelia DI creates a singleton `dndService` instance for all components to share.
+
+> For TypeScript user, have a look at [TypeScript Support](#/typescript-support).
 
 That's all you need to bring `DndService` to an Aurelia component. There is no step to set it up as plugin. Now let's get started to add [source and target](#/source-and-target).
 

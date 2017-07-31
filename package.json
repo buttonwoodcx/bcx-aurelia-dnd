@@ -45,6 +45,7 @@
     "test": "env BABEL_ENV=test browserify -t babelify test/dnd.spec.js | tape-run"
   },
   "main": "dist/index.js",
+  "types": "index.d.ts",
   "dependencies": {
     "aurelia-event-aggregator": "^1.0.1"
   }

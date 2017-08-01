@@ -5,7 +5,7 @@ A customized Aurelia repeater that supports drag & drop reordering automatically
 ## Add to your Aurelia app
 
 ### Install package
-> with aurelia-cli, just do `au import bcx-aurelia-reorderable-repeat`.
+> with aurelia-cli, just do `au install bcx-aurelia-reorderable-repeat`.
 
 > with jspm, do `jspm install npm:bcx-aurelia-reorderable-repeat`.
 

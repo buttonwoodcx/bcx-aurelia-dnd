@@ -4551,62 +4551,6 @@ define('tutorial/test-example',['exports'], function (exports) {
     this.sourceFilenames = ['test/simple-move-hover-no-preview/container.spec.js', 'test/simple-move-hover-no-preview/box.spec.js', 'test/setup.js'];
   };
 });
-define('resources/attributes/if-not',['exports', 'aurelia-templating', 'aurelia-templating-resources'], function (exports, _aureliaTemplating, _aureliaTemplatingResources) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.IfNotCustomAttribute = undefined;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  var _class;
-
-  var IfNotCustomAttribute = exports.IfNotCustomAttribute = (0, _aureliaTemplating.templateController)(_class = function (_If) {
-    _inherits(IfNotCustomAttribute, _If);
-
-    function IfNotCustomAttribute() {
-      _classCallCheck(this, IfNotCustomAttribute);
-
-      return _possibleConstructorReturn(this, _If.apply(this, arguments));
-    }
-
-    IfNotCustomAttribute.prototype.valueChanged = function valueChanged(newValue) {
-      _If.prototype.valueChanged.call(this, !newValue);
-    };
-
-    return IfNotCustomAttribute;
-  }(_aureliaTemplatingResources.If)) || _class;
-});
 define('resources/elements/display-source',['exports', 'aurelia-framework'], function (exports, _aureliaFramework) {
   'use strict';
 
@@ -4961,6 +4905,62 @@ define('resources/elements/show-mark-down-file',['exports', 'aurelia-framework']
     initializer: null
   })), _class);
 });
+define('resources/attributes/if-not',['exports', 'aurelia-templating', 'aurelia-templating-resources'], function (exports, _aureliaTemplating, _aureliaTemplatingResources) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.IfNotCustomAttribute = undefined;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  var _class;
+
+  var IfNotCustomAttribute = exports.IfNotCustomAttribute = (0, _aureliaTemplating.templateController)(_class = function (_If) {
+    _inherits(IfNotCustomAttribute, _If);
+
+    function IfNotCustomAttribute() {
+      _classCallCheck(this, IfNotCustomAttribute);
+
+      return _possibleConstructorReturn(this, _If.apply(this, arguments));
+    }
+
+    IfNotCustomAttribute.prototype.valueChanged = function valueChanged(newValue) {
+      _If.prototype.valueChanged.call(this, !newValue);
+    };
+
+    return IfNotCustomAttribute;
+  }(_aureliaTemplatingResources.If)) || _class;
+});
 define('resources/value-converters/ends-with',['exports', 'lodash'], function (exports, _lodash) {
   'use strict';
 
@@ -5047,40 +5047,40 @@ define('text!move-plus-add/box.html', ['module'], function(module) { module.expo
 define('text!order-list-with-fixed-item-height/item.css', ['module'], function(module) { module.exports = ".list-item {\n  display: block;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  width: 100%;\n  height: 50px;\n  text-align: center;\n  line-height: 50px;\n  overflow: hidden;\n  background: white;\n}\n\n.list-item.dragging {\n  border: none;\n  background-color: lightgrey;\n}"; });
 define('text!move-plus-add/container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container.css\"></require>\n  <require from=\"./target-effect.css\"></require>\n  <require from=\"./box\"></require>\n  <require from=\"./add-box\"></require>\n  <require from=\"./add-money\"></require>\n\n  <add-box></add-box>\n  <add-money></add-money>\n  <br><br>\n\n  <div ref=\"dndElement\" class=\"example-container ${dndCss}\">\n    <box repeat.for=\"item of patchedItems\" item.bind=\"item\"></box>\n  </div>\n</template>\n"; });
 define('text!order-list-with-fixed-item-height/list-container.css', ['module'], function(module) { module.exports = ".list-container {\n  width: 200px;\n}"; });
-define('text!move-plus-add/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"doc-demo\">\n    <container></container>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!order-list-with-fixed-item-height-reorderable-repeat/list-container.css', ['module'], function(module) { module.exports = ".list-container {\n  width: 200px;\n}\n\n.list-item {\n  display: block;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  width: 100%;\n  height: 50px;\n  text-align: center;\n  line-height: 50px;\n  overflow: hidden;\n  background: white;\n}\n"; });
-define('text!move-plus-add/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <container></container>\n    </div>\n    <div class=\"inline-demo-source-code\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
+define('text!move-plus-add/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"doc-demo\">\n    <container></container>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/list-container.css', ['module'], function(module) { module.exports = ".list-container {\n  width: 200px;\n}\n\n.list-item2 {\n  display: block;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  width: 100%;\n  height: 50px;\n  text-align: center;\n  line-height: 50px;\n  overflow: hidden;\n  background: white;\n}\n\n.reorderable-repeat-dragging-me.list-item2 {\n  visibility: visible; /* unset visibility: hidden */\n  color: transparent; /* hide text */\n  background: linear-gradient(to right, lightgrey, white, lightgrey);\n}"; });
-define('text!order-list-with-fixed-item-height/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
+define('text!move-plus-add/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./container\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <container></container>\n    </div>\n    <div class=\"inline-demo-source-code\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!order-list-with-unknown-item-height/item.css', ['module'], function(module) { module.exports = ".list-flex-item {\n  position: relative;\n  display: block;\n  background-color: white;\n  border: 1px solid #333;\n  width: 100%;\n  padding: 10px;\n  box-sizing: border-box;\n}\n\n.list-flex-item:not(:last-child) {\n  margin-bottom: -1px;\n}\n\n.list-flex-item.dragging {\n  background-color: lightgrey;\n}\n\n.list-flex-item .handler {\n  position: absolute;\n  top: 50%;\n  left: 10px;\n  margin-top: -10px;\n  width: 20px;\n  height: 20px;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  cursor: pointer;\n}\n\n.list-flex-item.has-handler {\n  padding-left: 40px;\n}"; });
+define('text!order-list-with-fixed-item-height/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!order-list-with-fixed-item-height/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!order-list-with-unknown-item-height/list-container.css', ['module'], function(module) { module.exports = ".list-container {\n  width: 200px;\n  margin: 0;\n  padding: 0;\n}"; });
 define('text!order-list-with-fixed-item-height/item.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <span show.bind=\"!draggingMe\">${item}</span>\n</template>\n"; });
 define('text!order-list-with-unknown-item-height-reorderable-repeat/list-container.css', ['module'], function(module) { module.exports = ".list-container {\n  width: 200px;\n  margin: 0;\n  padding: 0;\n}\n\n.list-flex-item {\n  position: relative;\n  display: block;\n  background-color: white;\n  border: 1px solid #333;\n  width: 100%;\n  padding: 10px;\n  box-sizing: border-box;\n}\n\n.list-flex-item:not(:last-child) {\n  margin-bottom: -1px;\n}\n\n.list-flex-item.dragging {\n  background-color: lightgrey;\n}\n\n.list-flex-item .handler {\n  position: absolute;\n  top: 50%;\n  left: 10px;\n  margin-top: -10px;\n  width: 20px;\n  height: 20px;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  cursor: pointer;\n}\n\n.list-flex-item.has-handler {\n  padding-left: 40px;\n}\n\n.list-flex-item.reorderable-repeat-dragging-me {\n  visibility: visible;\n  background-color: lightgrey;\n  color: transparent;\n}\n\n.list-flex-item.reorderable-repeat-dragging-me .handler {\n  visibility: hidden;\n}"; });
 define('text!order-list-with-fixed-item-height/item2.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <span show.bind=\"!draggingMe\">#${item.id} ${item.value}</span>\n</template>\n"; });
 define('text!order-table/table-container.css', ['module'], function(module) { module.exports = "table.table-container {\n  width: 100%;\n  background-color: white;\n  border-spacing: 0;\n}\n\ntable.table-container tr th {\n  border-bottom: 2px solid #555;\n}\n\ntable.table-container tr td {\n  border-bottom: 1px solid #555;\n}\n\ntable.table-container tr th,\ntable.table-container tr td {\n  text-align: left;\n  padding: 0.5rem;\n}\n\ntable.table-container tr.dragging td {\n  background-color: lightgrey;\n  color: lightgrey;\n}\n"; });
-define('text!order-list-with-fixed-item-height/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <p>Array of strings</p>\n\n  <div ref=\"dndElement\" class=\"list-container\">\n    <item repeat.for=\"item of patchedItems\" item.bind=\"item\"></item>\n  </div>\n</template>\n"; });
 define('text!order-table-with-handler/table-container.css', ['module'], function(module) { module.exports = "table.table-container {\n  width: 100%;\n  background-color: white;\n  border-spacing: 0;\n}\n\ntable.table-container tr th {\n  border-bottom: 2px solid #555;\n}\n\ntable.table-container tr td {\n  border-bottom: 1px solid #555;\n}\n\ntable.table-container tr th,\ntable.table-container tr td {\n  text-align: left;\n  padding: 0.5rem;\n}\n\ntable.table-container tr.dragging td {\n  background-color: lightgrey;\n  color: lightgrey;\n}\n\ntable.table-container tr td .handler {\n  display: inline-block;\n  width: 20px;\n  height: 20px;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  cursor: pointer;\n}"; });
+define('text!order-list-with-fixed-item-height/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <p>Array of strings</p>\n\n  <div ref=\"dndElement\" class=\"list-container\">\n    <item repeat.for=\"item of patchedItems\" item.bind=\"item\"></item>\n  </div>\n</template>\n"; });
 define('text!order-list-with-fixed-item-height/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item2\"></require>\n\n  <p>Array of objects</p>\n\n  <div ref=\"dndElement\" class=\"list-container\">\n    <item2 repeat.for=\"item of patchedItems\" item.bind=\"item\"></item2>\n  </div>\n</template>\n"; });
 define('text!order-table-with-handler-reorderable-repeat/table-container.css', ['module'], function(module) { module.exports = "table.table-container {\n  width: 100%;\n  background-color: white;\n  border-spacing: 0;\n}\n\ntable.table-container tr th {\n  border-bottom: 2px solid #555;\n}\n\ntable.table-container tr td {\n  border-bottom: 1px solid #555;\n}\n\ntable.table-container tr th,\ntable.table-container tr td {\n  text-align: left;\n  padding: 0.5rem;\n}\n\ntable.table-container tr.dragging td {\n  background-color: lightgrey;\n  color: lightgrey;\n}\n\ntable.table-container tr td .handler {\n  display: inline-block;\n  width: 20px;\n  height: 20px;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  cursor: pointer;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me {\n  visibility: visible;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me td {\n  background-color: lightgrey;\n  color: transparent;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me td .handler {\n  visibility: hidden;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!order-table-with-handler-reorderable-repeat-step2/table-container.css', ['module'], function(module) { module.exports = "table.table-container {\n  width: 100%;\n  background-color: white;\n  border-spacing: 0;\n}\n\ntable.table-container tr th {\n  border-bottom: 2px solid #555;\n}\n\ntable.table-container tr td {\n  border-bottom: 1px solid #555;\n}\n\ntable.table-container tr th,\ntable.table-container tr td {\n  text-align: left;\n  padding: 0.5rem;\n}\n\ntable.table-container tr.dragging td {\n  background-color: lightgrey;\n  color: lightgrey;\n}\n\ntable.table-container tr td .handler {\n  display: inline-block;\n  width: 20px;\n  height: 20px;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  cursor: pointer;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me {\n  visibility: visible;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me td {\n  background-color: lightgrey;\n  color: transparent;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me td .handler {\n  visibility: hidden;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!reorderable-direction/container.css', ['module'], function(module) { module.exports = ".floats-container {\n  overflow: hidden;\n  width: 100%;\n}\n\n.float-left, .float-right {\n  margin: 0.2rem;\n  border: 1px dashed grey;\n  padding: 0.5rem;\n  cursor: pointer;\n}\n\n.float-left {\n  float: left;\n}\n\n.float-right {\n  float: right;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of strings</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item\" reorderable-repeat.for=\"item of items\">\n      ${item}\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of objects</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item\" reorderable-repeat.for=\"item of items\">\n      #${item.id} ${item.value}\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of strings</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item\" reorderable-repeat.for=\"item of items\">\n      ${item}\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of objects</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item\" reorderable-repeat.for=\"item of items\">\n      #${item.id} ${item.value}\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of strings</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item2\" reorderable-repeat.for=\"item of items\">\n      ${item}\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview-with-clock/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
 define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of objects</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item2\" reorderable-repeat.for=\"item of items\">\n      #${item.id} ${item.value}\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview-with-clock/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!order-list-with-unknown-item-height/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!simple-move-step-1/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
+define('text!order-list-with-unknown-item-height/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!order-list-with-unknown-item-height/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-step-1/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
 define('text!order-list-with-unknown-item-height/item.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });

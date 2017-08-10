@@ -5,9 +5,9 @@ Before we go onto target definition, let's have a look what happened with the pr
 If using native HTML5 DnD API, the preview would be provided by browser automatically, you have little control of its appearance. Instead, as copied from dragula, `DndService` draws the preview "image" by creating a DOM element.
 
 1. first, it clones the source element to a preview element.
-2. add css class "bcx-dnd-preview" to the preview element. Most importantly the class sets `position: absolute !important;` on the preview.
+2. add css class "bcx-dnd-preview" to the preview element. Most importantly this class sets `position: absolute !important;` on the preview.
 3. get calculated page offset and size of source element, apply them to preview's `left,top,width,height` styles. So that preview will appear at the exact same location of source element.
-4. append preview element directly in HTML body.
+4. append preview element directly to HTML body.
 
 ```css
 .bcx-dnd-preview {
@@ -21,9 +21,9 @@ If using native HTML5 DnD API, the preview would be provided by browser automati
 
 > Be clear, preview element lives outside of Aurelia. It's a static snapshot of source element.
 
-> Because preview is directly under HTML body, you need to make sure source element's css class works directly under body. If you strict the source element's css like `.example-container .example-box {...}`, the preview with class `.example-box` would not look right when `.example-container` is absent. If refactoring your css to fit `bcx-aurelia-dnd` is too much work, you can also [customize preview](#/customize-preview-and-hover).
+> Because preview is directly under HTML body, you need to make sure source element's css class works directly under body. If the source element's css is like `.example-container .example-box {...}`, the preview with class `.example-box` would not look right when `.example-container` is absent. If refactoring your css to fit `bcx-aurelia-dnd` is too much work, you can also [customize preview](#/customize-preview-and-hover).
 
-> `bcx-aurelia-dnd` style sheet (for `.bcx-dnd-preview` and others) was injected to top of HTML head. You can overwrite them in your style sheet, for instance, overwrite the `opacity` and `box-shadow` on `.bcx-dnd-preview`. You can also apply special style to one type of your preview with `.bcx-dnd-preview.example-box {...}`. Comparing to native HTML5 DnD API, we have much better control on preview.
+> `bcx-aurelia-dnd` style sheet (for `.bcx-dnd-preview` and others) was injected to the top of HTML head. You can overwrite them in your style sheet, for instance, overwrite the `opacity` and `box-shadow` on `.bcx-dnd-preview`. You can also apply special style to one type of your preview with `.bcx-dnd-preview.example-box {...}`. Comparing to native HTML5 DnD API, we have much better control on preview.
 
 > You may wonder how would preview on `<tr>` ever work. It would not, `<tr>` would not work out of a table. You will learn how to deal with that in [customize preview](#/customize-preview-and-hover).
 
@@ -72,7 +72,7 @@ When a drag started, `DndService` got a model from source element (`dndModel()`)
 * all of above have value `undefined` when not in a DnD session.
 
 
-Only when `canDrop` is true, the target delegate have chance of receiving `dndDrop(location)`. In it, we got the `dnd.model.item`. You also got some location information passed as argument.
+Only when `canDrop` is true, the target delegate has chance of receiving `dndDrop(location)`. In it, we got the `dnd.model.item`. You also got some location information passed as argument.
 
 There are few objects in location payload.
 * __location.mouseStartAt__, drag start mouse location {x, y} (not {left, top}).

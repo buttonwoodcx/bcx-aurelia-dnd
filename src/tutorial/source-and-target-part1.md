@@ -66,11 +66,11 @@ export class Box {
 }
 ```
 
-> `DndService` has no requirement on the shape of the model. Even if you return `undefined` here, `DndService` would not complain, although there is no practical purpose of returning `undefined`.
+> `DndService` has no requirement on the shape of the model. Even if you return `undefined` here, `DndService` would not complain, although there is no practical usage of returning `undefined`.
 
 > You should make your own convention on the shape of the model. A common practice is to provide a `type` in the model, which you can easily check against in other parts of your app.
 
-Here is what we got so far, movable boxes. There is no effect of dropping it, because we have not registered any DnD target yet.
+Here is what we got so far, movable boxes. There is no effect when dropping it, because we have not registered any DnD target yet.
 
 
 

@@ -7,7 +7,7 @@ For the source delegate (box), we turned off preview, removed `show.bind="!dragg
 For the target delegate (container),
 
 * in html template, instead of repeat on original items list, we repeat on patched items list, which is the original items patched by intention.
-* we capture user intention in `dndHover(location)` callback. Beware, don't mutate real items yet. We use temporary property `intention` to save this information.
+* we capture user intention in `dndHover(location)` callback. Beware, don't mutate the real items list yet. We use temporary property `intention` to save this information.
 * we apply the intention in `dndDrop(location)` callback, as app user intended.
 * we reset temporary property `intention` before and after a DnD session by subscribing aurelia events `'dnd:willStart'` and `'dnd:didEnd'`.
 

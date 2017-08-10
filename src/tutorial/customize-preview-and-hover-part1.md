@@ -10,4 +10,4 @@ Preview has its limitation, it is a static snapshot of source element at the tim
 
 What about instead of using preview, we turn preview off, and use optional `dndHover(location)` callback on target delegate for real-time feedback.
 
-To elaborate the purpose, we put a real-time clock on every boxes. You can see it keep updating the clock during a DnD session.
+To demonstrate the purpose, we put a real-time clock on every boxes. You can see it keeps updating the clock during a DnD session.

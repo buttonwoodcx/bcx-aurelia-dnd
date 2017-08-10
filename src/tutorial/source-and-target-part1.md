@@ -5,7 +5,7 @@ Influenced by React DnD, `bcx-aurelia-dnd`'s `DndService` has concept of:
   * __DnD source__, a DOM element that you can drag, plus associated logic.
   * __DnD target__, a DOM element that you can drop to, plus associated logic.
 
-Since the source and target are bounded to DOM element, you need to register and deregister them to `DndService` at the right Aurelia component life-cycle. The common practice is to `addSource`/`addTarget` in `attached()`, and do `removeSource`/`removeTarget` in `detached()`.
+Since the source and target are bound to DOM element, you need to register and deregister them to `DndService` at the right Aurelia component life-cycle. The common practice is to `addSource`/`addTarget` in `attached()`, and do `removeSource`/`removeTarget` in `detached()`.
 
 Let's look at the first example ["move object"](#/simple), there is a container of three boxes inside. To implement moving box, we register every box as a source which we want to drag, and register the container as the target which will receive a drop callback.
 

@@ -2336,6 +2336,82 @@ define('order-list-with-unknown-item-height/list-container2',['exports', 'aureli
     return ListContainer2;
   }(), (_applyDecoratedDescriptor(_class2.prototype, 'patchedItems', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'patchedItems'), _class2.prototype)), _class2)) || _class);
 });
+define('order-list-with-unknown-item-height-reorderable-repeat/index',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Index = exports.Index = function Index() {
+    _classCallCheck(this, Index);
+
+    this.sourceFilenames = ['src/order-list-with-unknown-item-height-reorderable-repeat/list-container.js', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container.html', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container.css', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container2.js', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container2.html'];
+  };
+});
+define('order-list-with-unknown-item-height-reorderable-repeat/inline',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Inline = exports.Inline = function Inline() {
+    _classCallCheck(this, Inline);
+
+    this.sourceFilenames = ['src/order-list-with-unknown-item-height-reorderable-repeat/list-container.js', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container.html', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container.css', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container2.js', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container2.html'];
+  };
+});
+define('order-list-with-unknown-item-height-reorderable-repeat/list-container',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var ListContainer = exports.ListContainer = function ListContainer() {
+    _classCallCheck(this, ListContainer);
+
+    this.items = [{ id: '0', value: 'lorem' }, { id: '1', value: 'Lorem ipsum dolor sit amet. consectetur adipisicing elit.' }, { id: '2', value: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, tempore.' }, { id: '3', value: 'Lorem ipsum dolor sit amet, consectetur.' }];
+  };
+});
+define('order-list-with-unknown-item-height-reorderable-repeat/list-container2',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var ListContainer2 = exports.ListContainer2 = function ListContainer2() {
+    _classCallCheck(this, ListContainer2);
+
+    this.items = [{ id: '0', value: 'lorem' }, { id: '1', value: 'Lorem ipsum dolor sit amet. consectetur adipisicing elit.' }, { id: '2', value: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, tempore.' }, { id: '3', value: 'Lorem ipsum dolor sit amet, consectetur.' }];
+  };
+});
 define('order-table/index',['exports'], function (exports) {
   'use strict';
 
@@ -2662,82 +2738,6 @@ define('order-table/table-container',['exports', 'aurelia-framework', 'bcx-aurel
 
     return TableContainer;
   }(), (_applyDecoratedDescriptor(_class2.prototype, 'patchedItems', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'patchedItems'), _class2.prototype)), _class2)) || _class);
-});
-define('order-list-with-unknown-item-height-reorderable-repeat/index',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Index = exports.Index = function Index() {
-    _classCallCheck(this, Index);
-
-    this.sourceFilenames = ['src/order-list-with-unknown-item-height-reorderable-repeat/list-container.js', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container.html', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container.css', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container2.js', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container2.html'];
-  };
-});
-define('order-list-with-unknown-item-height-reorderable-repeat/inline',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Inline = exports.Inline = function Inline() {
-    _classCallCheck(this, Inline);
-
-    this.sourceFilenames = ['src/order-list-with-unknown-item-height-reorderable-repeat/list-container.js', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container.html', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container.css', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container2.js', 'src/order-list-with-unknown-item-height-reorderable-repeat/list-container2.html'];
-  };
-});
-define('order-list-with-unknown-item-height-reorderable-repeat/list-container',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var ListContainer = exports.ListContainer = function ListContainer() {
-    _classCallCheck(this, ListContainer);
-
-    this.items = [{ id: '0', value: 'lorem' }, { id: '1', value: 'Lorem ipsum dolor sit amet. consectetur adipisicing elit.' }, { id: '2', value: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, tempore.' }, { id: '3', value: 'Lorem ipsum dolor sit amet, consectetur.' }];
-  };
-});
-define('order-list-with-unknown-item-height-reorderable-repeat/list-container2',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var ListContainer2 = exports.ListContainer2 = function ListContainer2() {
-    _classCallCheck(this, ListContainer2);
-
-    this.items = [{ id: '0', value: 'lorem' }, { id: '1', value: 'Lorem ipsum dolor sit amet. consectetur adipisicing elit.' }, { id: '2', value: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, tempore.' }, { id: '3', value: 'Lorem ipsum dolor sit amet, consectetur.' }];
-  };
 });
 define('order-table-with-handler/index',['exports'], function (exports) {
   'use strict';

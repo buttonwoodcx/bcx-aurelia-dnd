@@ -4,7 +4,7 @@
 
 Re-ordering a list is probably the most common use case that leads you to this project.
 
-If you have read all the pages before this one, there is no more secret for how to implemented it.
+If you have read all the pages before this one, there is no more secret about how to implement it.
 
 ## (deprecated) List with fixed item height
 

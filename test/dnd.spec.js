@@ -196,8 +196,8 @@ test('add source', t => {
     }
   }, {centerPreviewToMousePosition: true, hideCursor: true});
 
-  // source with handler
-  dndService.addSource({dndModel: model2, dndElement: box_0_4}, {handler: box_0_4_handler});
+  // source with handler, a dndPreview returns undefined
+  dndService.addSource({dndModel: model2, dndElement: box_0_4, dndPreview: () => undefined}, {handler: box_0_4_handler});
 
   // source with content-box box-sizing
   dndService.addSource({dndModel: model1, dndElement: box_content_box});
@@ -809,10 +809,12 @@ test('drag type two inside of handler, drop on target', t => {
   t.ok(target4.dnd.canDrop);
   t.deepEqual(target4.dnd.model, m);
 
+  // dndPreview() returns undefined, fall back to default preview.
   const preview = $('.bcx-dnd-preview');
   t.equal(preview.length, 1);
   t.equal(preview.css('left'), '0px'); // initial position of preview
   t.equal(preview.css('top'), '400px');
+  t.equal(preview.text(), '04');
 
   t.deepEqual(_track, [
     { event: 'dnd:willStart', isProcessing: undefined, model: undefined },

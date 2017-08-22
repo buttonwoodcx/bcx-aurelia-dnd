@@ -12,6 +12,8 @@ There is one more option you can pass to `addSource()`, that is `hideCursor`, wh
 
 > Combine option `centerPreviewToMousePosition` with `hideCursor`, you are essentially using `dndPreview()` to draw a cursor replacement! That's what happened behind "Add money" button.
 
+> You could do conditional customizing preview. In `dndPreview()` callback, return a DOM element when you need to customize preview, or return null/undefined when you want to fall back to default preview.
+
 ## Style target element based on DnD state
 
 In the above example code, both boxes and container are DnD targets. They got background color and outline change during a DnD session for "add box" or "add money".

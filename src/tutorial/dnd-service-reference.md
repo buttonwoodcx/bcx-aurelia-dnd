@@ -53,7 +53,7 @@ const dndService = new DndService(sharedEa);
 
 > `delegate.dndModel()`, mandatory. Called once, when DnD session starts. It needs to return a model describing the meaning of a drag. There is no requirement on the shape of returned model.
 
-> `delegate.dndPreview(model)`, optional. Called once, when DnD session starts. It needs to return a newly created DOM element, with reasonable size, and not yet attached to DOM tree. Input `model` is the cached result of `sourceDelegate.dndModel()`.
+> `delegate.dndPreview(model)`, optional. Called once, when DnD session starts. It needs to return a newly created DOM element, with reasonable size, and not yet attached to DOM tree. Input `model` is the cached result of `sourceDelegate.dndModel()`. It could also return null or undefined, in that case, `DndService` will fall back to use default preview.
 
 > if `options.noPreview` is true, `delegate.dndPreview(model)` is ignored.
 

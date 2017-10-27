@@ -3,10 +3,12 @@ import resolve from 'rollup-plugin-node-resolve';
 import uglify from 'rollup-plugin-uglify';
 
 export default {
-  entry: 'src/index.js',
-  format: 'umd',
-  moduleName: 'BcxAureliaDnd',
-  dest: 'dist/index.js',
+  input: 'src/index.js',
+  output: {
+    format: 'umd',
+    file: 'dist/index.js',
+  },
+  name: 'BcxAureliaDnd',
   external: ["aurelia-event-aggregator"],
   globals: {
     "aurelia-event-aggregator": "AureliaEventAggregator"

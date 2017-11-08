@@ -1,5 +1,3 @@
-# Changelog
-
 ## 0.3.0 - 08/Nov/2017
 
   * fix missing event callback on touch devices.

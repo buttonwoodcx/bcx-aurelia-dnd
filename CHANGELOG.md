@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0 - 08/Nov/2017
+
+  * fix missing event callback on touch devices.
+
 ## 0.2.6 - 31/Jul/2017
 
   * add TypeScript support.

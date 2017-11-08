@@ -320,11 +320,11 @@ export class DndService {
     this._drag = this._drag.bind(this);
 
     // dnd start handler on doc level
-    documentElement.addEventListener('mousedown', this._grab, {passive: true});
-    documentElement.addEventListener('touchstart', this._grab, {passive: true});
+    documentElement.addEventListener('mousedown', this._grab, {passive: false});
+    documentElement.addEventListener('touchstart', this._grab, {passive: false});
 
     // dnd end handler for desktop on doc level
-    documentElement.addEventListener('mouseup', this._release, {passive: true});
+    documentElement.addEventListener('mouseup', this._release, {passive: false});
     // dnd end handler for mobile (touch event) on source element
   }
 
@@ -371,11 +371,11 @@ export class DndService {
   }
 
   _startListeningEventualMovements () {
-    documentElement.addEventListener('mousemove', this._startBecauseMouseMoved, {passive: true});
-    this._element && this._element.addEventListener('touchmove', this._startBecauseMouseMoved, {passive: true});
+    documentElement.addEventListener('mousemove', this._startBecauseMouseMoved, {passive: false});
+    this._element && this._element.addEventListener('touchmove', this._startBecauseMouseMoved, {passive: false});
 
     // dnd end handler for mobile (touch event) on source element
-    this._element && this._element.addEventListener('touchend', this._release, {passive: true});
+    this._element && this._element.addEventListener('touchend', this._release, {passive: false});
   }
 
   _stopListeningEventualMovements () {
@@ -387,8 +387,8 @@ export class DndService {
     documentElement.addEventListener('selectstart', this._preventGrabbed); // IE8
     documentElement.addEventListener('click', this._preventGrabbed);
 
-    documentElement.addEventListener('mousemove', this._drag, {passive: true});
-    this._element && this._element.addEventListener('touchmove', this._drag, {passive: true});
+    documentElement.addEventListener('mousemove', this._drag, {passive: false});
+    this._element && this._element.addEventListener('touchmove', this._drag, {passive: false});
   }
 
   _stopListeningMovements() {

@@ -1,3 +1,18 @@
+<a name="0.3.1"></a>
+## [0.3.1](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.3.0...v0.3.1) (2017-11-08)
+
+
+### Bug Fixes
+
+* for touchstart, disable html body scroll. ([3682b2c](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/3682b2c))
+
+
+### Features
+
+* use standard-changelog to auto generate changelog. ([c886197](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/c886197))
+
+
+
 ## 0.3.0 - 08/Nov/2017
 
   * fix missing event callback on touch devices.

@@ -41,7 +41,7 @@
     "prepare": "npm run build",
     "preversion": "npm test",
     "version": "standard-changelog && git add CHANGELOG.md",
-    "postversion": "git push && git push --tags",
+    "postversion": "git push && git push --tags && npm publish",
     "pretest": "npm run lint",
     "test": "env BABEL_ENV=test browserify -t babelify test/dnd.spec.js | tape-run"
   },

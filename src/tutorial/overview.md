@@ -25,10 +25,6 @@ Thanks for Aurelia, `bcx-aurelia-dnd` implementation is very simple. The source 
 
 Another bonus of dragula, it supports iPad! All examples here works on iPad.
 
-> There is an annoying whole HTML body bouncing effect on iPad. I tried some solutions to disable it, but none of them works so far. Even [dragula example page](https://bevacqua.github.io/dragula/) got the same issue.
-
-> Well, not exactly all works on iPad. When `noPreview` is true, iPad shows weird behaviour when starting a drag. I have not spent enough time on this issue.
-
 ## Use inside Aurelia app
 
 To start with your Aurelia app.

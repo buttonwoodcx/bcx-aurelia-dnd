@@ -114,32 +114,6 @@ const classes = (function() {
   return {add: addClass, rm: rmClass};
 }());
 
-function touchy (el, op, type, fn) {
-  var touch = {
-    mouseup: 'touchend',
-    mousedown: 'touchstart',
-    mousemove: 'touchmove'
-  };
-  var pointers = {
-    mouseup: 'pointerup',
-    mousedown: 'pointerdown',
-    mousemove: 'pointermove'
-  };
-  var microsoft = {
-    mouseup: 'MSPointerUp',
-    mousedown: 'MSPointerDown',
-    mousemove: 'MSPointerMove'
-  };
-  if (window.navigator.pointerEnabled) {
-    el[op](pointers[type], fn);
-  } else if (window.navigator.msPointerEnabled) {
-    el[op](microsoft[type], fn);
-  } else {
-    el[op](touch[type], fn);
-    el[op](type, fn);
-  }
-}
-
 function whichMouseButton (e) {
   if (e.touches !== undefined) { return e.touches.length; }
   if (e.which !== undefined && e.which !== 0) { return e.which; } // see https://github.com/bevacqua/dragula/issues/261
@@ -345,8 +319,13 @@ export class DndService {
     this._preventGrabbed = this._preventGrabbed.bind(this);
     this._drag = this._drag.bind(this);
 
-    touchy(documentElement, 'addEventListener', 'mousedown', this._grab);
-    touchy(documentElement, 'addEventListener', 'mouseup', this._release);
+    // dnd start handler on doc level
+    documentElement.addEventListener('mousedown', this._grab, {passive: true});
+    documentElement.addEventListener('touchstart', this._grab, {passive: true});
+
+    // dnd end handler for desktop on doc level
+    documentElement.addEventListener('mouseup', this._release, {passive: true});
+    // dnd end handler for mobile (touch event) on source element
   }
 
   addSource(delegate, options) {
@@ -392,23 +371,34 @@ export class DndService {
   }
 
   _startListeningEventualMovements () {
-    touchy(documentElement, 'addEventListener', 'mousemove', this._startBecauseMouseMoved);
+    documentElement.addEventListener('mousemove', this._startBecauseMouseMoved, {passive: true});
+    this._element && this._element.addEventListener('touchmove', this._startBecauseMouseMoved, {passive: true});
+
+    // dnd end handler for mobile (touch event) on source element
+    this._element && this._element.addEventListener('touchend', this._release, {passive: true});
   }
 
   _stopListeningEventualMovements () {
-    touchy(documentElement, 'removeEventListener', 'mousemove', this._startBecauseMouseMoved);
+    documentElement.removeEventListener('mousemove', this._startBecauseMouseMoved);
+    this._element && this._element.removeEventListener('touchmove', this._startBecauseMouseMoved);
   }
 
   _startListeningMovements() {
     documentElement.addEventListener('selectstart', this._preventGrabbed); // IE8
     documentElement.addEventListener('click', this._preventGrabbed);
-    touchy(documentElement, 'addEventListener', 'mousemove', this._drag);
+
+    documentElement.addEventListener('mousemove', this._drag, {passive: true});
+    this._element && this._element.addEventListener('touchmove', this._drag, {passive: true});
   }
 
   _stopListeningMovements() {
     documentElement.removeEventListener('selectstart', this._preventGrabbed); // IE8
     documentElement.removeEventListener('click', this._preventGrabbed);
-    touchy(documentElement, 'removeEventListener', 'mousemove', this._drag);
+
+    documentElement.removeEventListener('mousemove', this._drag);
+    this._element && this._element.removeEventListener('touchmove', this._drag);
+    // remove dnd end handler for mobile (touch event) on source element
+    this._element && this._element.removeEventListener('touchend', this._release);
   }
 
   _preventGrabbed(e) {
@@ -426,6 +416,7 @@ export class DndService {
       return; // we only care about honest-to-god left clicks and touch events
     }
     const element = e.target;
+    this._element = element;
     const dndSource = this._startingSource(element);
     if (!dndSource) return;
 
@@ -445,6 +436,7 @@ export class DndService {
     this._grabbed = undefined;
     this._stopListeningEventualMovements();
     this._stopListeningMovements();
+    this._element = undefined;
   }
 
   _release(e) {

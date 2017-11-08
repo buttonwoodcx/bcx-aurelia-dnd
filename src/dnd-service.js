@@ -429,6 +429,9 @@ export class DndService {
       } else {
         e.preventDefault(); // fixes https://github.com/bevacqua/dragula/issues/155
       }
+    } else {
+      // for touchstart, disable html body scroll
+      e.preventDefault();
     }
   }
 

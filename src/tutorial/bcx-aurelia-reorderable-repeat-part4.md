@@ -4,7 +4,7 @@
 
 > To understand this topic, please go through `bcx-aurelia-dnd` [tutorial](#/overview).
 
-> I was attempted to add a generic `<tr>` customized preview in `bcx-aurelia-reorderable-repeat`. But it is bit hard to get it right for all use cases, at least for now.
+> I attempted to add a generic `<tr>` customized preview in `bcx-aurelia-reorderable-repeat`. But it is bit hard to get it right for all use cases, at least for now.
 
 To draw a customized preview, use optional attribute "reorderable-dnd-preview". The attribute supports:
 

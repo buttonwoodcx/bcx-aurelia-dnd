@@ -37,4 +37,4 @@ If your DOM list flows rather from left to right (or from right to left), you ca
 
 > There is support of `reorderable-direction="up"` (for flow from bottom to top). If you can do that in your css (I am not sure how to), we support it.
 
-> I was attempted to auto-detect the DOM flow. It's bit tricky at least for now. This option might be removed in future, replaced by auto-detection.
+> I attempted to auto-detect the DOM flow. It's bit tricky at least for now. This option might be removed in future, replaced by auto-detection.

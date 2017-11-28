@@ -29,8 +29,11 @@ Another bonus of dragula, it supports iPad! All examples here works on iPad.
 
 To start with your Aurelia app.
 
-* For [aurelia-cli](https://github.com/aurelia/cli) user, just do `au install bcx-aurelia-dnd`.
-* For app built with jspm/webpack, just install npm package `npm install --save bcx-aurelia-dnd` and add it to your module config file if needed. `bcx-aurelia-dnd` is compiled in umd format (support both AMD and commonjs loader), you should have no trouble to get it working.
+> with aurelia-cli, just do `au install bcx-aurelia-dnd`.
+
+> with jspm, do `jspm install npm:bcx-aurelia-dnd`.
+
+> with webpack, do `npm install --save bcx-aurelia-dnd`.
 
 There is a single class `DndService` provided by `bcx-aurelia-dnd`. Inject it to your component.
 

@@ -44778,7 +44778,7 @@ define("jquery/jquery.min", [],function(){});
   }
 }.call(this));
 
-;/*! showdown v 1.8.1 - 01-11-2017 */
+;/*! showdown v 1.8.3 - 28-11-2017 */
 (function(){
 /**
  * Created by Tivie on 13-07-2015.
@@ -47378,7 +47378,9 @@ showdown.subParser('anchors', function (text, options, globals) {
       result += ' title="' + title + '"';
     }
 
-    if (options.openLinksInNewWindow) {
+    // optionLinksInNewWindow only applies
+    // to external links. Hash links (#) open in same page
+    if (options.openLinksInNewWindow && !/^#/.test(url)) {
       // escaped _
       result += ' target="¨E95Eblank"';
     }
@@ -47656,7 +47658,9 @@ showdown.subParser('codeSpans', function (text, options, globals) {
       c = c.replace(/^([ \t]*)/g, '');	// leading whitespace
       c = c.replace(/[ \t]*$/g, '');	// trailing whitespace
       c = showdown.subParser('encodeCode')(c, options, globals);
-      return m1 + '<code>' + c + '</code>';
+      c = m1 + '<code>' + c + '</code>';
+      c = showdown.subParser('hashHTMLSpans')(c, options, globals);
+      return c;
     }
   );
 
@@ -47856,7 +47860,7 @@ showdown.subParser('githubCodeBlocks', function (text, options, globals) {
 
   text += '¨0';
 
-  text = text.replace(/(?:^|\n)```(.*)\n([\s\S]*?)\n```/g, function (wholeMatch, language, codeblock) {
+  text = text.replace(/(?:^|\n)(```+|~~~+)([^\s`~]*)\n([\s\S]*?)\n\1/g, function (wholeMatch, delim, language, codeblock) {
     var end = (options.omitExtraWLInCodeBlocks) ? '' : '\n';
 
     // First parse the github code block
@@ -48081,6 +48085,7 @@ showdown.subParser('unhashHTMLSpans', function (text, options, globals) {
       var num = RegExp.$1;
       repText = repText.replace('¨C' + num + 'C', globals.gHtmlSpans[num]);
       if (limit === 10) {
+        console.error('maximum nesting of 10 spans reached!!!');
         break;
       }
       ++limit;
@@ -48404,14 +48409,14 @@ showdown.subParser('italicsAndBold', function (text, options, globals) {
 
   // Now parse asterisks
   if (options.literalMidWordAsterisks) {
-    text = text.trim().replace(/(^| )\*{3}(\S[\s\S]*?)\*{3}([ ,;!?.]|$)/g, function (wm, lead, txt, trail) {
-      return parseInside (txt, lead + '<strong><em>', '</em></strong>' + trail);
+    text = text.replace(/([^*]|^)\B\*\*\*(\S[\s\S]+?)\*\*\*\B(?!\*)/g, function (wm, lead, txt) {
+      return parseInside (txt, lead + '<strong><em>', '</em></strong>');
     });
-    text = text.trim().replace(/(^| )\*{2}(\S[\s\S]*?)\*{2}([ ,;!?.]|$)/g, function (wm, lead, txt, trail) {
-      return parseInside (txt, lead + '<strong>', '</strong>' + trail);
+    text = text.replace(/([^*]|^)\B\*\*(\S[\s\S]+?)\*\*\B(?!\*)/g, function (wm, lead, txt) {
+      return parseInside (txt, lead + '<strong>', '</strong>');
     });
-    text = text.trim().replace(/(^| )\*(\S[\s\S]*?)\*([ ,;!?.]|$)/g, function (wm, lead, txt, trail) {
-      return parseInside (txt, lead + '<em>', '</em>' + trail);
+    text = text.replace(/([^*]|^)\B\*(\S[\s\S]+?)\*\B(?!\*)/g, function (wm, lead, txt) {
+      return parseInside (txt, lead + '<em>', '</em>');
     });
   } else {
     text = text.replace(/\*\*\*(\S[\s\S]*?)\*\*\*/g, function (wm, m) {
@@ -48931,14 +48936,16 @@ showdown.subParser('tables', function (text, options, globals) {
   function parseTable (rawTable) {
     var i, tableLines = rawTable.split('\n');
 
-    // strip wrong first and last column if wrapped tables are used
     for (i = 0; i < tableLines.length; ++i) {
+      // strip wrong first and last column if wrapped tables are used
       if (/^ {0,3}\|/.test(tableLines[i])) {
         tableLines[i] = tableLines[i].replace(/^ {0,3}\|/, '');
       }
       if (/\|[ \t]*$/.test(tableLines[i])) {
         tableLines[i] = tableLines[i].replace(/\|[ \t]*$/, '');
       }
+      // parse code spans first, but we only support one line code spans
+      tableLines[i] = showdown.subParser('codeSpans')(tableLines[i], options, globals);
     }
 
     var rawHeaders = tableLines[0].split('|').map(function (s) { return s.trim();}),
@@ -49884,5 +49891,5 @@ define('bcx-aurelia-reorderable-repeat/reorderable-after-reordering',['exports',
     return ReorderableAfterReordering;
   }()) || _class);
 });
-function _aureliaConfigureModuleLoader(){requirejs.config({"baseUrl":"src/","paths":{"root":"src","resources":"resources","elements":"resources/elements","attributes":"resources/attributes","valueConverters":"resources/value-converters","bindingBehaviors":"resources/binding-behaviors","aurelia-binding":"../node_modules/aurelia-binding/dist/amd/aurelia-binding","aurelia-bootstrapper":"../node_modules/aurelia-bootstrapper/dist/amd/aurelia-bootstrapper","aurelia-dependency-injection":"../node_modules/aurelia-dependency-injection/dist/amd/aurelia-dependency-injection","aurelia-event-aggregator":"../node_modules/aurelia-event-aggregator/dist/amd/aurelia-event-aggregator","aurelia-framework":"../node_modules/aurelia-framework/dist/amd/aurelia-framework","aurelia-history":"../node_modules/aurelia-history/dist/amd/aurelia-history","aurelia-history-browser":"../node_modules/aurelia-history-browser/dist/amd/aurelia-history-browser","aurelia-loader":"../node_modules/aurelia-loader/dist/amd/aurelia-loader","aurelia-loader-default":"../node_modules/aurelia-loader-default/dist/amd/aurelia-loader-default","aurelia-logging":"../node_modules/aurelia-logging/dist/amd/aurelia-logging","aurelia-logging-console":"../node_modules/aurelia-logging-console/dist/amd/aurelia-logging-console","aurelia-metadata":"../node_modules/aurelia-metadata/dist/amd/aurelia-metadata","aurelia-pal":"../node_modules/aurelia-pal/dist/amd/aurelia-pal","aurelia-pal-browser":"../node_modules/aurelia-pal-browser/dist/amd/aurelia-pal-browser","aurelia-path":"../node_modules/aurelia-path/dist/amd/aurelia-path","aurelia-polyfills":"../node_modules/aurelia-polyfills/dist/amd/aurelia-polyfills","aurelia-route-recognizer":"../node_modules/aurelia-route-recognizer/dist/amd/aurelia-route-recognizer","aurelia-router":"../node_modules/aurelia-router/dist/amd/aurelia-router","aurelia-task-queue":"../node_modules/aurelia-task-queue/dist/amd/aurelia-task-queue","aurelia-templating":"../node_modules/aurelia-templating/dist/amd/aurelia-templating","aurelia-templating-binding":"../node_modules/aurelia-templating-binding/dist/amd/aurelia-templating-binding","text":"../node_modules/text/text","bcx-aurelia-dnd":"../node_modules/bcx-aurelia-dnd/dist/index","lodash":"../node_modules/lodash/lodash","showdown":"../node_modules/showdown/dist/showdown","app-bundle":"../scripts/app-bundle"},"packages":[{"name":"aurelia-templating-resources","location":"../node_modules/aurelia-templating-resources/dist/amd","main":"aurelia-templating-resources"},{"name":"aurelia-templating-router","location":"../node_modules/aurelia-templating-router/dist/amd","main":"aurelia-templating-router"},{"name":"aurelia-testing","location":"../node_modules/aurelia-testing/dist/amd","main":"aurelia-testing"},{"name":"jquery","location":"../node_modules/jquery/dist","main":"jquery.min"},{"name":"bcx-aurelia-reorderable-repeat","location":"../node_modules/bcx-aurelia-reorderable-repeat/dist/amd","main":"index"}],"stubModules":[],"shim":{},"bundles":{"app-bundle":["app","environment","main","not-found","show-tutorial","draw/canvas-container","draw/index","move-plus-add/add-box","move-plus-add/add-money","move-plus-add/box","move-plus-add/container","move-plus-add/index","move-plus-add/inline","order-list-with-fixed-item-height/index","order-list-with-fixed-item-height/inline","order-list-with-fixed-item-height/item","order-list-with-fixed-item-height/item2","order-list-with-fixed-item-height/list-container","order-list-with-fixed-item-height/list-container2","order-list-with-fixed-item-height-reorderable-repeat/index","order-list-with-fixed-item-height-reorderable-repeat/inline","order-list-with-fixed-item-height-reorderable-repeat/list-container","order-list-with-fixed-item-height-reorderable-repeat/list-container2","order-list-with-fixed-item-height-reorderable-repeat-step2/index","order-list-with-fixed-item-height-reorderable-repeat-step2/inline","order-list-with-fixed-item-height-reorderable-repeat-step2/list-container","order-list-with-fixed-item-height-reorderable-repeat-step2/list-container2","order-list-with-unknown-item-height/index","order-list-with-unknown-item-height/inline","order-list-with-unknown-item-height/item","order-list-with-unknown-item-height/item2","order-list-with-unknown-item-height/list-container","order-list-with-unknown-item-height/list-container2","order-list-with-unknown-item-height-reorderable-repeat/index","order-list-with-unknown-item-height-reorderable-repeat/inline","order-list-with-unknown-item-height-reorderable-repeat/list-container","order-list-with-unknown-item-height-reorderable-repeat/list-container2","order-table/index","order-table/inline","order-table/item","order-table/table-container","order-table-with-handler/index","order-table-with-handler/inline","order-table-with-handler/item","order-table-with-handler/table-container","order-table-with-handler-reorderable-repeat/index","order-table-with-handler-reorderable-repeat/inline","order-table-with-handler-reorderable-repeat/table-container","order-table-with-handler-reorderable-repeat-step2/index","order-table-with-handler-reorderable-repeat-step2/inline","order-table-with-handler-reorderable-repeat-step2/table-container","reorderable-direction/container","reorderable-direction/index","reorderable-direction/inline","resources/index","simple-move/box","simple-move/container","simple-move/index","simple-move/inline","simple-move-hover-no-preview-with-clock/box","simple-move-hover-no-preview-with-clock/container","simple-move-hover-no-preview-with-clock/index","simple-move-hover-no-preview/box","simple-move-hover-no-preview/container","simple-move-hover-no-preview/index","simple-move-step-1/box","simple-move-step-1/container","simple-move-step-1/index","simple-move-step-2/box","simple-move-step-2/container","simple-move-step-2/index","tutorial/test-example","resources/attributes/if-not","resources/elements/display-source","resources/elements/display-sources","resources/elements/mark-down","resources/elements/show-mark-down-file","resources/value-converters/ends-with","resources/value-converters/nav-section","normalize","move-plus-add/add-source","move-plus-add/target-effect"]}})}
+function _aureliaConfigureModuleLoader(){requirejs.config({"baseUrl":"src/","paths":{"root":"src","resources":"resources","elements":"resources/elements","attributes":"resources/attributes","valueConverters":"resources/value-converters","bindingBehaviors":"resources/binding-behaviors","aurelia-binding":"../node_modules/aurelia-binding/dist/amd/aurelia-binding","aurelia-bootstrapper":"../node_modules/aurelia-bootstrapper/dist/amd/aurelia-bootstrapper","aurelia-dependency-injection":"../node_modules/aurelia-dependency-injection/dist/amd/aurelia-dependency-injection","aurelia-event-aggregator":"../node_modules/aurelia-event-aggregator/dist/amd/aurelia-event-aggregator","aurelia-framework":"../node_modules/aurelia-framework/dist/amd/aurelia-framework","aurelia-history":"../node_modules/aurelia-history/dist/amd/aurelia-history","aurelia-history-browser":"../node_modules/aurelia-history-browser/dist/amd/aurelia-history-browser","aurelia-loader":"../node_modules/aurelia-loader/dist/amd/aurelia-loader","aurelia-loader-default":"../node_modules/aurelia-loader-default/dist/amd/aurelia-loader-default","aurelia-logging":"../node_modules/aurelia-logging/dist/amd/aurelia-logging","aurelia-logging-console":"../node_modules/aurelia-logging-console/dist/amd/aurelia-logging-console","aurelia-metadata":"../node_modules/aurelia-metadata/dist/amd/aurelia-metadata","aurelia-pal":"../node_modules/aurelia-pal/dist/amd/aurelia-pal","aurelia-pal-browser":"../node_modules/aurelia-pal-browser/dist/amd/aurelia-pal-browser","aurelia-path":"../node_modules/aurelia-path/dist/amd/aurelia-path","aurelia-polyfills":"../node_modules/aurelia-polyfills/dist/amd/aurelia-polyfills","aurelia-route-recognizer":"../node_modules/aurelia-route-recognizer/dist/amd/aurelia-route-recognizer","aurelia-router":"../node_modules/aurelia-router/dist/amd/aurelia-router","aurelia-task-queue":"../node_modules/aurelia-task-queue/dist/amd/aurelia-task-queue","aurelia-templating":"../node_modules/aurelia-templating/dist/amd/aurelia-templating","aurelia-templating-binding":"../node_modules/aurelia-templating-binding/dist/amd/aurelia-templating-binding","text":"../node_modules/text/text","bcx-aurelia-dnd":"../node_modules/bcx-aurelia-dnd/dist/index","lodash":"../node_modules/lodash/lodash","showdown":"../node_modules/showdown/dist/showdown","app-bundle":"../scripts/app-bundle"},"packages":[{"name":"aurelia-templating-resources","location":"../node_modules/aurelia-templating-resources/dist/amd","main":"aurelia-templating-resources"},{"name":"aurelia-templating-router","location":"../node_modules/aurelia-templating-router/dist/amd","main":"aurelia-templating-router"},{"name":"aurelia-testing","location":"../node_modules/aurelia-testing/dist/amd","main":"aurelia-testing"},{"name":"jquery","location":"../node_modules/jquery/dist","main":"jquery.min"},{"name":"bcx-aurelia-reorderable-repeat","location":"../node_modules/bcx-aurelia-reorderable-repeat/dist/amd","main":"index"}],"stubModules":[],"shim":{},"bundles":{"app-bundle":["app","environment","main","not-found","show-tutorial","draw/canvas-container","draw/index","move-plus-add/add-box","move-plus-add/add-money","move-plus-add/box","move-plus-add/container","move-plus-add/index","move-plus-add/inline","order-list-with-fixed-item-height/index","order-list-with-fixed-item-height/inline","order-list-with-fixed-item-height/item","order-list-with-fixed-item-height/item2","order-list-with-fixed-item-height/list-container","order-list-with-fixed-item-height/list-container2","order-list-with-fixed-item-height-reorderable-repeat/index","order-list-with-fixed-item-height-reorderable-repeat/inline","order-list-with-fixed-item-height-reorderable-repeat/list-container","order-list-with-fixed-item-height-reorderable-repeat/list-container2","order-list-with-fixed-item-height-reorderable-repeat-step2/index","order-list-with-fixed-item-height-reorderable-repeat-step2/inline","order-list-with-fixed-item-height-reorderable-repeat-step2/list-container","order-list-with-fixed-item-height-reorderable-repeat-step2/list-container2","order-list-with-unknown-item-height/index","order-list-with-unknown-item-height/inline","order-list-with-unknown-item-height/item","order-list-with-unknown-item-height/item2","order-list-with-unknown-item-height/list-container","order-list-with-unknown-item-height/list-container2","order-list-with-unknown-item-height-reorderable-repeat/index","order-list-with-unknown-item-height-reorderable-repeat/inline","order-list-with-unknown-item-height-reorderable-repeat/list-container","order-list-with-unknown-item-height-reorderable-repeat/list-container2","order-table/index","order-table/inline","order-table/item","order-table/table-container","order-table-with-handler/index","order-table-with-handler/inline","order-table-with-handler/item","order-table-with-handler/table-container","order-table-with-handler-reorderable-repeat/index","order-table-with-handler-reorderable-repeat/inline","order-table-with-handler-reorderable-repeat/table-container","order-table-with-handler-reorderable-repeat-step2/index","order-table-with-handler-reorderable-repeat-step2/inline","order-table-with-handler-reorderable-repeat-step2/table-container","reorderable-direction/container","reorderable-direction/index","reorderable-direction/inline","resources/index","simple-move/box","simple-move/container","simple-move/index","simple-move/inline","simple-move-hover-no-preview/box","simple-move-hover-no-preview/container","simple-move-hover-no-preview/index","simple-move-hover-no-preview-with-clock/box","simple-move-hover-no-preview-with-clock/container","simple-move-hover-no-preview-with-clock/index","simple-move-step-1/box","simple-move-step-1/container","simple-move-step-1/index","simple-move-step-2/box","simple-move-step-2/container","simple-move-step-2/index","tutorial/test-example","resources/attributes/if-not","resources/elements/display-source","resources/elements/display-sources","resources/elements/mark-down","resources/elements/show-mark-down-file","resources/value-converters/ends-with","resources/value-converters/nav-section","normalize","move-plus-add/add-source","move-plus-add/target-effect"]}})}
 //# sourceMappingURL=vendor-bundle.js.map

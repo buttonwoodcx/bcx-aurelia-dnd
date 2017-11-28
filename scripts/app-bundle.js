@@ -3536,6 +3536,320 @@ define('simple-move/inline',['exports'], function (exports) {
     this.sourceFilenames = ['src/simple-move/container.js', 'src/simple-move/container.html', 'src/simple-move/container.css', 'src/simple-move/box.js', 'src/simple-move/box.html', 'src/simple-move/box.css'];
   };
 });
+define('simple-move-hover-no-preview/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Box = undefined;
+
+  function _initDefineProp(target, property, descriptor, context) {
+    if (!descriptor) return;
+    Object.defineProperty(target, property, {
+      enumerable: descriptor.enumerable,
+      configurable: descriptor.configurable,
+      writable: descriptor.writable,
+      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+    });
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+      desc[key] = descriptor[key];
+    });
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
+
+    if ('value' in desc || desc.initializer) {
+      desc.writable = true;
+    }
+
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+      return decorator(target, property, desc) || desc;
+    }, desc);
+
+    if (context && desc.initializer !== void 0) {
+      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+      desc.initializer = undefined;
+    }
+
+    if (desc.initializer === void 0) {
+      Object['define' + 'Property'](target, property, desc);
+      desc = null;
+    }
+
+    return desc;
+  }
+
+  function _initializerWarningHelper(descriptor, context) {
+    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+  }
+
+  var _dec, _dec2, _class, _desc, _value, _class2, _descriptor;
+
+  var Box = exports.Box = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec2 = (0, _aureliaFramework.computedFrom)('item', 'item.x', 'item.y'), _dec(_class = (_class2 = function () {
+    function Box(dndService) {
+      _classCallCheck(this, Box);
+
+      _initDefineProp(this, 'item', _descriptor, this);
+
+      this.dndService = dndService;
+    }
+
+    Box.prototype.attached = function attached() {
+      this.dndService.addSource(this, { noPreview: true });
+    };
+
+    Box.prototype.detached = function detached() {
+      this.dndService.removeSource(this);
+    };
+
+    Box.prototype.dndModel = function dndModel() {
+      return {
+        type: 'moveItem',
+        id: this.item.id
+      };
+    };
+
+    _createClass(Box, [{
+      key: 'positionCss',
+      get: function get() {
+        var x = this.item && this.item.x || 0;
+        var y = this.item && this.item.y || 0;
+
+        return {
+          left: x + 'px',
+          top: y + 'px'
+        };
+      }
+    }]);
+
+    return Box;
+  }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'item', [_aureliaFramework.bindable], {
+    enumerable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class2.prototype, 'positionCss', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'positionCss'), _class2.prototype)), _class2)) || _class);
+});
+define('simple-move-hover-no-preview/container',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'aurelia-event-aggregator', 'lodash'], function (exports, _aureliaFramework, _bcxAureliaDnd, _aureliaEventAggregator, _lodash) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Container = undefined;
+
+  var _lodash2 = _interopRequireDefault(_lodash);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
+
+  var _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+      desc[key] = descriptor[key];
+    });
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
+
+    if ('value' in desc || desc.initializer) {
+      desc.writable = true;
+    }
+
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+      return decorator(target, property, desc) || desc;
+    }, desc);
+
+    if (context && desc.initializer !== void 0) {
+      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+      desc.initializer = undefined;
+    }
+
+    if (desc.initializer === void 0) {
+      Object['define' + 'Property'](target, property, desc);
+      desc = null;
+    }
+
+    return desc;
+  }
+
+  var _dec, _dec2, _class, _desc, _value, _class2;
+
+  var Container = exports.Container = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService, _aureliaEventAggregator.EventAggregator), _dec2 = (0, _aureliaFramework.computedFrom)('items', 'intention'), _dec(_class = (_class2 = function () {
+    function Container(dndService, ea) {
+      _classCallCheck(this, Container);
+
+      this.items = [{ id: 'a', name: 'A', x: 20, y: 20 }, { id: 'b', name: 'B', x: 50, y: 200 }, { id: 'c', name: 'C', x: 200, y: 100 }];
+
+      this.dndService = dndService;
+      this.ea = ea;
+    }
+
+    Container.prototype.attached = function attached() {
+      var _this = this;
+
+      this.dndService.addTarget(this);
+      this.subscribers = [this.ea.subscribe('dnd:willStart', function () {
+        return _this.resetIntention();
+      }), this.ea.subscribe('dnd:didEnd', function () {
+        return _this.resetIntention();
+      })];
+    };
+
+    Container.prototype.detached = function detached() {
+      this.dndService.removeTarget(this);
+      this.subscribers.forEach(function (s) {
+        return s.dispose();
+      });
+    };
+
+    Container.prototype.dndCanDrop = function dndCanDrop(model) {
+      return model.type === 'moveItem';
+    };
+
+    Container.prototype.dndDrop = function dndDrop() {
+      var items = this.items,
+          intention = this.intention;
+
+      if (!intention) return;
+
+      var idx = _lodash2.default.findIndex(items, { id: intention.id });
+
+      if (idx >= 0) {
+        var item = items[idx];
+        items.splice(idx, 1);
+
+        items.push(_extends({}, item, { x: intention.x, y: intention.y }));
+      }
+    };
+
+    Container.prototype.dndHover = function dndHover(location) {
+      var id = this.dnd.model.id;
+      var previewElementRect = location.previewElementRect,
+          targetElementRect = location.targetElementRect;
+
+      var newLoc = {
+        x: previewElementRect.x - targetElementRect.x,
+        y: previewElementRect.y - targetElementRect.y
+      };
+
+      var item = _lodash2.default.find(this.items, { id: id });
+      if (!item) return;
+
+      this.intention = { id: id, x: newLoc.x, y: newLoc.y };
+    };
+
+    Container.prototype.resetIntention = function resetIntention() {
+      this.intention = null;
+    };
+
+    _createClass(Container, [{
+      key: 'patchedItems',
+      get: function get() {
+        var items = this.items,
+            intention = this.intention;
+
+        if (!intention) return items;
+
+        var patched = _lodash2.default.reject(items, { id: intention.id });
+        var item = _lodash2.default.find(this.items, { id: intention.id });
+
+        if (item) {
+          patched.push(_extends({}, item, { x: intention.x, y: intention.y }));
+        }
+
+        return patched;
+      }
+    }]);
+
+    return Container;
+  }(), (_applyDecoratedDescriptor(_class2.prototype, 'patchedItems', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'patchedItems'), _class2.prototype)), _class2)) || _class);
+});
+define('simple-move-hover-no-preview/index',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Index = exports.Index = function Index() {
+    _classCallCheck(this, Index);
+
+    this.sourceFilenames = ['src/simple-move-hover-no-preview/container.js', 'src/simple-move-hover-no-preview/container.html', 'src/simple-move-hover-no-preview/container.css', 'src/simple-move-hover-no-preview/box.js', 'src/simple-move-hover-no-preview/box.html', 'src/simple-move-hover-no-preview/box.css'];
+  };
+});
 define('simple-move-hover-no-preview-with-clock/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
   'use strict';
 
@@ -3860,320 +4174,6 @@ define('simple-move-hover-no-preview-with-clock/index',['exports'], function (ex
     _classCallCheck(this, Index);
 
     this.sourceFilenames = ['src/simple-move-hover-no-preview-with-clock/container.js', 'src/simple-move-hover-no-preview-with-clock/container.html', 'src/simple-move-hover-no-preview-with-clock/container.css', 'src/simple-move-hover-no-preview-with-clock/box.js', 'src/simple-move-hover-no-preview-with-clock/box.html', 'src/simple-move-hover-no-preview-with-clock/box.css'];
-  };
-});
-define('simple-move-hover-no-preview/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.Box = undefined;
-
-  function _initDefineProp(target, property, descriptor, context) {
-    if (!descriptor) return;
-    Object.defineProperty(target, property, {
-      enumerable: descriptor.enumerable,
-      configurable: descriptor.configurable,
-      writable: descriptor.writable,
-      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-    });
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-    var desc = {};
-    Object['ke' + 'ys'](descriptor).forEach(function (key) {
-      desc[key] = descriptor[key];
-    });
-    desc.enumerable = !!desc.enumerable;
-    desc.configurable = !!desc.configurable;
-
-    if ('value' in desc || desc.initializer) {
-      desc.writable = true;
-    }
-
-    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-      return decorator(target, property, desc) || desc;
-    }, desc);
-
-    if (context && desc.initializer !== void 0) {
-      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-      desc.initializer = undefined;
-    }
-
-    if (desc.initializer === void 0) {
-      Object['define' + 'Property'](target, property, desc);
-      desc = null;
-    }
-
-    return desc;
-  }
-
-  function _initializerWarningHelper(descriptor, context) {
-    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
-  }
-
-  var _dec, _dec2, _class, _desc, _value, _class2, _descriptor;
-
-  var Box = exports.Box = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec2 = (0, _aureliaFramework.computedFrom)('item', 'item.x', 'item.y'), _dec(_class = (_class2 = function () {
-    function Box(dndService) {
-      _classCallCheck(this, Box);
-
-      _initDefineProp(this, 'item', _descriptor, this);
-
-      this.dndService = dndService;
-    }
-
-    Box.prototype.attached = function attached() {
-      this.dndService.addSource(this, { noPreview: true });
-    };
-
-    Box.prototype.detached = function detached() {
-      this.dndService.removeSource(this);
-    };
-
-    Box.prototype.dndModel = function dndModel() {
-      return {
-        type: 'moveItem',
-        id: this.item.id
-      };
-    };
-
-    _createClass(Box, [{
-      key: 'positionCss',
-      get: function get() {
-        var x = this.item && this.item.x || 0;
-        var y = this.item && this.item.y || 0;
-
-        return {
-          left: x + 'px',
-          top: y + 'px'
-        };
-      }
-    }]);
-
-    return Box;
-  }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'item', [_aureliaFramework.bindable], {
-    enumerable: true,
-    initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, 'positionCss', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'positionCss'), _class2.prototype)), _class2)) || _class);
-});
-define('simple-move-hover-no-preview/container',['exports', 'aurelia-framework', 'bcx-aurelia-dnd', 'aurelia-event-aggregator', 'lodash'], function (exports, _aureliaFramework, _bcxAureliaDnd, _aureliaEventAggregator, _lodash) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.Container = undefined;
-
-  var _lodash2 = _interopRequireDefault(_lodash);
-
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
-
-  var _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-    var desc = {};
-    Object['ke' + 'ys'](descriptor).forEach(function (key) {
-      desc[key] = descriptor[key];
-    });
-    desc.enumerable = !!desc.enumerable;
-    desc.configurable = !!desc.configurable;
-
-    if ('value' in desc || desc.initializer) {
-      desc.writable = true;
-    }
-
-    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-      return decorator(target, property, desc) || desc;
-    }, desc);
-
-    if (context && desc.initializer !== void 0) {
-      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-      desc.initializer = undefined;
-    }
-
-    if (desc.initializer === void 0) {
-      Object['define' + 'Property'](target, property, desc);
-      desc = null;
-    }
-
-    return desc;
-  }
-
-  var _dec, _dec2, _class, _desc, _value, _class2;
-
-  var Container = exports.Container = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService, _aureliaEventAggregator.EventAggregator), _dec2 = (0, _aureliaFramework.computedFrom)('items', 'intention'), _dec(_class = (_class2 = function () {
-    function Container(dndService, ea) {
-      _classCallCheck(this, Container);
-
-      this.items = [{ id: 'a', name: 'A', x: 20, y: 20 }, { id: 'b', name: 'B', x: 50, y: 200 }, { id: 'c', name: 'C', x: 200, y: 100 }];
-
-      this.dndService = dndService;
-      this.ea = ea;
-    }
-
-    Container.prototype.attached = function attached() {
-      var _this = this;
-
-      this.dndService.addTarget(this);
-      this.subscribers = [this.ea.subscribe('dnd:willStart', function () {
-        return _this.resetIntention();
-      }), this.ea.subscribe('dnd:didEnd', function () {
-        return _this.resetIntention();
-      })];
-    };
-
-    Container.prototype.detached = function detached() {
-      this.dndService.removeTarget(this);
-      this.subscribers.forEach(function (s) {
-        return s.dispose();
-      });
-    };
-
-    Container.prototype.dndCanDrop = function dndCanDrop(model) {
-      return model.type === 'moveItem';
-    };
-
-    Container.prototype.dndDrop = function dndDrop() {
-      var items = this.items,
-          intention = this.intention;
-
-      if (!intention) return;
-
-      var idx = _lodash2.default.findIndex(items, { id: intention.id });
-
-      if (idx >= 0) {
-        var item = items[idx];
-        items.splice(idx, 1);
-
-        items.push(_extends({}, item, { x: intention.x, y: intention.y }));
-      }
-    };
-
-    Container.prototype.dndHover = function dndHover(location) {
-      var id = this.dnd.model.id;
-      var previewElementRect = location.previewElementRect,
-          targetElementRect = location.targetElementRect;
-
-      var newLoc = {
-        x: previewElementRect.x - targetElementRect.x,
-        y: previewElementRect.y - targetElementRect.y
-      };
-
-      var item = _lodash2.default.find(this.items, { id: id });
-      if (!item) return;
-
-      this.intention = { id: id, x: newLoc.x, y: newLoc.y };
-    };
-
-    Container.prototype.resetIntention = function resetIntention() {
-      this.intention = null;
-    };
-
-    _createClass(Container, [{
-      key: 'patchedItems',
-      get: function get() {
-        var items = this.items,
-            intention = this.intention;
-
-        if (!intention) return items;
-
-        var patched = _lodash2.default.reject(items, { id: intention.id });
-        var item = _lodash2.default.find(this.items, { id: intention.id });
-
-        if (item) {
-          patched.push(_extends({}, item, { x: intention.x, y: intention.y }));
-        }
-
-        return patched;
-      }
-    }]);
-
-    return Container;
-  }(), (_applyDecoratedDescriptor(_class2.prototype, 'patchedItems', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'patchedItems'), _class2.prototype)), _class2)) || _class);
-});
-define('simple-move-hover-no-preview/index',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Index = exports.Index = function Index() {
-    _classCallCheck(this, Index);
-
-    this.sourceFilenames = ['src/simple-move-hover-no-preview/container.js', 'src/simple-move-hover-no-preview/container.html', 'src/simple-move-hover-no-preview/container.css', 'src/simple-move-hover-no-preview/box.js', 'src/simple-move-hover-no-preview/box.html', 'src/simple-move-hover-no-preview/box.css'];
   };
 });
 define('simple-move-step-1/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
@@ -5059,34 +5059,34 @@ define('text!order-list-with-fixed-item-height/item.html', ['module'], function(
 define('text!order-list-with-unknown-item-height-reorderable-repeat/list-container.css', ['module'], function(module) { module.exports = ".list-container {\n  width: 200px;\n  margin: 0;\n  padding: 0;\n}\n\n.list-flex-item {\n  position: relative;\n  display: block;\n  background-color: white;\n  border: 1px solid #333;\n  width: 100%;\n  padding: 10px;\n  box-sizing: border-box;\n}\n\n.list-flex-item:not(:last-child) {\n  margin-bottom: -1px;\n}\n\n.list-flex-item.dragging {\n  background-color: lightgrey;\n}\n\n.list-flex-item .handler {\n  position: absolute;\n  top: 50%;\n  left: 10px;\n  margin-top: -10px;\n  width: 20px;\n  height: 20px;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  cursor: pointer;\n}\n\n.list-flex-item.has-handler {\n  padding-left: 40px;\n}\n\n.list-flex-item.reorderable-repeat-dragging-me {\n  visibility: visible;\n  background-color: lightgrey;\n  color: transparent;\n}\n\n.list-flex-item.reorderable-repeat-dragging-me .handler {\n  visibility: hidden;\n}"; });
 define('text!order-list-with-fixed-item-height/item2.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <span show.bind=\"!draggingMe\">#${item.id} ${item.value}</span>\n</template>\n"; });
 define('text!order-table/table-container.css', ['module'], function(module) { module.exports = "table.table-container {\n  width: 100%;\n  background-color: white;\n  border-spacing: 0;\n}\n\ntable.table-container tr th {\n  border-bottom: 2px solid #555;\n}\n\ntable.table-container tr td {\n  border-bottom: 1px solid #555;\n}\n\ntable.table-container tr th,\ntable.table-container tr td {\n  text-align: left;\n  padding: 0.5rem;\n}\n\ntable.table-container tr.dragging td {\n  background-color: lightgrey;\n  color: lightgrey;\n}\n"; });
-define('text!order-list-with-fixed-item-height/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <p>Array of strings</p>\n\n  <div ref=\"dndElement\" class=\"list-container\">\n    <item repeat.for=\"item of patchedItems\" item.bind=\"item\"></item>\n  </div>\n</template>\n"; });
 define('text!order-table-with-handler/table-container.css', ['module'], function(module) { module.exports = "table.table-container {\n  width: 100%;\n  background-color: white;\n  border-spacing: 0;\n}\n\ntable.table-container tr th {\n  border-bottom: 2px solid #555;\n}\n\ntable.table-container tr td {\n  border-bottom: 1px solid #555;\n}\n\ntable.table-container tr th,\ntable.table-container tr td {\n  text-align: left;\n  padding: 0.5rem;\n}\n\ntable.table-container tr.dragging td {\n  background-color: lightgrey;\n  color: lightgrey;\n}\n\ntable.table-container tr td .handler {\n  display: inline-block;\n  width: 20px;\n  height: 20px;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  cursor: pointer;\n}"; });
-define('text!order-list-with-fixed-item-height/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item2\"></require>\n\n  <p>Array of objects</p>\n\n  <div ref=\"dndElement\" class=\"list-container\">\n    <item2 repeat.for=\"item of patchedItems\" item.bind=\"item\"></item2>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <p>Array of strings</p>\n\n  <div ref=\"dndElement\" class=\"list-container\">\n    <item repeat.for=\"item of patchedItems\" item.bind=\"item\"></item>\n  </div>\n</template>\n"; });
 define('text!order-table-with-handler-reorderable-repeat/table-container.css', ['module'], function(module) { module.exports = "table.table-container {\n  width: 100%;\n  background-color: white;\n  border-spacing: 0;\n}\n\ntable.table-container tr th {\n  border-bottom: 2px solid #555;\n}\n\ntable.table-container tr td {\n  border-bottom: 1px solid #555;\n}\n\ntable.table-container tr th,\ntable.table-container tr td {\n  text-align: left;\n  padding: 0.5rem;\n}\n\ntable.table-container tr.dragging td {\n  background-color: lightgrey;\n  color: lightgrey;\n}\n\ntable.table-container tr td .handler {\n  display: inline-block;\n  width: 20px;\n  height: 20px;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  cursor: pointer;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me {\n  visibility: visible;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me td {\n  background-color: lightgrey;\n  color: transparent;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me td .handler {\n  visibility: hidden;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item2\"></require>\n\n  <p>Array of objects</p>\n\n  <div ref=\"dndElement\" class=\"list-container\">\n    <item2 repeat.for=\"item of patchedItems\" item.bind=\"item\"></item2>\n  </div>\n</template>\n"; });
 define('text!order-table-with-handler-reorderable-repeat-step2/table-container.css', ['module'], function(module) { module.exports = "table.table-container {\n  width: 100%;\n  background-color: white;\n  border-spacing: 0;\n}\n\ntable.table-container tr th {\n  border-bottom: 2px solid #555;\n}\n\ntable.table-container tr td {\n  border-bottom: 1px solid #555;\n}\n\ntable.table-container tr th,\ntable.table-container tr td {\n  text-align: left;\n  padding: 0.5rem;\n}\n\ntable.table-container tr.dragging td {\n  background-color: lightgrey;\n  color: lightgrey;\n}\n\ntable.table-container tr td .handler {\n  display: inline-block;\n  width: 20px;\n  height: 20px;\n  box-sizing: border-box;\n  border: 1px solid #333;\n  cursor: pointer;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me {\n  visibility: visible;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me td {\n  background-color: lightgrey;\n  color: transparent;\n}\n\ntable.table-container tr.reorderable-repeat-dragging-me td .handler {\n  visibility: hidden;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!reorderable-direction/container.css', ['module'], function(module) { module.exports = ".floats-container {\n  overflow: hidden;\n  width: 100%;\n}\n\n.float-left, .float-right {\n  margin: 0.2rem;\n  border: 1px dashed grey;\n  padding: 0.5rem;\n  cursor: pointer;\n}\n\n.float-left {\n  float: left;\n}\n\n.float-right {\n  float: right;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of strings</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item\" reorderable-repeat.for=\"item of items\">\n      ${item}\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of objects</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item\" reorderable-repeat.for=\"item of items\">\n      #${item.id} ${item.value}\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of strings</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item\" reorderable-repeat.for=\"item of items\">\n      ${item}\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of objects</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item\" reorderable-repeat.for=\"item of items\">\n      #${item.id} ${item.value}\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of strings</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item2\" reorderable-repeat.for=\"item of items\">\n      ${item}\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview-with-clock/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of objects</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item2\" reorderable-repeat.for=\"item of items\">\n      #${item.id} ${item.value}\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of strings</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item2\" reorderable-repeat.for=\"item of items\">\n      ${item}\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-hover-no-preview-with-clock/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!order-list-with-unknown-item-height/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
+define('text!order-list-with-fixed-item-height-reorderable-repeat-step2/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n\n  <p>Array of objects</p>\n\n  <div class=\"list-container\">\n    <div class=\"list-item2\" reorderable-repeat.for=\"item of items\">\n      #${item.id} ${item.value}\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-step-1/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-unknown-item-height/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
+define('text!order-list-with-unknown-item-height/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });
 define('text!simple-move-step-1/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
-define('text!order-list-with-unknown-item-height/item.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });
+define('text!order-list-with-unknown-item-height/inline.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"inline-demo\">\n    <div class=\"inline-demo-app\">\n      <table class=\"table-align-top\">\n        <tr>\n          <td><list-container></list-container></td>\n          <td><list-container2></list-container2></td>\n        </tr>\n      </table>\n    </div>\n    <div class=\"inline-demo-source-code inline-demo-source-code-for-reorder\">\n      <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n    </div>\n  </div>\n</template>\n"; });
 define('text!simple-move-step-2/box.css', ['module'], function(module) { module.exports = ".example-box {\n  position: absolute;\n  cursor: pointer;\n  box-sizing: border-box;\n  width: 80px;\n  height: 40px;\n  border: 1px solid #555;\n  background: white;\n}"; });
-define('text!order-list-with-unknown-item-height/item2.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item has-handler ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n  <div class=\"handler\" ref=\"handler\" show.bind=\"!draggingMe\"></div>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });
+define('text!order-list-with-unknown-item-height/item.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });
 define('text!simple-move-step-2/container.css', ['module'], function(module) { module.exports = ".example-container {\n  position: relative;\n  box-sizing: border-box;\n  width: 300px;\n  height: 300px;\n  border: 1px solid #555;\n  overflow: hidden;\n}"; });
+define('text!order-list-with-unknown-item-height/item2.html', ['module'], function(module) { module.exports = "<template ref=\"dndElement\" class=\"list-flex-item has-handler ${draggingMe ? 'dragging' : ''}\">\n  <require from=\"./item.css\"></require>\n  <div class=\"handler\" ref=\"handler\" show.bind=\"!draggingMe\"></div>\n\n  <!-- cannot use show.bind here, it changes outer element size-->\n  <!-- use visibility: hidden; to retain size -->\n  <span css=\"visibility: ${draggingMe ? 'hidden': 'inherit'}\">${item.value}</span>\n</template>\n"; });
 define('text!order-list-with-unknown-item-height/list-container.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item\"></require>\n\n  <p>Item is draggable</p>\n  <ul ref=\"dndElement\" class=\"list-container\">\n    <li as-element=\"item\" repeat.for=\"item of patchedItems\" item.bind=\"item\" update-intention.call=\"updateIntention(targetId, beforeTarget)\"></li>\n  </ul>\n</template>\n"; });
 define('text!order-list-with-unknown-item-height/list-container2.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container.css\"></require>\n  <require from=\"./item2\"></require>\n\n  <p>With special drag handler</p>\n  <ul ref=\"dndElement\" class=\"list-container\">\n    <li as-element=\"item2\" repeat.for=\"item of patchedItems\" item.bind=\"item\" update-intention.call=\"updateIntention(targetId, beforeTarget)\"></li>\n  </ul>\n</template>\n"; });
 define('text!order-list-with-unknown-item-height-reorderable-repeat/index.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./list-container\"></require>\n  <require from=\"./list-container2\"></require>\n\n  <div class=\"doc-demo\">\n    <table class=\"table-align-top\">\n      <tr>\n        <td><list-container></list-container></td>\n        <td><list-container2></list-container2></td>\n      </tr>\n    </table>\n  </div>\n  <div class=\"doc-source-code\">\n    <display-sources filenames.bind=\"sourceFilenames\"></display-sources>\n  </div>\n</template>\n"; });

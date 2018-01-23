@@ -6,13 +6,13 @@ export default {
   input: 'src/index.js',
   output: {
     format: 'umd',
+    name: 'BcxAureliaDnd',
     file: 'dist/index.js',
+    globals: {
+      "aurelia-event-aggregator": "AureliaEventAggregator"
+    }
   },
-  name: 'BcxAureliaDnd',
   external: ["aurelia-event-aggregator"],
-  globals: {
-    "aurelia-event-aggregator": "AureliaEventAggregator"
-  },
   plugins: [
     resolve(),
     babel({

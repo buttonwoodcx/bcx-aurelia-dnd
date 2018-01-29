@@ -8,6 +8,8 @@
 
 > Note in customization, you need to unset `visibility` first.
 
+> While the item being dragged receives class `.reorderable-repeat-dragging-me`, all items involved in reordering receive additional class `.reorderable-repeat-reordering`. Be default, `.reorderable-repeat-reordering` has no impact on style.
+
 ### Use handler to limit where user can start drag
 
 `bcx-aurelia-dnd` supports optional `handler` option on source delegate to limit where drag can start. In `bcx-aurelia-reorderable-repeat`, you can pass optional attribute "reorderable-dnd-handler-selector" on the repeated DOM to select `handler` for undernearth source delegates (hidden by `bcx-aurelia-reorderable-repeat` implementation).

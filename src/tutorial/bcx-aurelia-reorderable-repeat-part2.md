@@ -1,4 +1,4 @@
-### Customize item under drag
+### Customize item style under drag
 
 If you have not read [tutorial](#/overview) for `bcx-aurelia-dnd`, we recommend you to read it through. If you have not, here are some key information:
 

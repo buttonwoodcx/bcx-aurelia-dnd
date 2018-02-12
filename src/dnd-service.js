@@ -50,6 +50,10 @@ html, body {
   box-shadow: 0 0 16px gray;
 }
 
+.bcx-dnd-preview .bcx-dnd-preview-hide {
+  visible: hidden !important;
+}
+
 .bcx-dnd-hide {
   display: none !important;
 }

@@ -1,3 +1,14 @@
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.3.1...v0.4.0) (2018-02-13)
+
+
+### Features
+
+* ship default preview drawers for <tr> and <li> tags. ([38443f0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/38443f0))
+* support class .bcx-dnd-preview-hide to hide some node in .bcx-dnd-preview. ([ca26b94](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/ca26b94))
+
+
+
 <a name="0.3.1"></a>
 ## [0.3.1](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.3.0...v0.3.1) (2017-11-08)
 

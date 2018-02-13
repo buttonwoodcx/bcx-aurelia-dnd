@@ -1,7 +1,7 @@
-/* global global, self */
 // borrowed many code from https://github.com/bevacqua/dragula.git
-
+import _global from './global';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {trPreview, liInUlPreview, liInOlPreview, defaultPreview} from './preview-drawers';
 
 // Ideally should be using aurelia-pal, but it doesn't support
 // enough DOM features for bcx-aurelia-dnd to work.
@@ -11,21 +11,6 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 // for aurelia component testing in nodejs, feed constructor with a mock DndService.
 //
 
-// copied from https://github.com/aurelia/pal/blob/master/src/index.js
-const _global = (function() {
-  // Workers don’t have `window`, only `self`
-  if (typeof self !== 'undefined') {
-    return self;
-  }
-
-  if (typeof global !== 'undefined') {
-    return global;
-  }
-
-  // Not all environments allow eval and Function
-  // Use only as a last resort:
-  return new Function('return this')();
-})();
 
 const doc = _global.document;
 const documentElement = doc && doc.documentElement;
@@ -311,11 +296,16 @@ export class DndService {
 
   dndSources = []
   dndTargets = []
+  previewDrawers = [];
 
   constructor(ea) {
     this.ea = ea;
 
     injectStyles();
+    this.addPreviewDrawer(defaultPreview);
+    this.addPreviewDrawer(liInUlPreview);
+    this.addPreviewDrawer(liInOlPreview);
+    this.addPreviewDrawer(trPreview);
 
     this._grab = this._grab.bind(this);
     this._release = this._release.bind(this);
@@ -330,6 +320,10 @@ export class DndService {
     // dnd end handler for desktop on doc level
     documentElement.addEventListener('mouseup', this._release, {passive: false});
     // dnd end handler for mobile (touch event) on source element
+  }
+
+  addPreviewDrawer(drawer) {
+    this.previewDrawers.unshift(drawer);
   }
 
   addSource(delegate, options) {
@@ -717,16 +711,21 @@ export class DndService {
       const el = this._sourceElement;
       if (!el) return;
 
-      const rect = el.getBoundingClientRect();
-      this._preview = el.cloneNode(true);
-      const computed = _global.getComputedStyle(el);
-      this._preview.style.width = computed.width;
-      this._preview.style.height = computed.height;
+      for (let i = 0; i < this.previewDrawers.length; i++) {
+        this._preview = this.previewDrawers[i](el);
+        if (this._preview) break;
+      }
+
+      if (!this._preview) return;
     }
 
     classes.add(this._preview, 'bcx-dnd-preview');
     doc.body.appendChild(this._preview);
     classes.add(doc.body, 'bcx-dnd-unselectable');
+
+    if (_global.getComputedStyle(this._preview).backgroundColor === 'rgba(0, 0, 0, 0)') {
+      this._preview.style.backgroundColor = 'white';
+    }
 
     if (this._hideCursor) {
       classes.add(doc.body, 'bcx-dnd-hide-cursor');

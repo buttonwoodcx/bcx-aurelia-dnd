@@ -52,6 +52,8 @@ interface TargetOptions {
   element?: Element;
 }
 
+type PreviewDrawer = (Element) => Element?;
+
 export declare class DndService {
   readonly isProcessing: boolean;
   readonly model: any;
@@ -61,4 +63,6 @@ export declare class DndService {
 
   addTarget(targetDelegate: TargetDelegate, options?: TargetOptions): void;
   removeTarget(target: TargetDelegate | Element): void;
+
+  addPreviewDrawer(drawer: PreviewDrawer): void;
 }

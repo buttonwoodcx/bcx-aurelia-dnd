@@ -43,7 +43,7 @@
     "version": "standard-changelog && git add CHANGELOG.md",
     "postversion": "git push && git push --tags && npm publish",
     "pretest": "npm run lint",
-    "test": "env BABEL_ENV=test browserify -t babelify test/dnd.spec.js | tape-run"
+    "test": "env BABEL_ENV=test browserify -t babelify test/dnd.spec.js test/preview-drawers.spec.js | tape-run"
   },
   "main": "dist/index.js",
   "types": "index.d.ts",

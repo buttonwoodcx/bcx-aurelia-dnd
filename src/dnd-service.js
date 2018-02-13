@@ -36,7 +36,7 @@ html, body {
 }
 
 .bcx-dnd-preview .bcx-dnd-preview-hide {
-  visible: hidden !important;
+  visibility: hidden !important;
 }
 
 .bcx-dnd-hide {

@@ -10,7 +10,7 @@
   "dependencies": {
     "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.2.0",
-    "bcx-aurelia-dnd": "^0.4.0",
+    "bcx-aurelia-dnd": "^0.4.1",
     "bcx-aurelia-reorderable-repeat": "^0.3.1",
     "bluebird": "^3.5.1",
     "jquery": "^3.3.1",

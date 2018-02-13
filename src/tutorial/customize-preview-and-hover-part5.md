@@ -2,11 +2,11 @@
 
 You can mark parts of the source element with class `bcx-dnd-preview-hide` to prevent the part showing up. For instance, mark edit button to hide the button in preview.
 
-> The default style for `bcx-dnd-preview-hide` is `visible: hidden;`, it means the hidden part doesn't affect the layout geometry.
+> The default style for `bcx-dnd-preview-hide` is `visibility: hidden;`, it means the hidden part doesn't affect the layout geometry.
 
 ```
 .bcx-dnd-preview .bcx-dnd-preview-hide {
-  visible: hidden !important;
+  visibility: hidden !important;
 }
 ```
 

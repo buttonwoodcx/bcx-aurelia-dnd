@@ -17,7 +17,7 @@ When [Aurelia](http://aurelia.io) released v1.0.0 in July 2016, we quickly decid
 
 One obstacle of the re-write is missing drag-and-drop library for our blueprint composer. Previously we were using [React DnD](http://react-dnd.github.io/react-dnd/), but there is no equivalent in Aurelia. There are plenty DOM based DnD libraries in JavaScript world, [dragula](https://bevacqua.github.io/dragula/) is the best in our eyes. We copied dragula code, removed all its DOM mutation code (we don't need that in Aurelia), wrote interface for it to talk with controller layer of MVC, made a working DnD library in one day. `bcx-aurelia-dnd` source code is largely unchanged since that first implementation.
 
-Thanks for Aurelia, `bcx-aurelia-dnd` implementation is very simple. The source code is less than 600 lines of JavaScript, even most of it were copied from dragula to handle events and styling. As always, similar to most libraries, the [source code](https://github.com/buttonwoodcx/bcx-aurelia-dnd) is way shorter than documentation. Pick one to read on :-)
+Thanks for Aurelia, `bcx-aurelia-dnd` implementation is very simple. The source code is less than 700 lines of JavaScript, even most of it were copied from dragula to handle events and styling. As always, similar to most libraries, the [source code](https://github.com/buttonwoodcx/bcx-aurelia-dnd) is way shorter than documentation.
 
 ## Why based on dragula, not native HTML5 DnD API
 

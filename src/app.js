@@ -181,17 +181,31 @@ export class App {
       },
       {
         route: 'order-table', name: 'order-table',
-        title: '7. Customize preview for <tr>',
+        title: '7. (deprecated) Customize preview for <tr>',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-table/index'
       },
       {
+        route: 'order-table-with-default-preview', name: 'order-table-with-default-preview',
+        title: '8. (deprecated) default preview for <tr>',
+        nav: true,
+        settings: {section: 'examples'},
+        moduleId: 'order-table-with-default-preview/index'
+      },
+      {
         route: 'order-table-with-handler', name: 'order-table-with-handler',
-        title: '8. Customize preview for <tr> with handler',
+        title: '9. (deprecated) Customize preview for <tr> with handler',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-table-with-handler/index'
+      },
+      {
+        route: 'order-table-with-handler-with-default-preview', name: 'order-table-with-handler-with-default-preview',
+        title: '10. (deprecated) default preview for <tr> with handler',
+        nav: true,
+        settings: {section: 'examples'},
+        moduleId: 'order-table-with-handler-with-default-preview/index'
       },
       {
         route: 'order-simple-reorderable-repeat-step2', name: 'order-simple-reorderable-repeat-step2',
@@ -201,7 +215,7 @@ export class App {
         moduleId: 'order-list-with-fixed-item-height-reorderable-repeat-step2/index'
       },
       {
-        route: 'order-flex-reorderable-repeat-step2', name: 'order-flex-reorderable-repeat-step2',
+        route: 'order-flex-reorderable-repeat', name: 'order-flex-reorderable-repeat',
         title: '2. Re-order list with unknown item height',
         nav: true,
         settings: {section: 'reorderable-repeat-examples'},
@@ -209,14 +223,21 @@ export class App {
       },
       {
         route: 'order-table-with-handler-reorderable-repeat', name: 'order-table-with-handler-reorderable-repeat',
-        title: '3. Customize preview for <tr> with handler',
+        title: '3. (deprecated) Customize preview for <tr> with handler',
         nav: true,
         settings: {section: 'reorderable-repeat-examples'},
         moduleId: 'order-table-with-handler-reorderable-repeat-step2/index'
       },
       {
+        route: 'order-table-with-handler-reorderable-repeat-with-default-preview', name: 'order-table-with-handler-reorderable-repeat-with-default-preview',
+        title: '4. Customize preview for <tr> with handler',
+        nav: true,
+        settings: {section: 'reorderable-repeat-examples'},
+        moduleId: 'order-table-with-handler-reorderable-repeat-step2-with-default-preview/index'
+      },
+      {
         route: 'reorderable-direction', name: 'reorderable-direction',
-        title: '4. DOM flow direction',
+        title: '5. DOM flow direction',
         nav: true,
         settings: {section: 'reorderable-repeat-examples'},
         moduleId: 'reorderable-direction/index'

@@ -13,3 +13,5 @@ There is one more option for `addSource()`, you can pass a `handler` element in 
 > Preview still aligns to source element, not handler element.
 
 Here is an example for using special handler for reordering a table.
+
+> The re-ordering algorithm in following example is DEPRECATED by [`bcx-aurelia-reorderable-repeat`](#/bcx-aurelia-reorderable-repeat).

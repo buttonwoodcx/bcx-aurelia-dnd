@@ -1,0 +1,26 @@
+<template>
+  <require from="./table-container.css"></require>
+
+  <table class="table-container">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Age</th>
+      </tr>
+    </thead>
+    <tbody ref="tableBody">
+      <tr
+        reorderable-repeat.for="item of items"
+        reorderable-dnd-handler-selector=".handler"
+        reorderable-after-reordering="afterReordering"
+      >
+        <td style="width:30px;">
+          <div class="handler"></div>
+        </td>
+        <td>${item.name}</td>
+        <td>${item.age}</td>
+      </tr>
+    </tbody>
+  </table>
+</template>

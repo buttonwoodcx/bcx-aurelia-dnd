@@ -3,12 +3,12 @@ export class App {
     this.router = router;
 
     config.title = 'bcx-aurelia-dnd examples';
-    // config.options.pushState = true;
-    config.mapUnknownRoutes((instruction) => {
-      console.log('mapUnknownRoutes', instruction);
-      return 'not-found';
-    });
+    config.mapUnknownRoutes('not-found');
     config.map([
+      {
+        route: '',
+        redirect: 'overview'
+      },
       {
         route: 'overview', name: 'overview',
         title: 'Overview',
@@ -220,10 +220,6 @@ export class App {
         nav: true,
         settings: {section: 'reorderable-repeat-examples'},
         moduleId: 'reorderable-direction/index'
-      },
-      {
-        route: '',
-        redirect: 'overview'
       }
     ]);
   }

@@ -5,7 +5,6 @@ export function configure(config) {
     './elements/mark-down',
     './elements/show-mark-down-file',
     './value-converters/nav-section',
-    './value-converters/ends-with',
-    './attributes/if-not'
+    './value-converters/ends-with'
   ]);
 }

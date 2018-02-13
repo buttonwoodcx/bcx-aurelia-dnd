@@ -57,7 +57,7 @@
   "scripts": {
     "test": "tape -r babel-register 'test/**/*.spec.js'",
     "preversion": "npm test",
-    "version": "au build --env prod && git add index.html scripts",
+    "version": "au clean && au build --env prod && git add index.html scripts",
     "postversion": "git push && git push --tags"
   }
 }

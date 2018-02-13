@@ -75,7 +75,7 @@ define('app',['exports'], function (exports) {
         nav: true,
         settings: {
           section: 'tutorial',
-          trunks: ['tutorial/bcx-aurelia-reorderable-repeat-part1.md', 'order-list-with-fixed-item-height-reorderable-repeat/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part2.md', 'order-list-with-fixed-item-height-reorderable-repeat-step2/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part3.md', 'order-list-with-unknown-item-height-reorderable-repeat/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part4.md', 'order-table-with-handler-reorderable-repeat/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part5.md', 'order-table-with-handler-reorderable-repeat-step2/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part6.md', 'reorderable-direction/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part7.md']
+          trunks: ['tutorial/bcx-aurelia-reorderable-repeat-part1.md', 'order-list-with-fixed-item-height-reorderable-repeat/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part2.md', 'order-list-with-fixed-item-height-reorderable-repeat-step2/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part3.md', 'order-list-with-unknown-item-height-reorderable-repeat/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part4.md', 'order-table-with-handler-reorderable-repeat/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part5.md', 'order-table-with-handler-reorderable-repeat-step2-with-default-preview/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part6.md', 'reorderable-direction/inline', 'tutorial/bcx-aurelia-reorderable-repeat-part7.md']
         },
         moduleId: 'show-tutorial'
       }, {
@@ -4032,228 +4032,6 @@ define('resources/index',['exports'], function (exports) {
     config.globalResources(['./elements/display-source', './elements/display-sources', './elements/mark-down', './elements/show-mark-down-file', './value-converters/nav-section', './value-converters/ends-with']);
   }
 });
-define('simple-move/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.Box = undefined;
-
-  function _initDefineProp(target, property, descriptor, context) {
-    if (!descriptor) return;
-    Object.defineProperty(target, property, {
-      enumerable: descriptor.enumerable,
-      configurable: descriptor.configurable,
-      writable: descriptor.writable,
-      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-    });
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
-
-  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-    var desc = {};
-    Object['ke' + 'ys'](descriptor).forEach(function (key) {
-      desc[key] = descriptor[key];
-    });
-    desc.enumerable = !!desc.enumerable;
-    desc.configurable = !!desc.configurable;
-
-    if ('value' in desc || desc.initializer) {
-      desc.writable = true;
-    }
-
-    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-      return decorator(target, property, desc) || desc;
-    }, desc);
-
-    if (context && desc.initializer !== void 0) {
-      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-      desc.initializer = undefined;
-    }
-
-    if (desc.initializer === void 0) {
-      Object['define' + 'Property'](target, property, desc);
-      desc = null;
-    }
-
-    return desc;
-  }
-
-  function _initializerWarningHelper(descriptor, context) {
-    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
-  }
-
-  var _dec, _dec2, _dec3, _class, _desc, _value, _class2, _descriptor;
-
-  var Box = exports.Box = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec2 = (0, _aureliaFramework.computedFrom)('item', 'item.x', 'item.y'), _dec3 = (0, _aureliaFramework.computedFrom)('dndService.isProcessing', 'dndService.model'), _dec(_class = (_class2 = function () {
-    function Box(dndService) {
-      _classCallCheck(this, Box);
-
-      _initDefineProp(this, 'item', _descriptor, this);
-
-      this.dndService = dndService;
-    }
-
-    Box.prototype.attached = function attached() {
-      this.dndService.addSource(this);
-    };
-
-    Box.prototype.detached = function detached() {
-      this.dndService.removeSource(this);
-    };
-
-    Box.prototype.dndModel = function dndModel() {
-      return {
-        type: 'moveItem',
-        item: this.item
-      };
-    };
-
-    _createClass(Box, [{
-      key: 'positionCss',
-      get: function get() {
-        var x = this.item && this.item.x || 0;
-        var y = this.item && this.item.y || 0;
-
-        return {
-          left: x + 'px',
-          top: y + 'px'
-        };
-      }
-    }, {
-      key: 'draggingMe',
-      get: function get() {
-        return this.dndService.isProcessing && this.dndService.model.item === this.item;
-      }
-    }]);
-
-    return Box;
-  }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'item', [_aureliaFramework.bindable], {
-    enumerable: true,
-    initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, 'positionCss', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'positionCss'), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, 'draggingMe', [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, 'draggingMe'), _class2.prototype)), _class2)) || _class);
-});
-define('simple-move/container',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.Container = undefined;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var _dec, _class;
-
-  var Container = exports.Container = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec(_class = function () {
-    function Container(dndService) {
-      _classCallCheck(this, Container);
-
-      this.items = [{ name: 'A', x: 20, y: 20 }, { name: 'B', x: 50, y: 200 }, { name: 'C', x: 200, y: 100 }];
-
-      this.dndService = dndService;
-    }
-
-    Container.prototype.attached = function attached() {
-      this.dndService.addTarget(this);
-    };
-
-    Container.prototype.detached = function detached() {
-      this.dndService.removeTarget(this);
-    };
-
-    Container.prototype.dndCanDrop = function dndCanDrop(model) {
-      return model.type === 'moveItem';
-    };
-
-    Container.prototype.dndDrop = function dndDrop(location) {
-      var item = this.dnd.model.item;
-      var previewElementRect = location.previewElementRect,
-          targetElementRect = location.targetElementRect;
-
-      var newLoc = {
-        x: previewElementRect.x - targetElementRect.x,
-        y: previewElementRect.y - targetElementRect.y
-      };
-      item.x = newLoc.x;
-      item.y = newLoc.y;
-
-      var idx = this.items.indexOf(item);
-      if (idx >= 0) {
-        this.items.splice(idx, 1);
-        this.items.push(item);
-      }
-    };
-
-    return Container;
-  }()) || _class);
-});
-define('simple-move/index',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Index = exports.Index = function Index() {
-    _classCallCheck(this, Index);
-
-    this.sourceFilenames = ['src/simple-move/container.js', 'src/simple-move/container.html', 'src/simple-move/container.css', 'src/simple-move/box.js', 'src/simple-move/box.html', 'src/simple-move/box.css'];
-  };
-});
-define('simple-move/inline',['exports'], function (exports) {
-  'use strict';
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  var Inline = exports.Inline = function Inline() {
-    _classCallCheck(this, Inline);
-
-    this.sourceFilenames = ['src/simple-move/container.js', 'src/simple-move/container.html', 'src/simple-move/container.css', 'src/simple-move/box.js', 'src/simple-move/box.html', 'src/simple-move/box.css'];
-  };
-});
 define('simple-move-hover-no-preview/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
   'use strict';
 
@@ -4892,6 +4670,228 @@ define('simple-move-hover-no-preview-with-clock/index',['exports'], function (ex
     _classCallCheck(this, Index);
 
     this.sourceFilenames = ['src/simple-move-hover-no-preview-with-clock/container.js', 'src/simple-move-hover-no-preview-with-clock/container.html', 'src/simple-move-hover-no-preview-with-clock/container.css', 'src/simple-move-hover-no-preview-with-clock/box.js', 'src/simple-move-hover-no-preview-with-clock/box.html', 'src/simple-move-hover-no-preview-with-clock/box.css'];
+  };
+});
+define('simple-move/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Box = undefined;
+
+  function _initDefineProp(target, property, descriptor, context) {
+    if (!descriptor) return;
+    Object.defineProperty(target, property, {
+      enumerable: descriptor.enumerable,
+      configurable: descriptor.configurable,
+      writable: descriptor.writable,
+      value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+    });
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _createClass = function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  }();
+
+  function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+      desc[key] = descriptor[key];
+    });
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
+
+    if ('value' in desc || desc.initializer) {
+      desc.writable = true;
+    }
+
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+      return decorator(target, property, desc) || desc;
+    }, desc);
+
+    if (context && desc.initializer !== void 0) {
+      desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+      desc.initializer = undefined;
+    }
+
+    if (desc.initializer === void 0) {
+      Object['define' + 'Property'](target, property, desc);
+      desc = null;
+    }
+
+    return desc;
+  }
+
+  function _initializerWarningHelper(descriptor, context) {
+    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+  }
+
+  var _dec, _dec2, _dec3, _class, _desc, _value, _class2, _descriptor;
+
+  var Box = exports.Box = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec2 = (0, _aureliaFramework.computedFrom)('item', 'item.x', 'item.y'), _dec3 = (0, _aureliaFramework.computedFrom)('dndService.isProcessing', 'dndService.model'), _dec(_class = (_class2 = function () {
+    function Box(dndService) {
+      _classCallCheck(this, Box);
+
+      _initDefineProp(this, 'item', _descriptor, this);
+
+      this.dndService = dndService;
+    }
+
+    Box.prototype.attached = function attached() {
+      this.dndService.addSource(this);
+    };
+
+    Box.prototype.detached = function detached() {
+      this.dndService.removeSource(this);
+    };
+
+    Box.prototype.dndModel = function dndModel() {
+      return {
+        type: 'moveItem',
+        item: this.item
+      };
+    };
+
+    _createClass(Box, [{
+      key: 'positionCss',
+      get: function get() {
+        var x = this.item && this.item.x || 0;
+        var y = this.item && this.item.y || 0;
+
+        return {
+          left: x + 'px',
+          top: y + 'px'
+        };
+      }
+    }, {
+      key: 'draggingMe',
+      get: function get() {
+        return this.dndService.isProcessing && this.dndService.model.item === this.item;
+      }
+    }]);
+
+    return Box;
+  }(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'item', [_aureliaFramework.bindable], {
+    enumerable: true,
+    initializer: null
+  }), _applyDecoratedDescriptor(_class2.prototype, 'positionCss', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'positionCss'), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, 'draggingMe', [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, 'draggingMe'), _class2.prototype)), _class2)) || _class);
+});
+define('simple-move/container',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Container = undefined;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var _dec, _class;
+
+  var Container = exports.Container = (_dec = (0, _aureliaFramework.inject)(_bcxAureliaDnd.DndService), _dec(_class = function () {
+    function Container(dndService) {
+      _classCallCheck(this, Container);
+
+      this.items = [{ name: 'A', x: 20, y: 20 }, { name: 'B', x: 50, y: 200 }, { name: 'C', x: 200, y: 100 }];
+
+      this.dndService = dndService;
+    }
+
+    Container.prototype.attached = function attached() {
+      this.dndService.addTarget(this);
+    };
+
+    Container.prototype.detached = function detached() {
+      this.dndService.removeTarget(this);
+    };
+
+    Container.prototype.dndCanDrop = function dndCanDrop(model) {
+      return model.type === 'moveItem';
+    };
+
+    Container.prototype.dndDrop = function dndDrop(location) {
+      var item = this.dnd.model.item;
+      var previewElementRect = location.previewElementRect,
+          targetElementRect = location.targetElementRect;
+
+      var newLoc = {
+        x: previewElementRect.x - targetElementRect.x,
+        y: previewElementRect.y - targetElementRect.y
+      };
+      item.x = newLoc.x;
+      item.y = newLoc.y;
+
+      var idx = this.items.indexOf(item);
+      if (idx >= 0) {
+        this.items.splice(idx, 1);
+        this.items.push(item);
+      }
+    };
+
+    return Container;
+  }()) || _class);
+});
+define('simple-move/index',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Index = exports.Index = function Index() {
+    _classCallCheck(this, Index);
+
+    this.sourceFilenames = ['src/simple-move/container.js', 'src/simple-move/container.html', 'src/simple-move/container.css', 'src/simple-move/box.js', 'src/simple-move/box.html', 'src/simple-move/box.css'];
+  };
+});
+define('simple-move/inline',['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  var Inline = exports.Inline = function Inline() {
+    _classCallCheck(this, Inline);
+
+    this.sourceFilenames = ['src/simple-move/container.js', 'src/simple-move/container.html', 'src/simple-move/container.css', 'src/simple-move/box.js', 'src/simple-move/box.html', 'src/simple-move/box.css'];
   };
 });
 define('simple-move-step-1/box',['exports', 'aurelia-framework', 'bcx-aurelia-dnd'], function (exports, _aureliaFramework, _bcxAureliaDnd) {

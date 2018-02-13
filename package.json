@@ -1,7 +1,7 @@
 {
   "name": "bcx-aurelia-dnd-examples",
   "description": "bcx-aurelia-dnd examples",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "http://github.com/buttonwoodcx/bcx-aurelia-dnd"

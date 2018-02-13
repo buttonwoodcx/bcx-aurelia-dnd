@@ -3,8 +3,8 @@
   "description": "bcx-aurelia-dnd examples",
   "version": "0.1.0",
   "repository": {
-    "type": "???",
-    "url": "???"
+    "type": "git",
+    "url": "http://github.com/buttonwoodcx/bcx-aurelia-dnd"
   },
   "license": "MIT",
   "dependencies": {
@@ -55,6 +55,9 @@
     "vinyl-fs": "^3.0.2"
   },
   "scripts": {
-    "test": "tape -r babel-register 'test/**/*.spec.js'"
+    "test": "tape -r babel-register 'test/**/*.spec.js'",
+    "preversion": "npm test",
+    "version": "au build --env prod && git add index.html scripts",
+    "postversion": "git push && git push --tags"
   }
 }

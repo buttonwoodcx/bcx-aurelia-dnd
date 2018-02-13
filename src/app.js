@@ -188,7 +188,7 @@ export class App {
       },
       {
         route: 'order-table-with-default-preview', name: 'order-table-with-default-preview',
-        title: '8. (deprecated) default preview for <tr>',
+        title: '8. (deprecated) Default preview for <tr>',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-table-with-default-preview/index'
@@ -202,7 +202,7 @@ export class App {
       },
       {
         route: 'order-table-with-handler-with-default-preview', name: 'order-table-with-handler-with-default-preview',
-        title: '10. (deprecated) default preview for <tr> with handler',
+        title: '10. (deprecated) Default preview for <tr> with handler',
         nav: true,
         settings: {section: 'examples'},
         moduleId: 'order-table-with-handler-with-default-preview/index'
@@ -230,7 +230,7 @@ export class App {
       },
       {
         route: 'order-table-with-handler-reorderable-repeat-with-default-preview', name: 'order-table-with-handler-reorderable-repeat-with-default-preview',
-        title: '4. Customize preview for <tr> with handler',
+        title: '4. Default preview for <tr> with handler',
         nav: true,
         settings: {section: 'reorderable-repeat-examples'},
         moduleId: 'order-table-with-handler-reorderable-repeat-step2-with-default-preview/index'

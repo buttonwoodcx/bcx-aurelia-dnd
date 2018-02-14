@@ -1,6 +1,6 @@
 html, body {
   height :100%;
-  font-family: Helvetica, Arial;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial;
 }
 
 body {
@@ -14,7 +14,7 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 250px;
+  width: 300px;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #eee;
@@ -37,26 +37,33 @@ body {
   margin: 4px 0;
 }
 
-
 a.link {
   display: block;
   text-decoration: none;
   font-size: 0.8rem;
 }
 
+a.link.deprecated, a.link.deprecated:visited {
+  text-decoration: line-through;
+  color: #888;
+}
+
 a.link, a.link:visited {
-  display: block;
   color: black;
   padding: 4px 5px 4px 10px;
-  margin: 8px 0;
+  margin: 2px 0;
 }
 
 .doc-navigation a.remote-link:hover,
-a.link:hover {
-  text-decoration: underline;
+a.link:hover, a.link.deprecated:hover {
+  background-color: #888;
+  color: white;
 }
 
-a.link.active {
+a.link.active,
+a.link.active:hover,
+a.link.active.deprecated:hover,
+a.link.active.deprecated:visited {
   background-color: #555;
   color: white;
 }
@@ -64,7 +71,7 @@ a.link.active {
 .doc-content {
   position: absolute;
   top: 0;
-  left: 250px;
+  left: 300px;
   bottom: 0;
   right: 0;
   padding: 1rem 2rem;
@@ -142,23 +149,26 @@ mark-down blockquote {
 }
 
 mark-down blockquote p {
+  border: 1px solid #aaa;
   border-left: 0.5rem solid #aaa;
   margin: 0.5rem 0;
   padding: 0.5rem 1rem 0.5rem 1.5rem;
-  color: #555;
-  background-color: #eee;
 }
 
 mark-down code, mark-down pre {
-  background-color: #eee;
-  border-radius: 2px;
+  color: #555;
 }
 
 mark-down blockquote code {
-  background-color: white;
+  background-color: #f5f5f5;
+  border-radius: .25em;
+  padding-left: .5em;
+  padding-right: .5em;
 }
 
 mark-down pre {
+  background-color: #f5f5f5;
+  border-radius: .25em;
   font-size: 0.8rem;
   padding: 1rem;
 }
@@ -191,3 +201,26 @@ mark-down pre {
   left: 430px;
 }
 
+h1, h2, h3, h4, h5 {
+  margin: .75em 0 .5em;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: .75em;
+}

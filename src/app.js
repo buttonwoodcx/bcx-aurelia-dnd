@@ -64,6 +64,7 @@ export class App {
         title: '(deprecated) Re-order a list',
         nav: true,
         settings: {
+          deprecated: true,
           section: 'tutorial',
           trunks: [
             'tutorial/re-order-list-part1.md',
@@ -169,42 +170,42 @@ export class App {
         route: 'order-simple', name: 'order-simple',
         title: '5. (deprecated) Re-order list with fixed item height',
         nav: true,
-        settings: {section: 'examples'},
+        settings: {deprecated: true, section: 'examples'},
         moduleId: 'order-list-with-fixed-item-height/index'
       },
       {
         route: 'order-flex', name: 'order-flex',
         title: '6. (deprecated) Re-order list with unknown item height',
         nav: true,
-        settings: {section: 'examples'},
+        settings: {deprecated: true, section: 'examples'},
         moduleId: 'order-list-with-unknown-item-height/index'
       },
       {
         route: 'order-table', name: 'order-table',
         title: '7. (deprecated) Customize preview for <tr>',
         nav: true,
-        settings: {section: 'examples'},
+        settings: {deprecated: true, section: 'examples'},
         moduleId: 'order-table/index'
       },
       {
         route: 'order-table-with-default-preview', name: 'order-table-with-default-preview',
         title: '8. (deprecated) Default preview for <tr>',
         nav: true,
-        settings: {section: 'examples'},
+        settings: {deprecated: true, section: 'examples'},
         moduleId: 'order-table-with-default-preview/index'
       },
       {
         route: 'order-table-with-handler', name: 'order-table-with-handler',
         title: '9. (deprecated) Customize preview for <tr> with handler',
         nav: true,
-        settings: {section: 'examples'},
+        settings: {deprecated: true, section: 'examples'},
         moduleId: 'order-table-with-handler/index'
       },
       {
         route: 'order-table-with-handler-with-default-preview', name: 'order-table-with-handler-with-default-preview',
         title: '10. (deprecated) Default preview for <tr> with handler',
         nav: true,
-        settings: {section: 'examples'},
+        settings: {deprecated: true, section: 'examples'},
         moduleId: 'order-table-with-handler-with-default-preview/index'
       },
       {
@@ -225,7 +226,7 @@ export class App {
         route: 'order-table-with-handler-reorderable-repeat', name: 'order-table-with-handler-reorderable-repeat',
         title: '3. (deprecated) Customize preview for <tr> with handler',
         nav: true,
-        settings: {section: 'reorderable-repeat-examples'},
+        settings: {deprecated: true, section: 'reorderable-repeat-examples'},
         moduleId: 'order-table-with-handler-reorderable-repeat-step2/index'
       },
       {

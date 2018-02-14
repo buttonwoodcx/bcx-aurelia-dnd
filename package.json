@@ -56,6 +56,6 @@
   },
   "scripts": {
     "test": "tape -r babel-register 'test/**/*.spec.js'",
-    "release": "npm test && au clean && au build --env prod && git add index.html scripts && git push"
+    "release": "npm test && au clean && au build --env prod && git add index.html scripts && git commit -m 'release doc' && git push"
   }
 }

@@ -1,32 +1,3 @@
-With Aurelia, you actually don't need this callback. The generic solution is to use Aurelia `BindingEngine`'s `collectionObserver`. Here is some sample code on how to do that.
-
-```javascript
-import {inject, BindingEngine} from 'aurelia-framework';
-@inject(BindingEngine)
-export class YourComponent {
-  items = [ /* ... */ ];
-
-  constructor(bindingEngine) {
-    this.bindingEngine = bindingEngine;
-  }
-
-  attached() {
-    this._subscriber = this.bindingEngine.collectionObserver(this.items).subscribe((changes) => {
-      // `this.items` here is the updated array.
-      // `changes` is the aurelia collection mutation, if you know what to inspect it.
-    });
-  }
-
-  detached() {
-    this._subscriber.dispose();
-  }
-}
-```
-
-> This solution catches all mutation on `items` array, no matter whether the change is triggered by `reorderable-repeat`.
-
-> For only listening to changes triggered by `reorderable-repeat`, use "reorderable-after-reordering" callback.
-
 ### Direction of DOM flow
 
 By default, `bcx-aurelia-reorderable-repeat` thinks your DOM list flows from top to bottom.

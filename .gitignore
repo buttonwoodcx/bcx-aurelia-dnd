@@ -10,3 +10,6 @@ dist/
 
 # my temporary test file
 /_test_.js
+
+# for gh-pages.
+/src/environment.js

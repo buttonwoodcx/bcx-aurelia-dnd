@@ -2,7 +2,7 @@
 
 > Since `bcx-aurelia-dnd` v0.4.0 and `bcx-aurelia-reorderable-repeat` v0.3.1, it ships with some default preview drawers for `<tr>` and `<li>` elements. You rarely need to go down this path to deal with `<tr>` preview.
 
-> The default `<tr>` and `<li>` preview implement doesn't handle all situations. When the rendered preview doesn't match your expectation, you still need to draw it manually.
+> The default `<tr>` and `<li>` preview implementation doesn't handle all situations. When the rendered preview doesn't match your expectation, you still need to draw it manually.
 
 `bcx-aurelia-reorderable-repeat` did not hide `bcx-aurelia-dnd`'s limitation on drawing preview.
 
@@ -14,4 +14,4 @@ To draw a customized preview, use optional attribute "reorderable-dnd-preview". 
 
 * or a full method call like `reorderable-dnd-preview.call="methodInScope(smthInScope, smth2InScope)"`. The evaluated result of the function call must be a DOM element (unattached to DOM tree) with reasonable size.
 
-Here is a rewrite of example #8 "Customize preview for `<tr>` with handler".
+Here is a rewrite of example #8 "Default preview for `<tr>` with handler".

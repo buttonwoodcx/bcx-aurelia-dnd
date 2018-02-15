@@ -45,7 +45,7 @@ It observes `dnd.isProcessing`, `dnd.model`, `dnd.canDrop` and `dnd.isHoveringSh
 
 > Since v0.4.0, `bcx-aurelia-dnd` ships with some default preview drawers for `<tr>` and `<li>` elements. You rarely need to go down this path to deal with `<tr>` preview.
 
-> The default `<tr>` and `<li>` preview implement doesn't handle all situations. When the rendered preview doesn't match your expectation, you still need to draw it manually.
+> The default `<tr>` and `<li>` preview implementation doesn't handle all situations. When the rendered preview doesn't match your expectation, you still need to draw it manually.
 
 We need to create a customized preview for `<tr>` source element. Just wraps it in a `table` (and also `tbody` if needed), sizes it right, you are good to go.
 

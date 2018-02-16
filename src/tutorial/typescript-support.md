@@ -17,10 +17,6 @@ you can import additional interface declarations:
 * `SourceDelegate` for dnd source.
 * `TargetDelegate`, `TargetDelegateInjectedDnd`, `DndLocation` for dnd target:
 
-```
-import {DndService, TargetDelegateInjectedDnd} from 'bcx-aurelia-dnd';
-```
-
 > This is for getting TypeScript to know about the types. It's optional but recommended, you don't need to import them for TypeScript to work.
 
 Here is an example of using it inside a TypeScript project.

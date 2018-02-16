@@ -1,3 +1,13 @@
+<a name="0.4.2"></a>
+## [0.4.2](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.1...v0.4.2) (2018-02-16)
+
+
+### Bug Fixes
+
+* display:none; does not work in ol>li preview as I wanted. ([abc2272](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/abc2272))
+
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.0...v0.4.1) (2018-02-13)
 

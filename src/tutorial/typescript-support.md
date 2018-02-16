@@ -12,23 +12,25 @@ In TypeScript project, on top of normal import:
 import {DndService} from 'bcx-aurelia-dnd';
 ```
 
-you can import additional interface declaration `TargetDelegateInjectedDnd`:
+you can import additional interface declarations:
+
+* `SourceDelegate` for dnd source.
+* `TargetDelegate`, `TargetDelegateInjectedDnd`, `DndLocation` for dnd target:
 
 ```
 import {DndService, TargetDelegateInjectedDnd} from 'bcx-aurelia-dnd';
 ```
 
-> This is for getting TypeScript to know about the injected `dnd` property on target delegate. It's totally optional, you don't need to import it for TypeScript to work.
+> This is for getting TypeScript to know about the types. It's optional but recommended, you don't need to import them for TypeScript to work.
 
 Here is an example of using it inside a TypeScript project.
 
 ```
-// optionally import TargetDelegateInjectedDnd
-import {DndService, TargetDelegateInjectedDnd} from 'bcx-aurelia-dnd';
+import {DndService, TargetDelegate, TargetDelegateInjectedDnd, DndLocation} from 'bcx-aurelia-dnd';
 import {autoinject, computedFrom} from 'aurelia-framework';
 
 @autoinject
-export class App {
+export class App implements TargetDelegate {
   dndService: DndService;
 
   // need to declare "dnd" before using it,
@@ -48,11 +50,11 @@ export class App {
     this.dndService.removeTarget(this);
   }
 
-  dndCanDrop(): boolean {
+  dndCanDrop(model: any): boolean {
     //...
   }
 
-  dndDrop(): void {
+  dndDrop(location: DndLocation): void {
     //...
   }
 

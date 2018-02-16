@@ -17,6 +17,6 @@ In you app main js file, `aurelia.use.plugin('bcx-aurelia-reorderable-repeat');`
 
 ## Usage
 
-Simply use `reorderable-repeat.for="item of items"` in your view template. That's it...
+Simply use `reorderable-repeat.for="item of items"` in your view template. That's it.
 
 Here is a rewrite of example #5 "re-order list with fixed item height" with `bcx-aurelia-reorderable-repeat`.

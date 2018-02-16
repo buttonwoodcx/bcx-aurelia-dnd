@@ -1,7 +1,7 @@
 import test from 'tape';
 import $ from 'jquery';
 import _global from '../src/global';
-import {trPreview, liInUlPreview, liInOlPreview, defaultPreview} from '../src/preview-drawers';
+import {trPreview, liPreview, defaultPreview} from '../src/preview-drawers';
 
 const doc = _global.document;
 const documentElement = doc && doc.documentElement;
@@ -12,13 +12,13 @@ function buildHtml(domStr) {
   dom.appendTo('body');
 }
 
-test('trPreview ignore element not tr tag', t => {
+test('trPreview ignores element not tr tag', t => {
   buildHtml('<p>lorem</p>');
   t.notOk(trPreview(doc.querySelector('p')));
   t.end();
 });
 
-test('trPreview ignore malformed table', t => {
+test('trPreview ignores malformed table', t => {
   buildHtml('<tr><td></td></tr>');
   t.notOk(trPreview(doc.querySelector('tr')));
   t.end();
@@ -43,61 +43,55 @@ test('trPreview copies table', t => {
   t.end();
 });
 
-test('liInUlPreview ignore element not li tag', t => {
+test('liPreview ignores element not li tag', t => {
   buildHtml('<p>lorem</p>');
-  t.notOk(liInUlPreview(doc.querySelector('p')));
+  t.notOk(liPreview(doc.querySelector('p')));
   t.end();
 });
 
-test('liInUlPreview ignore li in ol', t => {
-  buildHtml('<ol><li>1</li></ol>');
-  t.notOk(liInUlPreview(doc.querySelector('li')));
-  t.end();
-});
-
-test('liInUlPreview copies li in ul', t => {
+test('liPreview copies li in ul', t => {
   buildHtml('<ul><li>0</li><li>1</li><li>2</li></ul>');
   const li = doc.querySelectorAll('li')[1];
-  const newLiInUl = liInUlPreview(li);
+  const newLiInUl = liPreview(li);
   t.equal(newLiInUl.tagName, 'UL');
   t.equal(newLiInUl.style.width, 'auto');
   t.equal(newLiInUl.style.height, 'auto');
+  t.equal(newLiInUl.style.listStyleType, 'none');
 
   t.equal(newLiInUl.childElementCount, 1);
   const newLi = newLiInUl.children[0];
   t.equal(newLi.innerText, '1');
   t.equal(newLi.style.width, _global.getComputedStyle(li).width);
   t.equal(newLi.style.height, _global.getComputedStyle(li).height);
+  t.equal(newLi.style.flex, '0 0 auto');
   t.end();
 });
 
-test('liInOlPreview ignore element not li tag', t => {
-  buildHtml('<p>lorem</p>');
-  t.notOk(liInOlPreview(doc.querySelector('p')));
-  t.end();
-});
-
-test('liInOlPreview ignore li in ul', t => {
-  buildHtml('<ul><li>1</li></ul>');
-  t.notOk(liInOlPreview(doc.querySelector('li')));
-  t.end();
-});
-
-test('liInOlPreview copies li in ol', t => {
+test('liPreview copies li in ol', t => {
   buildHtml('<ol><li>0</li><li>1</li><li>2</li></ol>');
   const li = doc.querySelectorAll('li')[1];
-  const newLiInOl = liInOlPreview(li);
-
+  const newLiInOl = liPreview(li);
   t.equal(newLiInOl.tagName, 'OL');
   t.equal(newLiInOl.style.width, 'auto');
   t.equal(newLiInOl.style.height, 'auto');
+  t.equal(newLiInOl.style.listStyleType, 'none');
 
-  t.equal(newLiInOl.childElementCount, 3);
-  t.equal(newLiInOl.children[0].style.display, 'none');
-  t.equal(newLiInOl.children[2].style.display, 'none');
-  const newLi = newLiInOl.children[1];
+  t.equal(newLiInOl.childElementCount, 1);
+  const newLi = newLiInOl.children[0];
   t.equal(newLi.innerText, '1');
   t.equal(newLi.style.width, _global.getComputedStyle(li).width);
   t.equal(newLi.style.height, _global.getComputedStyle(li).height);
+  t.equal(newLi.style.flex, '0 0 auto');
+  t.end();
+});
+
+test('defaultPreview clones element', t => {
+  buildHtml('<div><p>lorem</p></div>');
+  const div = defaultPreview(doc.querySelector('div'));
+  t.equal(div.tagName, 'DIV');
+  t.equal(div.childElementCount, 1);
+  const newP = div.children[0];
+  t.equal(newP.tagName, 'P');
+  t.equal(newP.innerText, 'lorem');
   t.end();
 });

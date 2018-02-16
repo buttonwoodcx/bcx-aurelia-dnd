@@ -30,47 +30,23 @@ export function trPreview(el) {
   return newTable;
 }
 
-export function liInUlPreview(el) {
+export function liPreview(el) {
   if (el.tagName !== 'LI') return;
-  if (!el.parentNode || el.parentNode.tagName !== 'UL') return;
+  if (!el.parentNode || (el.parentNode.tagName !== 'UL' && el.parentNode.tagName !== 'OL')) return;
 
   const newLi = el.cloneNode(true);
   const computed = _global.getComputedStyle(el);
   newLi.style.width = computed.width;
   newLi.style.height = computed.height;
+  newLi.style.flex = '0 0 auto';
 
-  let newUl = el.parentNode.cloneNode();
-  newUl.appendChild(newLi);
-  newUl.style.width = 'auto';
-  newUl.style.height = 'auto';
+  let newUlOrOl = el.parentNode.cloneNode();
+  newUlOrOl.appendChild(newLi);
+  newUlOrOl.style.width = 'auto';
+  newUlOrOl.style.height = 'auto';
+  newUlOrOl.style.listStyleType = 'none';
 
-  return newUl;
-}
-
-export function liInOlPreview(el) {
-  if (el.tagName !== 'LI') return;
-  if (!el.parentNode || el.parentNode.tagName !== 'OL') return;
-
-  const computed = _global.getComputedStyle(el);
-
-  const ol = el.parentNode;
-  const newOl = ol.cloneNode(true);
-
-  newOl.style.width = 'auto';
-  newOl.style.height = 'auto';
-
-  const liCount = ol.childElementCount;
-  for(let i = 0; i < liCount; i++) {
-    const newLi = newOl.children[i];
-    if (ol.children[i] === el) {
-      newLi.style.width = computed.width;
-      newLi.style.height = computed.height;
-    } else {
-      newLi.style.display = 'none'; // hide all other li.
-    }
-  }
-
-  return newOl;
+  return newUlOrOl;
 }
 
 export function defaultPreview(el) {

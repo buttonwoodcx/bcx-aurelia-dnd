@@ -8,11 +8,6 @@ export class TableContainer {
     {name: 'Emma', age: 18}
   ];
 
-  afterReordering(items) {
-    // use either `items` or `this.items` for updated array model
-    console.log('Items has been updated to: ' + JSON.stringify(items));
-  }
-
   rowPreview(item) {
     // when building html by string, to be safe, better to
     // use jquery $('<td><td>').text(item.name).

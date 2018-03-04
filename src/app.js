@@ -104,7 +104,7 @@ export class App {
             'tutorial/bcx-aurelia-reorderable-repeat-part3.md',
             'order-list-with-unknown-item-height-reorderable-repeat/inline',
             'tutorial/bcx-aurelia-reorderable-repeat-part4.md',
-            'order-table-with-handler-reorderable-repeat/inline',
+            'order-table-with-handler-reorderable-repeat-step2/inline',
             'tutorial/bcx-aurelia-reorderable-repeat-part5.md',
             'order-table-with-handler-reorderable-repeat-step2-with-default-preview/inline',
             'tutorial/bcx-aurelia-reorderable-repeat-part6.md',

@@ -1,3 +1,13 @@
+<a name="0.4.3"></a>
+## [0.4.3](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.2...v0.4.3) (2018-03-08)
+
+
+### Bug Fixes
+
+* fix BABEL_ENV to development to fix npm installation directly from git. ([7af52bd](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/7af52bd))
+
+
+
 <a name="0.4.2"></a>
 ## [0.4.2](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.1...v0.4.2) (2018-02-16)
 

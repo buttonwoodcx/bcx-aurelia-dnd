@@ -13,7 +13,11 @@ A customized Aurelia repeater that supports drag & drop reordering automatically
 
 ### Load plugin
 
-In you app main js file, `aurelia.use.plugin('bcx-aurelia-reorderable-repeat');`.
+In you app main.js file.
+
+```js
+aurelia.use.plugin(PLATFORM.moduleName('bcx-aurelia-reorderable-repeat'));
+```
 
 ## Usage
 

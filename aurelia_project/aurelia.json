@@ -145,7 +145,7 @@
           {
             "name": "bcx-aurelia-reorderable-repeat",
             "main": "index",
-            "path": "../node_modules/bcx-aurelia-reorderable-repeat/dist/amd"
+            "path": "../node_modules/bcx-aurelia-reorderable-repeat/dist"
           }
         ]
       }

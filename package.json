@@ -10,8 +10,8 @@
   "dependencies": {
     "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.2.0",
-    "bcx-aurelia-dnd": "^0.4.2",
-    "bcx-aurelia-reorderable-repeat": "^0.3.4",
+    "bcx-aurelia-dnd": "^0.4.3",
+    "bcx-aurelia-reorderable-repeat": "^0.4.0",
     "bluebird": "^3.5.1",
     "jquery": "^3.3.1",
     "lodash": "^4.17.5",
@@ -21,8 +21,8 @@
   },
   "peerDependencies": {},
   "devDependencies": {
-    "aurelia-cli": "^0.32.0",
-    "aurelia-pal-nodejs": "^1.0.0-beta.3.0.0",
+    "aurelia-cli": "^0.33.1",
+    "aurelia-pal-nodejs": "^1.0.0-beta.3.2.0",
     "aurelia-testing": "^1.0.0-beta.4.0.0",
     "aurelia-tools": "^2.0.0",
     "babel-eslint": "^8.2.2",
@@ -38,7 +38,7 @@
     "browser-sync": "^2.23.6",
     "connect-history-api-fallback": "^1.5.0",
     "debounce": "^1.1.0",
-    "eslint": "^4.18.1",
+    "eslint": "^4.19.1",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-babel": "^7.0.1",
     "gulp-changed-in-place": "^2.3.0",
@@ -51,7 +51,7 @@
     "minimatch": "^3.0.4",
     "tape": "^4.9.0",
     "through2": "^2.0.3",
-    "uglify-js": "^3.3.12",
+    "uglify-js": "^3.3.21",
     "vinyl-fs": "^3.0.2"
   },
   "scripts": {

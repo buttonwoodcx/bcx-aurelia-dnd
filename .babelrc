@@ -1,10 +1,11 @@
 {
   "env": {
     "test": {
-      "presets": ["es2015", "stage-1"]
+      "presets": ["env", "stage-1"]
     },
     "development": {
-      "presets": ["es2015-rollup", "stage-1"]
+      "presets": [["env", {"modules": false}], "stage-1"],
+      "plugins": ["external-helpers"]
     }
   }
 }

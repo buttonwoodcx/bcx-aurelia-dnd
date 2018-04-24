@@ -1,3 +1,13 @@
+<a name="0.4.5"></a>
+## [0.4.5](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.4...v0.4.5) (2018-04-24)
+
+
+### Bug Fixes
+
+* fix reversed logic on background-color fallback. ([8612e9f](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/8612e9f))
+
+
+
 <a name="0.4.4"></a>
 ## [0.4.4](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.3...v0.4.4) (2018-04-24)
 

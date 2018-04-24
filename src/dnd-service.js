@@ -703,7 +703,9 @@ export class DndService {
     if (this._preview) return;
     if (this._noPreview) return;
 
-    if (this._sourcePreview) {
+    let customised = !!this._sourcePreview;
+
+    if (customised) {
       this._preview = this._sourcePreview;
       this._sourcePreview = undefined;
     } else {
@@ -722,7 +724,7 @@ export class DndService {
     doc.body.appendChild(this._preview);
     classes.add(doc.body, 'bcx-dnd-unselectable');
 
-    if (_global.getComputedStyle(this._preview).backgroundColor === 'rgba(0, 0, 0, 0)') {
+    if (customised && _global.getComputedStyle(this._preview).backgroundColor === 'rgba(0, 0, 0, 0)') {
       this._preview.style.backgroundColor = 'white';
     }
 

@@ -10,7 +10,7 @@
   "dependencies": {
     "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.2.0",
-    "bcx-aurelia-dnd": "^0.4.3",
+    "bcx-aurelia-dnd": "^0.4.4",
     "bcx-aurelia-reorderable-repeat": "^0.4.0",
     "bluebird": "^3.5.1",
     "jquery": "^3.3.1",
@@ -22,10 +22,10 @@
   "peerDependencies": {},
   "devDependencies": {
     "aurelia-cli": "^0.33.1",
-    "aurelia-pal-nodejs": "^1.0.0-beta.3.2.0",
+    "aurelia-pal-nodejs": "^1.0.0-beta.3.3.0",
     "aurelia-testing": "^1.0.0-beta.4.0.0",
     "aurelia-tools": "^2.0.0",
-    "babel-eslint": "^8.2.2",
+    "babel-eslint": "^8.2.3",
     "babel-plugin-syntax-flow": "^6.18.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-es2015-modules-amd": "^6.24.1",
@@ -35,7 +35,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "babel-register": "^6.26.0",
-    "browser-sync": "^2.23.6",
+    "browser-sync": "^2.23.7",
     "connect-history-api-fallback": "^1.5.0",
     "debounce": "^1.1.0",
     "eslint": "^4.19.1",
@@ -51,7 +51,7 @@
     "minimatch": "^3.0.4",
     "tape": "^4.9.0",
     "through2": "^2.0.3",
-    "uglify-js": "^3.3.21",
+    "uglify-js": "^3.3.22",
     "vinyl-fs": "^3.0.2"
   },
   "scripts": {

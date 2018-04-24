@@ -1,3 +1,13 @@
+<a name="0.4.4"></a>
+## [0.4.4](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.3...v0.4.4) (2018-04-24)
+
+
+### Bug Fixes
+
+* do not fallback background color to white for customised preview. ([c1e8b82](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/c1e8b82))
+
+
+
 <a name="0.4.3"></a>
 ## [0.4.3](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.2...v0.4.3) (2018-03-08)
 

@@ -724,7 +724,7 @@ export class DndService {
     doc.body.appendChild(this._preview);
     classes.add(doc.body, 'bcx-dnd-unselectable');
 
-    if (customised && _global.getComputedStyle(this._preview).backgroundColor === 'rgba(0, 0, 0, 0)') {
+    if (!customised && _global.getComputedStyle(this._preview).backgroundColor === 'rgba(0, 0, 0, 0)') {
       this._preview.style.backgroundColor = 'white';
     }
 

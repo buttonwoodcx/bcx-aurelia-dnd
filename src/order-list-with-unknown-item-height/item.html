@@ -1,7 +1,0 @@
-<template ref="dndElement" class="list-flex-item ${draggingMe ? 'dragging' : ''}">
-  <require from="./item.css"></require>
-
-  <!-- cannot use show.bind here, it changes outer element size-->
-  <!-- use visibility: hidden; to retain size -->
-  <span css="visibility: ${draggingMe ? 'hidden': 'inherit'}">${item.value}</span>
-</template>

@@ -1,14 +1,3 @@
-# bcx-aurelia-dnd examples
+# deprecated bcx-aurelia-dnd doc repo
 
-Project is built with aurelia-cli.
-
-```
-npm i -g aurelia-cli
-npm install
-```
-
-Then
-
-```
-au run
-```
+Replaced by https://github.com/buttonwoodcx/doc-bcx-aurelia-dnd

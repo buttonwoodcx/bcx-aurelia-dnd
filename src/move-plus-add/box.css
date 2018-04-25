@@ -1,9 +1,0 @@
-.example-box {
-  position: absolute;
-  cursor: pointer;
-  box-sizing: border-box;
-  width: 80px;
-  height: 40px;
-  border: 1px solid #555;
-  background: white;
-}

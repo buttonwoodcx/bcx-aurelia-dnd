@@ -1,6 +1,0 @@
-<template>
-  <div repeat.for="trunk of trunks">
-    <show-mark-down-file if.bind="trunk | endsWith:'.md'" filename.bind="trunk"></show-mark-down-file>
-    <compose else view-model="./${trunk}"></compose>
-  </div>
-</template>

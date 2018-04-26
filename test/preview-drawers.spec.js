@@ -1,7 +1,7 @@
 import test from 'tape';
 import $ from 'jquery';
 import _global from '../src/global';
-import {trPreview, liPreview, defaultPreview} from '../src/preview-drawers';
+import {trPreview, liPreview, defaultPreview, unknownTagPreview} from '../src/preview-drawers';
 
 const doc = _global.document;
 const documentElement = doc && doc.documentElement;
@@ -93,5 +93,34 @@ test('defaultPreview clones element', t => {
   const newP = div.children[0];
   t.equal(newP.tagName, 'P');
   t.equal(newP.innerText, 'lorem');
+  t.end();
+});
+
+test('unknownTagPreview ignores element with non-zero size', t => {
+  buildHtml('<div><p>lorem</p></div>');
+  t.notOk(unknownTagPreview(doc.querySelector('div')));
+  t.end();
+});
+
+test('unknownTagPreview ignores unknown tag with custom display', t => {
+  buildHtml('<xyz style="display:block"><div>lorem</div><div>hello</div></xyz>');
+  t.notOk(unknownTagPreview(doc.querySelector('div')));
+  t.end();
+});
+
+test('unknownTagPreview ignores unknown tag with custom size', t => {
+  buildHtml('<xyz style="width:100%;"><div>lorem</div><div>hello</div></xyz>');
+  t.notOk(unknownTagPreview(doc.querySelector('div')));
+  t.end();
+});
+
+test('unknownTagPreview clones zero size element, copies children size', t => {
+  buildHtml('<xyz><div>lorem</div><div>hello</div></xyz>');
+  const xyz = doc.querySelector('xyz');
+  const newXyz = unknownTagPreview(xyz);
+  t.equal(newXyz.tagName, 'XYZ');
+  t.equal(newXyz.childElementCount, 2);
+  t.equal(newXyz.style.width, '');
+  t.equal(newXyz.style.height, '');
   t.end();
 });

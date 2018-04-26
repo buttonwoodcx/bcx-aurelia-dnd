@@ -49,6 +49,32 @@ export function liPreview(el) {
   return newUlOrOl;
 }
 
+// For unknown tag, the default display is inline,
+// will be auto size (based on children).
+// This is very common in Aurelia's custom component.
+export function unknownTagPreview(el) {
+  const computed = _global.getComputedStyle(el);
+  const isUnknownTag = computed.display === 'inline' &&
+    computed.width === 'auto' &&
+    computed.height === 'auto' &&
+    el.style.width === '' &&
+    el.style.height === '';
+
+  if (!isUnknownTag) return;
+
+  const preview = el.cloneNode(true);
+  const len = el.childElementCount;
+
+  // copy all children size
+  for (let i = 0; i < len; i++) {
+    const computed = _global.getComputedStyle(el.children[i]);
+    preview.children[i].style.width = computed.width;
+    preview.children[i].style.height = computed.height;
+  }
+
+  return preview;
+}
+
 export function defaultPreview(el) {
   const preview = el.cloneNode(true);
   const computed = _global.getComputedStyle(el);

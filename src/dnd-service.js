@@ -1,7 +1,7 @@
 // borrowed many code from https://github.com/bevacqua/dragula.git
 import _global from './global';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {trPreview, liPreview, defaultPreview} from './preview-drawers';
+import {trPreview, liPreview, unknownTagPreview, defaultPreview} from './preview-drawers';
 
 // Ideally should be using aurelia-pal, but it doesn't support
 // enough DOM features for bcx-aurelia-dnd to work.
@@ -303,6 +303,7 @@ export class DndService {
 
     injectStyles();
     this.addPreviewDrawer(defaultPreview);
+    this.addPreviewDrawer(unknownTagPreview);
     this.addPreviewDrawer(liPreview);
     this.addPreviewDrawer(trPreview);
 

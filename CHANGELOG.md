@@ -1,3 +1,14 @@
+<a name="0.4.6"></a>
+## [0.4.6](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.5...v0.4.6) (2018-04-26)
+
+
+### Features
+
+* preview drawer for unknown HTML tag, improve compatibility of Aurelia custom component ([3752fea](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/3752fea))
+* update link to newest doc site. ([264aabc](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/264aabc))
+
+
+
 <a name="0.4.5"></a>
 ## [0.4.5](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.4...v0.4.5) (2018-04-24)
 

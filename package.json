@@ -49,7 +49,7 @@
   "main": "dist/index.js",
   "types": "index.d.ts",
   "files": [
-    "dist/**/*",
+    "dist",
     "index.d.ts"
   ],
   "dependencies": {

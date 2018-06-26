@@ -1,3 +1,13 @@
+<a name="0.4.7"></a>
+## [0.4.7](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.6...v0.4.7) (2018-06-26)
+
+
+### Bug Fixes
+
+* fix error in TypeScript def file ([717a67a](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/717a67a)), closes [#4](https://github.com/buttonwoodcx/bcx-aurelia-dnd/issues/4)
+
+
+
 <a name="0.4.6"></a>
 ## [0.4.6](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.5...v0.4.6) (2018-04-26)
 

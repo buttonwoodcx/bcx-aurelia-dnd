@@ -42,27 +42,27 @@ declare interface TargetDelegateInjectedDnd {
 
 interface TargetDelegate {
   dndElement?: Element;
+  dnd?: TargetDelegateInjectedDnd;
   dndCanDrop(model: any): boolean;
   dndDrop(location: DndLocation): void;
   dndHover?(location: DndLocation): void;
-  dnd?: TargetDelegateInjectedDnd;
 }
 
 interface TargetOptions {
   element?: Element;
 }
 
-type PreviewDrawer = (Element) => Element?;
+type PreviewDrawer = (Element) => Element | void;
 
 export declare class DndService {
-  readonly isProcessing: boolean;
-  readonly model: any;
+  public readonly isProcessing: boolean;
+  public readonly model: any;
 
-  addSource(sourceDelegate: SourceDelegate, options?: SourceOptions): void;
-  removeSource(source: SourceDelegate | Element): void;
+  public addSource(sourceDelegate: SourceDelegate, options?: SourceOptions): void;
+  public removeSource(source: SourceDelegate | Element): void;
 
-  addTarget(targetDelegate: TargetDelegate, options?: TargetOptions): void;
-  removeTarget(target: TargetDelegate | Element): void;
+  public addTarget(targetDelegate: TargetDelegate, options?: TargetOptions): void;
+  public removeTarget(target: TargetDelegate | Element): void;
 
-  addPreviewDrawer(drawer: PreviewDrawer): void;
+  public addPreviewDrawer(drawer: PreviewDrawer): void;
 }

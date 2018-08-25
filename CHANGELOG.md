@@ -1,3 +1,13 @@
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.7...v0.5.0) (2018-08-25)
+
+
+### Features
+
+* use babel loose mode for faster/smaller code ([feb81cf](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/feb81cf))
+
+
+
 <a name="0.4.7"></a>
 ## [0.4.7](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.6...v0.4.7) (2018-06-26)
 

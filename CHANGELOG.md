@@ -1,3 +1,13 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.5.0...v1.0.0) (2018-10-04)
+
+
+### Features
+
+* change output file to cjs format, upgrade to babel7 ([2e04321](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/2e04321))
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.4.7...v0.5.0) (2018-08-25)
 

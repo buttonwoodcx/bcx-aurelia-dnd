@@ -3,14 +3,10 @@ import resolve from 'rollup-plugin-node-resolve';
 import {terser} from "rollup-plugin-terser";
 
 export default {
-  input: 'src/index.js',
+  input: 'src/dnd-service.js',
   output: {
-    format: 'umd',
-    name: 'BcxAureliaDnd',
-    file: 'dist/index.js',
-    globals: {
-      "aurelia-event-aggregator": "AureliaEventAggregator"
-    }
+    format: 'cjs',
+    file: 'dist/index.js'
   },
   external: ["aurelia-event-aggregator"],
   plugins: [

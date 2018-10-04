@@ -9,8 +9,6 @@ import {trPreview, liPreview, unknownTagPreview, defaultPreview} from './preview
 // DndService only works in browser.
 // code can be loaded in nodejs env, as long as you don't run it.
 // for aurelia component testing in nodejs, feed constructor with a mock DndService.
-//
-
 
 const doc = _global.document;
 const documentElement = doc && doc.documentElement;
@@ -187,7 +185,7 @@ function getCoord (coord, e) {
   return host[coord];
 }
 
-export class DndSource {
+class DndSource {
   constructor(delegate, options = {}) {
     if (!delegate) {
       throw new Error("Missing delegate for dnd source.");
@@ -232,7 +230,7 @@ export class DndSource {
   }
 }
 
-export class DndTarget {
+class DndTarget {
   constructor(delegate, options = {}) {
     if (!delegate) {
       throw new Error("Missing delegate for dnd target.");
@@ -291,15 +289,14 @@ function indexOfHandler(array, handler) {
   return -1; // nothing found
 }
 
-export class DndService {
-  static inject = [EventAggregator]
-
-  dndSources = []
-  dndTargets = []
-  previewDrawers = [];
+class DndService {
 
   constructor(ea) {
     this.ea = ea;
+
+    this.dndSources = [];
+    this.dndTargets = [];
+    this.previewDrawers = [];
 
     injectStyles();
     this.addPreviewDrawer(defaultPreview);
@@ -744,3 +741,6 @@ export class DndService {
   }
 }
 
+DndService.inject = [EventAggregator];
+
+export {DndService};

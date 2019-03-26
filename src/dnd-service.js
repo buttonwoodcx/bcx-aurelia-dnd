@@ -311,11 +311,11 @@ class DndService {
     this._drag = this._drag.bind(this);
 
     // dnd start handler on doc level
-    documentElement.addEventListener('mousedown', this._grab, {passive: false});
+    documentElement.addEventListener('mousedown', this._grab);
     documentElement.addEventListener('touchstart', this._grab, {passive: false});
 
     // dnd end handler for desktop on doc level
-    documentElement.addEventListener('mouseup', this._release, {passive: false});
+    documentElement.addEventListener('mouseup', this._release);
     // dnd end handler for mobile (touch event) on source element
   }
 
@@ -366,7 +366,7 @@ class DndService {
   }
 
   _startListeningEventualMovements () {
-    documentElement.addEventListener('mousemove', this._startBecauseMouseMoved, {passive: false});
+    documentElement.addEventListener('mousemove', this._startBecauseMouseMoved);
     this._element && this._element.addEventListener('touchmove', this._startBecauseMouseMoved, {passive: false});
 
     // dnd end handler for mobile (touch event) on source element
@@ -375,14 +375,14 @@ class DndService {
 
   _stopListeningEventualMovements () {
     documentElement.removeEventListener('mousemove', this._startBecauseMouseMoved);
-    this._element && this._element.removeEventListener('touchmove', this._startBecauseMouseMoved);
+    this._element && this._element.removeEventListener('touchmove', this._startBecauseMouseMoved, {passive: false});
   }
 
   _startListeningMovements() {
     documentElement.addEventListener('selectstart', this._preventGrabbed); // IE8
     documentElement.addEventListener('click', this._preventGrabbed);
 
-    documentElement.addEventListener('mousemove', this._drag, {passive: false});
+    documentElement.addEventListener('mousemove', this._drag);
     this._element && this._element.addEventListener('touchmove', this._drag, {passive: false});
   }
 
@@ -391,9 +391,9 @@ class DndService {
     documentElement.removeEventListener('click', this._preventGrabbed);
 
     documentElement.removeEventListener('mousemove', this._drag);
-    this._element && this._element.removeEventListener('touchmove', this._drag);
+    this._element && this._element.removeEventListener('touchmove', this._drag, {passive: false});
     // remove dnd end handler for mobile (touch event) on source element
-    this._element && this._element.removeEventListener('touchend', this._release);
+    this._element && this._element.removeEventListener('touchend', this._release, {passive: false});
   }
 
   _preventGrabbed(e) {

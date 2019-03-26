@@ -1,3 +1,12 @@
+## [1.0.1](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.0.0...v1.0.1) (2019-03-26)
+
+
+### Bug Fixes
+
+* fix event handler remover on IE11 ([5ccabc5](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/5ccabc5)), closes [#10](https://github.com/buttonwoodcx/bcx-aurelia-dnd/issues/10)
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v0.5.0...v1.0.0) (2018-10-04)
 

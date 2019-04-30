@@ -54,15 +54,5 @@
   ],
   "dependencies": {
     "aurelia-event-aggregator": "^1.0.1"
-  },
-  "aurelia": {
-    "import": {
-      "dependencies": [
-        "bcx-aurelia-dnd"
-      ],
-      "tutorial": [
-        "import {DndService} from 'bcx-aurelia-dnd';"
-      ]
-    }
   }
 }

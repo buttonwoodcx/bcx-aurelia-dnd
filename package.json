@@ -22,19 +22,19 @@
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.2",
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
     "eslint": "^5.16.0",
     "jquery": "^3.4.1",
-    "rollup": "^1.13.1",
+    "rollup": "^1.15.6",
     "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-node-resolve": "^5.0.1",
+    "rollup-plugin-node-resolve": "^5.0.3",
     "rollup-plugin-terser": "^5.0.0",
     "standard-changelog": "^2.0.11",
     "tap-dot": "^2.0.0",
     "tape": "^4.10.2",
-    "tape-run": "^6.0.0"
+    "browser-do": "^0.2.0"
   },
   "scripts": {
     "build": "env BABEL_ENV=development rollup -c",
@@ -44,7 +44,7 @@
     "version": "standard-changelog && git add CHANGELOG.md",
     "postversion": "git push && git push --tags && npm publish",
     "pretest": "npm run lint",
-    "test": "env BABEL_ENV=test browserify -t babelify test/dnd.spec.js test/preview-drawers.spec.js | tape-run"
+    "test": "env BABEL_ENV=test browserify -t babelify test/dnd.spec.js test/preview-drawers.spec.js | browser-do --tap"
   },
   "main": "dist/index.js",
   "types": "index.d.ts",

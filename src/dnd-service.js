@@ -317,6 +317,7 @@ class DndService {
     // dnd end handler for desktop on doc level
     documentElement.addEventListener('mouseup', this._release);
     // dnd end handler for mobile (touch event) on source element
+    documentElement.addEventListener('touchend', this._release);
   }
 
   addPreviewDrawer(drawer) {
@@ -367,6 +368,7 @@ class DndService {
 
   _startListeningEventualMovements () {
     documentElement.addEventListener('mousemove', this._startBecauseMouseMoved);
+    documentElement.addEventListener('touchmove', this._startBecauseMouseMoved, {passive: false});
     this._element && this._element.addEventListener('touchmove', this._startBecauseMouseMoved, {passive: false});
 
     // dnd end handler for mobile (touch event) on source element
@@ -375,6 +377,7 @@ class DndService {
 
   _stopListeningEventualMovements () {
     documentElement.removeEventListener('mousemove', this._startBecauseMouseMoved);
+    documentElement.removeEventListener('touchmove', this._startBecauseMouseMoved, {passive: false});
     this._element && this._element.removeEventListener('touchmove', this._startBecauseMouseMoved, {passive: false});
   }
 
@@ -383,6 +386,7 @@ class DndService {
     documentElement.addEventListener('click', this._preventGrabbed);
 
     documentElement.addEventListener('mousemove', this._drag);
+    documentElement.addEventListener('touchmove', this._drag, {passive: false});
     this._element && this._element.addEventListener('touchmove', this._drag, {passive: false});
   }
 
@@ -391,6 +395,7 @@ class DndService {
     documentElement.removeEventListener('click', this._preventGrabbed);
 
     documentElement.removeEventListener('mousemove', this._drag);
+    documentElement.removeEventListener('touchmove', this._drag, {passive: false});
     this._element && this._element.removeEventListener('touchmove', this._drag, {passive: false});
     // remove dnd end handler for mobile (touch event) on source element
     this._element && this._element.removeEventListener('touchend', this._release, {passive: false});

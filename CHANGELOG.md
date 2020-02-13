@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.0.1...v1.0.2) (2020-02-13)
+
+
+### Bug Fixes
+
+* it looks like iOS changed behaviour on events on removed DOM element ([a779b27](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/a779b27a9bfe84adf6b90daa69bc576b3238d0c6)), closes [buttonwoodcx/bcx-aurelia-reorderable-repeat#14](https://github.com/buttonwoodcx/bcx-aurelia-reorderable-repeat/issues/14)
+
+
+
 ## [1.0.1](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.0.0...v1.0.1) (2019-03-26)
 
 

@@ -1,3 +1,12 @@
+## [1.0.3](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.0.2...v1.0.3) (2020-02-14)
+
+
+### Bug Fixes
+
+* fix typescript definition error TS7051 ([e8f0942](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/e8f09420660bbb48531e7752596b039c95318de7)), closes [#16](https://github.com/buttonwoodcx/bcx-aurelia-dnd/issues/16)
+
+
+
 ## [1.0.2](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.0.1...v1.0.2) (2020-02-13)
 
 

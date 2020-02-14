@@ -52,7 +52,7 @@ interface TargetOptions {
   element?: Element;
 }
 
-type PreviewDrawer = (Element) => Element | void;
+type PreviewDrawer = (element: Element) => Element | void;
 
 export declare class DndService {
   public readonly isProcessing: boolean;

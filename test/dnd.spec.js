@@ -207,7 +207,6 @@ test('add source', t => {
   // source with border-box box-sizing
   dndService.addSource({dndModel: model1, dndElement: box_border_box});
 
-
   // source with customised dndCanDrag
   dndService.addSource({
     dndModel: model1,

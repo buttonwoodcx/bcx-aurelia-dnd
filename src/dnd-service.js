@@ -420,10 +420,6 @@ class DndService {
     const dndSource = this._startingSource(element);
     if (!dndSource) return;
 
-    if (typeof dndSource.delegate.dndCanDrag === 'function') {
-      if (!dndSource.delegate.dndCanDrag()) return;
-    }
-
     this._grabbed = dndSource;
     this._startListeningEventualMovements();
 
@@ -468,11 +464,21 @@ class DndService {
       return;
     }
 
-    let dndSource = this._sourceOf(element);
-    while (!dndSource && element) {
-      element = getParent(element); // drag target should be a top element
+    let dndSource;
+    while (element) {
       if (!element) break;
-      dndSource = this._sourceOf(element);
+      const s = this._sourceOf(element);
+
+      if (s && (
+        typeof s.delegate.dndCanDrag !== 'function' ||
+        s.delegate.dndCanDrag()
+      )) {
+        dndSource = s;
+        break;
+      }
+
+      // Try next parent
+      element = getParent(element);
     }
 
     return dndSource;

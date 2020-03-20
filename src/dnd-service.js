@@ -420,6 +420,10 @@ class DndService {
     const dndSource = this._startingSource(element);
     if (!dndSource) return;
 
+    if (typeof dndSource.delegate.dndCanDrag === 'function') {
+      if (!dndSource.delegate.dndCanDrag()) return;
+    }
+
     this._grabbed = dndSource;
     this._startListeningEventualMovements();
 

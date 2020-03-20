@@ -58,6 +58,8 @@ const box_0_4 = addBox('04', 0, 200, 50, 50);
 const box_0_4_handler = $('<div style="position:absolute;width:10px;height:10px;left:5px;bottom:5px"></div>').get(0);
 box_0_4.appendChild(box_0_4_handler);
 
+const box_0_5 = addBox('05', 0, 250, 50, 50);
+
 let box_content_box = $(`
 <div style="position:absolute;left:0;top:250px;width:25px;height:25px;margin:10px;padding:5px;border:1px solid black;box-sizing:content-box;"></div>
 `);
@@ -170,7 +172,7 @@ test('add source', t => {
   // source with element option and noPreview
   dndService.addSource({dndModel: model1}, {element: box_0_1, noPreview: true});
 
-  // source with customised preview
+  // source with customised preview and dndCanDrag
   dndService.addSource({
     dndModel: model2,
     dndElement: box_0_2,
@@ -180,7 +182,8 @@ test('add source', t => {
       dom.css('width', '25px');
       dom.css('height', '20px');
       return dom.get(0);
-    }
+    },
+    dndCanDrag: () => true
   });
 
   // source with customised preview, centerPreviewToMousePosition
@@ -203,6 +206,15 @@ test('add source', t => {
   dndService.addSource({dndModel: model1, dndElement: box_content_box});
   // source with border-box box-sizing
   dndService.addSource({dndModel: model1, dndElement: box_border_box});
+
+
+  // source with customised dndCanDrag
+  dndService.addSource({
+    dndModel: model1,
+    dndElement: box_0_5,
+    dndCanDrag: () => false
+  });
+
   t.end();
 });
 
@@ -934,24 +946,37 @@ test('preview size is correct no matter what box-sizing is in use', t => {
   t.end();
 });
 
+test('cannnot drag a source with false canDrag return', t => {
+  // box_0_5
+  fireEvent(box_0_5, 'mousedown', {which: 1, clientX: 5, clientY: 10});
+
+  // first small movement, this is where dnd starts
+  fireEvent(documentElement, 'mousemove', {which: 1, clientX: 6, clientY: 10});
+
+  t.notOk(dndService.isProcessing);
+
+  fireEvent(documentElement, 'mouseup', {which: 1, clientX: 6, clientY: 10});
+  t.end();
+});
+
 test('removeSource, removeTarget', t => {
-  t.equal(dndService.dndSources.length, 7);
+  t.equal(dndService.dndSources.length, 8);
   t.equal(dndService.dndTargets.length, 4);
 
   dndService.removeSource(box_border_box);
-  t.equal(dndService.dndSources.length, 6);
+  t.equal(dndService.dndSources.length, 7);
   t.equal(dndService.dndTargets.length, 4);
 
   dndService.removeSource(box_0_0);
-  t.equal(dndService.dndSources.length, 5);
+  t.equal(dndService.dndSources.length, 6);
   t.equal(dndService.dndTargets.length, 4);
 
   dndService.removeTarget(tbox_small_inner);
-  t.equal(dndService.dndSources.length, 5);
+  t.equal(dndService.dndSources.length, 6);
   t.equal(dndService.dndTargets.length, 3);
 
   dndService.removeTarget(target1);
-  t.equal(dndService.dndSources.length, 5);
+  t.equal(dndService.dndSources.length, 6);
   t.equal(dndService.dndTargets.length, 2);
   t.end();
 });

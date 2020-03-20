@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.0.3...v1.1.0) (2020-03-20)
+
+
+### Features
+
+* support optional dndCanDrag() on source delegate ([29835a6](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/29835a6be3b715ac7be4cc540b48adb1fb6ea274))
+
+
+
 ## [1.0.3](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.0.2...v1.0.3) (2020-02-14)
 
 

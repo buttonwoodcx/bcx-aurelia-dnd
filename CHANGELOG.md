@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.1.0...v1.1.1) (2020-03-20)
+
+
+### Bug Fixes
+
+* don't miss canDrag check on nested dnd source ([a58357f](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/a58357ff07004271bc86bbc004912af4407ff726))
+
+
+
 # [1.1.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.0.3...v1.1.0) (2020-03-20)
 
 

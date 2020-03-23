@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.1.1...v1.2.0) (2020-03-23)
+
+
+### Features
+
+* support esc key to cancel a dnd ([c1dc2f2](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/c1dc2f29705414259f12387717bd9bdaa01963fa))
+
+
+
 ## [1.1.1](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.1.0...v1.1.1) (2020-03-20)
 
 

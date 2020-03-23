@@ -958,6 +958,75 @@ test('cannnot drag a source with false canDrag return', t => {
   t.end();
 });
 
+test('drag type one, cancel with esc key', t => {
+  const m = {type: 'one', name: 'model1'};
+
+  fireEvent(box_0_0, 'mousedown', {which: 1, clientX: 5, clientY: 10});
+  t.notOk($('body').hasClass('bcx-dnd-hide-cursor'));
+
+  // first small movement, this is where dnd starts
+  fireEvent(documentElement, 'mousemove', {which: 1, clientX: 6, clientY: 10});
+  const preview = $('.bcx-dnd-preview');
+  // following movement re-position preview.
+  fireEvent(documentElement, 'mousemove', {which: 1, clientX: 8, clientY: 10});
+  t.equal(preview.css('left'), '2px'); // moved 2px to the right
+  t.equal(preview.css('top'), '0px');
+  t.notOk($('body').hasClass('bcx-dnd-hide-cursor'));
+
+  clearTrack();
+
+  // Cancel with esc key
+  fireEvent(documentElement, 'keydown', {key: 'Escape'});
+
+  // After esc, hover over tbox_big move 125px to the right, move 5px down
+  fireEvent(documentElement, 'mousemove', {which: 1, clientX: 131, clientY: 15});
+  t.notOk(document.querySelector('.bcx-dnd-preview'));
+  t.notOk(dndService.isProcessing);
+  t.notOk(dndService.model);
+
+  t.notOk(target1.dnd.isProcessing);
+  t.notOk(target1.dnd.isHoveringShallowly);
+  t.notOk(target1.dnd.isHovering);
+  t.notOk(target1.dnd.canDrop);
+  t.notOk(target1.dnd.model);
+
+  t.notOk(target2.dnd.isProcessing);
+  t.notOk(target2.dnd.isHoveringShallowly);
+  t.notOk(target2.dnd.isHovering);
+  t.notOk(target2.dnd.canDrop);
+  t.notOk(target2.dnd.model);
+
+  t.notOk(target3.dnd.isProcessing);
+  t.notOk(target3.dnd.isHoveringShallowly);
+  t.notOk(target3.dnd.isHovering);
+  t.notOk(target3.dnd.canDrop);
+  t.notOk(target3.dnd.model);
+
+  t.deepEqual(_track, []);
+
+  // After esc, hover over tbox_small_inner move 150px to the right, move 55px down
+  fireEvent(documentElement, 'mousemove', {which: 1, clientX: 156, clientY: 65});
+  t.notOk(document.querySelector('.bcx-dnd-preview'));
+  t.notOk(dndService.isProcessing);
+  t.notOk(dndService.model);
+  t.notOk(target1.dnd.isProcessing);
+  t.notOk(target2.dnd.isProcessing);
+  t.notOk(target3.dnd.isProcessing);
+  t.deepEqual(_track, []);
+
+  // After esc, drop on tbox_small_inner
+  fireEvent(documentElement, 'mouseup', {which: 1, clientX: 156, clientY: 65});
+  t.notOk(dndService.isProcessing);
+  t.notOk(dndService.model);
+  t.notOk(target1.dnd.isProcessing);
+  t.notOk(target2.dnd.isProcessing);
+  t.notOk(target3.dnd.isProcessing);
+
+  t.deepEqual(_track, []);
+
+  t.end();
+});
+
 test('removeSource, removeTarget', t => {
   t.equal(dndService.dndSources.length, 8);
   t.equal(dndService.dndTargets.length, 4);

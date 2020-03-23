@@ -309,6 +309,7 @@ class DndService {
     this._startBecauseMouseMoved = this._startBecauseMouseMoved.bind(this);
     this._preventGrabbed = this._preventGrabbed.bind(this);
     this._drag = this._drag.bind(this);
+    this._esc = this._esc.bind(this);
 
     // dnd start handler on doc level
     documentElement.addEventListener('mousedown', this._grab);
@@ -385,6 +386,7 @@ class DndService {
     documentElement.addEventListener('selectstart', this._preventGrabbed); // IE8
     documentElement.addEventListener('click', this._preventGrabbed);
 
+    documentElement.addEventListener('keydown', this._esc);
     documentElement.addEventListener('mousemove', this._drag);
     documentElement.addEventListener('touchmove', this._drag, {passive: false});
     this._element && this._element.addEventListener('touchmove', this._drag, {passive: false});
@@ -394,6 +396,7 @@ class DndService {
     documentElement.removeEventListener('selectstart', this._preventGrabbed); // IE8
     documentElement.removeEventListener('click', this._preventGrabbed);
 
+    documentElement.removeEventListener('keydown', this._esc);
     documentElement.removeEventListener('mousemove', this._drag);
     documentElement.removeEventListener('touchmove', this._drag, {passive: false});
     this._element && this._element.removeEventListener('touchmove', this._drag, {passive: false});
@@ -443,7 +446,6 @@ class DndService {
   }
 
   _release(e) {
-    this._ungrab();
     if (!this.isProcessing) return;
 
     this.ea && this.ea.publish('dnd:willEnd');
@@ -654,6 +656,18 @@ class DndService {
         dnd.isHovering = false;
       }
     });
+  }
+
+  _esc(e) {
+    if (!this.isProcessing) {
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      // cleanup without dndDrop, without dnd:willEnd/dnd:didEnd events.
+      this._cleanup();
+      e.preventDefault();
+    }
   }
 
   _updatePreviewLocation(e) {

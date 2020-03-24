@@ -446,6 +446,7 @@ class DndService {
   }
 
   _release(e) {
+    this._ungrab();
     if (!this.isProcessing) return;
 
     this.ea && this.ea.publish('dnd:willEnd');

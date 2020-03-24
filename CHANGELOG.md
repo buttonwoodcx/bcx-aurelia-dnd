@@ -1,3 +1,12 @@
+## [1.2.1](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.2.0...v1.2.1) (2020-03-24)
+
+
+### Bug Fixes
+
+* fix missing release on firefox ([b18192a](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/b18192a358a0f920a9c21d6fedba5d0c847a71b5))
+
+
+
 # [1.2.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.1.1...v1.2.0) (2020-03-23)
 
 

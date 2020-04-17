@@ -91,6 +91,7 @@ ea.subscribe('dnd:willStart', () => trackEvent('dnd:willStart'));
 ea.subscribe('dnd:didStart', () => trackEvent('dnd:didStart'));
 ea.subscribe('dnd:willEnd', () => trackEvent('dnd:willEnd'));
 ea.subscribe('dnd:didEnd', () => trackEvent('dnd:didEnd'));
+ea.subscribe('dnd:didCancel', () => trackEvent('dnd:didCancel'));
 
 const target1 = {
   dndElement: tbox_big,
@@ -1002,7 +1003,9 @@ test('drag type one, cancel with esc key', t => {
   t.notOk(target3.dnd.canDrop);
   t.notOk(target3.dnd.model);
 
-  t.deepEqual(_track, []);
+  t.deepEqual(_track, [
+    {event: 'dnd:didCancel', isProcessing: undefined, model: undefined}
+  ]);
 
   // After esc, hover over tbox_small_inner move 150px to the right, move 55px down
   fireEvent(documentElement, 'mousemove', {which: 1, clientX: 156, clientY: 65});
@@ -1012,7 +1015,9 @@ test('drag type one, cancel with esc key', t => {
   t.notOk(target1.dnd.isProcessing);
   t.notOk(target2.dnd.isProcessing);
   t.notOk(target3.dnd.isProcessing);
-  t.deepEqual(_track, []);
+  t.deepEqual(_track, [
+    {event: 'dnd:didCancel', isProcessing: undefined, model: undefined}
+  ]);
 
   // After esc, drop on tbox_small_inner
   fireEvent(documentElement, 'mouseup', {which: 1, clientX: 156, clientY: 65});
@@ -1022,7 +1027,9 @@ test('drag type one, cancel with esc key', t => {
   t.notOk(target2.dnd.isProcessing);
   t.notOk(target3.dnd.isProcessing);
 
-  t.deepEqual(_track, []);
+  t.deepEqual(_track, [
+    {event: 'dnd:didCancel', isProcessing: undefined, model: undefined}
+  ]);
 
   t.end();
 });

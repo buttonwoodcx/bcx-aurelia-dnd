@@ -665,9 +665,11 @@ class DndService {
     }
 
     if (e.key === 'Escape') {
+      e.preventDefault();
       // cleanup without dndDrop, without dnd:willEnd/dnd:didEnd events.
       this._cleanup();
-      e.preventDefault();
+      // fire up dnd:didCancel
+      this.ea && this.ea.publish('dnd:didCancel');
     }
   }
 

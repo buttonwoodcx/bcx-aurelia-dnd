@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.2.1...v1.3.0) (2020-04-17)
+
+
+### Features
+
+* publish event did:didCancel on ESC key ([0666523](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/0666523002432d5e3561815638d75022b6aac26d))
+
+
+
 ## [1.2.1](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.2.0...v1.2.1) (2020-03-24)
 
 

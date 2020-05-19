@@ -1,3 +1,12 @@
+# [1.4.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.3.0...v1.4.0) (2020-05-19)
+
+
+### Features
+
+* move from rollup to ncc ([990a88f](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/990a88f41610bdb2f140fe15cc9864d5147911f7))
+
+
+
 # [1.3.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.2.1...v1.3.0) (2020-04-17)
 
 

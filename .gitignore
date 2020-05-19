@@ -4,7 +4,8 @@ npm-debug.*
 /yarn.lock
 /package-lock.json
 
-dist/
+/dist
+/packed
 /.source*
 
 # Mac OS X

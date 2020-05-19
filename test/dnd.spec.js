@@ -4,7 +4,7 @@
 import test from 'tape';
 import $ from 'jquery';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {DndService} from '../src/dnd-service';
+import {DndService} from '../src/index';
 
 const doc = document;
 const documentElement = doc.documentElement;

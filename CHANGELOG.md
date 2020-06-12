@@ -1,3 +1,12 @@
+## [1.5.1](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.5.0...v1.5.1) (2020-06-12)
+
+
+### Bug Fixes
+
+* avoid referencing TouchEvent or MouseEvent in compiled code ([0bdca66](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/0bdca667fbc811a53d809b8401900a4ae2ddd049))
+
+
+
 # [1.5.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.4.0...v1.5.0) (2020-06-12)
 
 

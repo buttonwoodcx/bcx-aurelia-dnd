@@ -163,18 +163,16 @@ const classes = (function() {
 }());
 
 function whichMouseButton(e: MouseEvent | TouchEvent) {
-  if (e instanceof TouchEvent) {
-    if (e.touches !== undefined) { return e.touches.length; }
-  }
+  const te = e as TouchEvent;
+  if (te.touches !== undefined) { return te.touches.length; }
 
   if (e.which !== undefined && e.which !== 0) { return e.which; } // see https://github.com/bevacqua/dragula/issues/261
 
-  if (e instanceof MouseEvent) {
-    if (e.buttons !== undefined) { return e.buttons; }
-    const button = e.button;
-    if (button !== undefined) { // see https://github.com/jquery/jquery/blob/99e8ff1baa7ae341e94bb89c3e84570c7c3ad9ea/src/event.js#L573-L575
-      return button & 1 ? 1 : button & 2 ? 3 : (button & 4 ? 2 : 0);
-    }
+  const me = e as MouseEvent;
+  if (me.buttons !== undefined) { return me.buttons; }
+  const button = me.button;
+  if (button !== undefined) { // see https://github.com/jquery/jquery/blob/99e8ff1baa7ae341e94bb89c3e84570c7c3ad9ea/src/event.js#L573-L575
+    return button & 1 ? 1 : button & 2 ? 3 : (button & 4 ? 2 : 0);
   }
 }
 
@@ -243,13 +241,12 @@ function getEventHost(e: Event) {
   // on touchend event, we have to use `e.changedTouches`
   // see http://stackoverflow.com/questions/7192563/touchend-event-properties
   // see https://github.com/bevacqua/dragula/issues/34
-  if (e instanceof TouchEvent) {
-    if (e.targetTouches && e.targetTouches.length) {
-      return e.targetTouches[0];
-    }
-    if (e.changedTouches && e.changedTouches.length) {
-      return e.changedTouches[0];
-    }
+  const te = e as TouchEvent;
+  if (te.targetTouches && te.targetTouches.length) {
+    return te.targetTouches[0];
+  }
+  if (te.changedTouches && te.changedTouches.length) {
+    return te.changedTouches[0];
   }
 
   return e;

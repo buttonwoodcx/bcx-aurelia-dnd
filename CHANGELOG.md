@@ -1,3 +1,12 @@
+## [1.5.2](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.5.1...v1.5.2) (2020-06-12)
+
+
+### Bug Fixes
+
+* export needed types ([a596243](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/a596243324f34ae7eb8c35fd1b63a9077e79ba1c))
+
+
+
 ## [1.5.1](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.5.0...v1.5.1) (2020-06-12)
 
 

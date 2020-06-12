@@ -1,6 +1,6 @@
+// @ts-nocheck
 // not testing all edge cases in DOM/events, assumes dragula covers them all.
 // only test dnd lifecycle.
-
 import test from 'tape';
 import $ from 'jquery';
 import {EventAggregator} from 'aurelia-event-aggregator';
@@ -162,7 +162,7 @@ const target4 = {
 
 test('add source', t => {
 
-  t.throws(() => dndService.addSource(), 'missing delegate');
+  t.throws(() => dndService.addSource(undefined), 'missing delegate');
   t.throws(() => dndService.addSource({dndElement: box_0_0}), 'missing dndModel()');
   t.throws(() => dndService.addSource({dndModel: model1}), 'missing dndElement');
   t.throws(() => dndService.addSource({dndModel: model1, dndElement: box_0_0}, {handler: 1}), 'invalid handler');

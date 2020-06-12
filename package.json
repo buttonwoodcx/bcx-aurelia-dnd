@@ -19,36 +19,32 @@
   "license": "MIT",
   "author": "Chunpeng Huo",
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@zeit/ncc": "^0.22.2",
-    "babel-eslint": "^10.1.0",
-    "babelify": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^3.2.0",
+    "@typescript-eslint/parser": "^3.2.0",
     "browser-do": "^2.0.2",
     "browserify": "^16.5.1",
     "eslint": "^7.0.0",
     "jquery": "^3.5.1",
+    "rimraf": "^3.0.2",
     "standard-changelog": "^2.0.24",
     "tap-dot": "^2.0.0",
-    "tape": "^5.0.0"
+    "tape": "^5.0.0",
+    "tsify": "^4.0.2",
+    "typescript": "^3.9.5"
   },
   "scripts": {
-    "prebuild": "ncc build src/index.js -m -e aurelia-event-aggregator -o packed",
-    "build": "babel packed/index.js -o dist/index.js",
+    "build": "rimraf dist && tsc src/index.ts --declaration --outDir dist",
     "lint": "eslint src",
     "prepare": "npm run build",
     "preversion": "npm test",
     "version": "standard-changelog && git add CHANGELOG.md",
     "postversion": "git push && git push --tags && npm publish",
     "pretest": "npm run lint",
-    "test": "browserify -t babelify test/dnd.spec.js test/preview-drawers.spec.js | browser-do --tap"
+    "test": "browserify -p tsify test/dnd.spec.ts test/preview-drawers.spec.ts | browser-do --tap"
   },
   "main": "dist/index.js",
-  "types": "index.d.ts",
   "files": [
-    "dist",
-    "index.d.ts"
+    "dist"
   ],
   "dependencies": {
     "aurelia-event-aggregator": "^1.0.3"

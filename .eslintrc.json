@@ -1,36 +1,21 @@
 {
-  "parser": "babel-eslint",
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "arrowFunctions": true,
-      "blockBindings": true,
-      "classes": true,
-      "defaultParams": true,
-      "destructuring": true,
-      "forOf": true,
-      "generators": false,
-      "modules": true,
-      "objectLiteralComputedProperties": true,
-      "objectLiteralDuplicateProperties": false,
-      "objectLiteralShorthandMethods": true,
-      "objectLiteralShorthandProperties": true,
-      "spread": true,
-      "superInFunctions": true,
-      "templateStrings": true,
-      "jsx": false
-    }
+    "ecmaVersion": 2016,
+    "sourceType": "module"
   },
   "rules": {
-    "semi": [2, "always"],
-    "no-undef": 2
+    "@typescript-eslint/no-explicit-any": 0
   },
   "env": {
     "es6": true,
-    "browser": true,
-    "node": false
-  },
-  "globals": {
+    "browser": true
   }
 }

@@ -1,10 +1,9 @@
+// @ts-nocheck
 import test from 'tape';
 import $ from 'jquery';
-import _global from '../src/global';
 import {trPreview, liPreview, defaultPreview, unknownTagPreview} from '../src/preview-drawers';
 
-const doc = _global.document;
-const documentElement = doc && doc.documentElement;
+const doc = document;
 
 function buildHtml(domStr) {
   $('body').empty();
@@ -29,17 +28,17 @@ test('trPreview copies table', t => {
   const newTable = trPreview(doc.querySelector('tr'));
   t.equal(newTable.tagName, 'TABLE');
   t.equal(newTable.style.width,
-          _global.getComputedStyle(doc.querySelector('table')).width);
+          getComputedStyle(doc.querySelector('table')).width);
 
   const tds = doc.querySelectorAll('table tr td');
   t.equal($(newTable).find('td').first().css('width'),
-          _global.getComputedStyle(tds[0]).width);
+          getComputedStyle(tds[0]).width);
   t.equal($(newTable).find('td').first().css('height'),
-          _global.getComputedStyle(tds[0]).height);
+          getComputedStyle(tds[0]).height);
   t.equal($(newTable).find('td:nth-child(2)').css('width'),
-          _global.getComputedStyle(tds[1]).width);
+          getComputedStyle(tds[1]).width);
   t.equal($(newTable).find('td:nth-child(2)').css('height'),
-          _global.getComputedStyle(tds[1]).height);
+          getComputedStyle(tds[1]).height);
   t.end();
 });
 
@@ -61,8 +60,8 @@ test('liPreview copies li in ul', t => {
   t.equal(newLiInUl.childElementCount, 1);
   const newLi = newLiInUl.children[0];
   t.equal(newLi.innerText, '1');
-  t.equal(newLi.style.width, _global.getComputedStyle(li).width);
-  t.equal(newLi.style.height, _global.getComputedStyle(li).height);
+  t.equal(newLi.style.width, getComputedStyle(li).width);
+  t.equal(newLi.style.height, getComputedStyle(li).height);
   t.equal(newLi.style.flex, '0 0 auto');
   t.end();
 });
@@ -79,8 +78,8 @@ test('liPreview copies li in ol', t => {
   t.equal(newLiInOl.childElementCount, 1);
   const newLi = newLiInOl.children[0];
   t.equal(newLi.innerText, '1');
-  t.equal(newLi.style.width, _global.getComputedStyle(li).width);
-  t.equal(newLi.style.height, _global.getComputedStyle(li).height);
+  t.equal(newLi.style.width, getComputedStyle(li).width);
+  t.equal(newLi.style.height, getComputedStyle(li).height);
   t.equal(newLi.style.flex, '0 0 auto');
   t.end();
 });

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES5",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "test",
+    "src"
+  ]
+}

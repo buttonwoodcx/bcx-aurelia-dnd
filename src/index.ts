@@ -2,14 +2,14 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {trPreview, liPreview, unknownTagPreview, defaultPreview} from './preview-drawers';
 
-interface SourceDelegate {
+export interface SourceDelegate {
   dndElement?: Element;
   dndModel(): any;
   dndCanDrag?(): boolean;
   dndPreview?(model: any): Element;
 }
 
-interface SourceOptions {
+export interface SourceOptions {
   element?: Element;
   handler?: Element;
   noPreview?: boolean;
@@ -29,7 +29,7 @@ interface Rect {
   readonly height: number;
 }
 
-interface DndLocation {
+export interface DndLocation {
   mouseStartAt: Point;
   mouseEndAt: Point;
   sourceElementRect: Rect;
@@ -37,7 +37,7 @@ interface DndLocation {
   targetElementRect: Rect;
 }
 
-declare interface TargetDelegateInjectedDnd {
+export interface TargetDelegateInjectedDnd {
   isProcessing: boolean;
   model?: any;
   canDrop?: boolean;
@@ -45,7 +45,7 @@ declare interface TargetDelegateInjectedDnd {
   isHoveringShallowly?: boolean;
 }
 
-interface TargetDelegate {
+export interface TargetDelegate {
   dndElement?: Element;
   dnd?: TargetDelegateInjectedDnd;
   dndCanDrop(model: any): boolean;
@@ -53,11 +53,11 @@ interface TargetDelegate {
   dndHover?(location: DndLocation): void;
 }
 
-interface TargetOptions {
+export interface TargetOptions {
   element?: Element;
 }
 
-type PreviewDrawer = (element: Element) => Element | void;
+export type PreviewDrawer = (element: Element) => Element | void;
 
 interface LandingTargets {
   shallowTarget: DndTarget | void;

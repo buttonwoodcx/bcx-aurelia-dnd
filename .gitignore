@@ -3,6 +3,7 @@ node_modules/
 npm-debug.*
 /yarn.lock
 /package-lock.json
+/bun.lockb
 
 /dist
 /packed

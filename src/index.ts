@@ -441,9 +441,12 @@ class DndService {
   }
 
   addTarget(delegate: TargetDelegate, options: TargetOptions = {}): void {
-    delegate.dnd = {
-      isProcessing: false
-    };
+    if (delegate.dnd) {
+      delegate.dnd.isProcessing = false;
+    } else {
+      delegate.dnd = { isProcessing: false };
+    }
+
     const dndTarget = new DndTarget(delegate, options);
 
     // init delegate.dnd if there is a dnd session
@@ -461,9 +464,8 @@ class DndService {
   removeTarget(delegateOrElement: TargetDelegate | Element): void {
     const idx = indexOfElementOrDelegate(this.dndTargets, delegateOrElement);
     if (idx >= 0) {
-      const dndTarget = this.dndTargets[idx];
+      // const dndTarget = this.dndTargets[idx];
       // if (dndTarget.dndHover) dndTarget.dndHover.cancel();
-      dndTarget.delegate.dnd = null;
       this.dndTargets.splice(idx, 1);
     }
   }

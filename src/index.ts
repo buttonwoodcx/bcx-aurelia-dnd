@@ -476,16 +476,22 @@ class DndService {
   _startListeningEventualMovements(): void {
     documentElement.addEventListener('mousemove', this._startBecauseMouseMoved);
     documentElement.addEventListener('touchmove', this._startBecauseMouseMoved, {passive: false});
-    this._element && this._element.addEventListener('touchmove', this._startBecauseMouseMoved, {passive: false});
+    if (this._element) {
+      this._element.addEventListener('touchmove', this._startBecauseMouseMoved, {passive: false});
+    }
 
     // dnd end handler for mobile (touch event) on source element
-    this._element && this._element.addEventListener('touchend', this._release, {passive: false});
+    if (this._element) {
+      this._element.addEventListener('touchend', this._release, {passive: false});
+    }
   }
 
   _stopListeningEventualMovements(): void {
     documentElement.removeEventListener('mousemove', this._startBecauseMouseMoved);
     documentElement.removeEventListener('touchmove', this._startBecauseMouseMoved);
-    this._element && this._element.removeEventListener('touchmove', this._startBecauseMouseMoved);
+    if (this._element) {
+      this._element.removeEventListener('touchmove', this._startBecauseMouseMoved);
+    }
   }
 
   _startListeningMovements(): void {
@@ -495,7 +501,9 @@ class DndService {
     documentElement.addEventListener('keydown', this._esc);
     documentElement.addEventListener('mousemove', this._drag);
     documentElement.addEventListener('touchmove', this._drag, {passive: false});
-    this._element && this._element.addEventListener('touchmove', this._drag, {passive: false});
+    if (this._element) {
+      this._element.addEventListener('touchmove', this._drag, {passive: false});
+    }
   }
 
   _stopListeningMovements(): void {
@@ -505,9 +513,13 @@ class DndService {
     documentElement.removeEventListener('keydown', this._esc);
     documentElement.removeEventListener('mousemove', this._drag);
     documentElement.removeEventListener('touchmove', this._drag);
-    this._element && this._element.removeEventListener('touchmove', this._drag);
+    if (this._element) {
+      this._element.removeEventListener('touchmove', this._drag);
+    }
     // remove dnd end handler for mobile (touch event) on source element
-    this._element && this._element.removeEventListener('touchend', this._release);
+    if (this._element) {
+      this._element.removeEventListener('touchend', this._release);
+    }
   }
 
   _preventGrabbed(e: MouseEvent | TouchEvent): void {
@@ -555,7 +567,9 @@ class DndService {
     this._ungrab();
     if (!this.isProcessing) return;
 
-    this.ea && this.ea.publish('dnd:willEnd');
+    if (this.ea) {
+      this.ea.publish('dnd:willEnd');
+    }
 
     const {shallowTarget} = this._landingTargets(e);
 
@@ -565,7 +579,9 @@ class DndService {
 
     this._cleanup();
 
-    this.ea && this.ea.publish('dnd:didEnd');
+    if (this.ea) {
+      this.ea.publish('dnd:didEnd');
+    }
   }
 
   _startingSource(element: Element): DndSource {
@@ -635,7 +651,9 @@ class DndService {
   }
 
   _start(dndSource: DndSource): void {
-    this.ea && this.ea.publish('dnd:willStart');
+    if (this.ea) {
+      this.ea.publish('dnd:willStart');
+    }
 
     this.isProcessing = true;
     this.model = dndSource.delegate.dndModel();
@@ -665,7 +683,9 @@ class DndService {
       dnd.model = this.model;
     });
 
-    this.ea && this.ea.publish('dnd:didStart');
+    if (this.ea) {
+      this.ea.publish('dnd:didStart');
+    }
   }
 
   _cleanup(): void {
@@ -782,7 +802,9 @@ class DndService {
       // cleanup without dndDrop, without dnd:willEnd/dnd:didEnd events.
       this._cleanup();
       // fire up dnd:didCancel
-      this.ea && this.ea.publish('dnd:didCancel');
+      if (this.ea) {
+        this.ea.publish('dnd:didCancel');
+      }
     }
   }
 

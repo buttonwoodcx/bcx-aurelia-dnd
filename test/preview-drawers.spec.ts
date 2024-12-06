@@ -1,4 +1,3 @@
-// @ts-nocheck
 import test from 'tape';
 import $ from 'jquery';
 import {trPreview, liPreview, defaultPreview, unknownTagPreview} from '../src/preview-drawers';
@@ -58,7 +57,7 @@ test('liPreview copies li in ul', t => {
   t.equal(newLiInUl.style.listStyleType, 'none');
 
   t.equal(newLiInUl.childElementCount, 1);
-  const newLi = newLiInUl.children[0];
+  const newLi = newLiInUl.children[0] as HTMLElement;
   t.equal(newLi.innerText, '1');
   t.equal(newLi.style.width, getComputedStyle(li).width);
   t.equal(newLi.style.height, getComputedStyle(li).height);
@@ -76,7 +75,7 @@ test('liPreview copies li in ol', t => {
   t.equal(newLiInOl.style.listStyleType, 'none');
 
   t.equal(newLiInOl.childElementCount, 1);
-  const newLi = newLiInOl.children[0];
+  const newLi = newLiInOl.children[0] as HTMLElement;
   t.equal(newLi.innerText, '1');
   t.equal(newLi.style.width, getComputedStyle(li).width);
   t.equal(newLi.style.height, getComputedStyle(li).height);
@@ -89,7 +88,7 @@ test('defaultPreview clones element', t => {
   const div = defaultPreview(doc.querySelector('div'));
   t.equal(div.tagName, 'DIV');
   t.equal(div.childElementCount, 1);
-  const newP = div.children[0];
+  const newP = div.children[0] as HTMLElement;
   t.equal(newP.tagName, 'P');
   t.equal(newP.innerText, 'lorem');
   t.end();
@@ -115,7 +114,7 @@ test('unknownTagPreview ignores unknown tag with custom size', t => {
 
 test('unknownTagPreview clones zero size element, copies children size', t => {
   buildHtml('<xyz><div>lorem</div><div>hello</div></xyz>');
-  const xyz = doc.querySelector('xyz');
+  const xyz = doc.querySelector('xyz') as HTMLElement;
   const newXyz = unknownTagPreview(xyz);
   t.equal(newXyz.tagName, 'XYZ');
   t.equal(newXyz.childElementCount, 2);

@@ -34,7 +34,7 @@
   },
   "scripts": {
     "build": "rimraf dist && tsc src/index.ts --declaration --outDir dist --removeComments",
-    "lint": "eslint src",
+    "lint": "eslint src test",
     "prepare": "npm run build",
     "preversion": "npm test",
     "version": "standard-changelog && git add CHANGELOG.md",

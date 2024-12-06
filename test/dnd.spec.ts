@@ -1,15 +1,15 @@
-// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // not testing all edge cases in DOM/events, assumes dragula covers them all.
 // only test dnd lifecycle.
 import test from 'tape';
 import $ from 'jquery';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {DndService} from '../src/index';
+import {DndService, type SourceDelegate, type SourceOptions, type TargetDelegate, type TargetOptions} from '../src/index';
 
 const doc = document;
 const documentElement = doc.documentElement;
 
-let node = doc.createElement('style');
+const node = doc.createElement('style');
 node.innerHTML = `
 .test-class {
   display: block;
@@ -23,9 +23,8 @@ const dndService = new DndService(ea);
 
 // copied from dragula test/lib/events.js
 function fireEvent(el, type, options) {
-  var o = options || {};
-  var e = document.createEvent('Event');
-  e.initEvent(type, true, true);
+  const o = options || {};
+  const e = new Event(type, { bubbles: true, cancelable: true });
   Object.keys(o).forEach(apply);
   el.dispatchEvent(e);
   function apply (key) {
@@ -93,7 +92,7 @@ ea.subscribe('dnd:willEnd', () => trackEvent('dnd:willEnd'));
 ea.subscribe('dnd:didEnd', () => trackEvent('dnd:didEnd'));
 ea.subscribe('dnd:didCancel', () => trackEvent('dnd:didCancel'));
 
-const target1 = {
+const target1: TargetDelegate = {
   dndElement: tbox_big,
   dndCanDrop(model) { return model && model.type === 'one'; },
   dndDrop(location) {
@@ -110,7 +109,7 @@ const target1 = {
   }
 };
 
-const target2 = {
+const target2: TargetDelegate = {
   dndCanDrop(model) { return true; },
   dndDrop(location) {
     track({
@@ -126,7 +125,7 @@ const target2 = {
   }
 };
 
-const target3 = {
+const target3: TargetDelegate = {
   dndElement: tbox_big2,
   dndCanDrop(model) { return model && model.type === 'two'; },
   dndDrop(location) {
@@ -143,7 +142,7 @@ const target3 = {
   }
 };
 
-const target4 = {
+const target4: TargetDelegate = {
   dndElement: tbox_small_inner2,
   dndCanDrop(model) { return model && model.type === 'two'; },
   dndDrop(location) {
@@ -160,71 +159,79 @@ const target4 = {
   }
 };
 
-test('add source', t => {
+const source1: SourceDelegate = {dndModel: model1, dndElement: box_0_0};
+const source2: SourceDelegate = {dndModel: model1};
+const source3: SourceDelegate = {
+  dndModel: model2,
+  dndElement: box_0_2,
+  dndPreview: (model) => {
+    const dom = $('<div></div>');
+    dom.text(model.name);
+    dom.css('width', '25px');
+    dom.css('height', '20px');
+    return dom.get(0);
+  },
+  dndCanDrag: () => true
+};
+const source4: SourceDelegate = {
+  dndModel: model2,
+  dndElement: box_0_3,
+  dndPreview: (model) => {
+    const dom = $('<div></div>');
+    dom.text('+');
+    dom.css('width', '10px');
+    dom.css('height', '10px');
+    return dom.get(0);
+  }
+};
+const source5: SourceDelegate = {dndModel: model2, dndElement: box_0_4, dndPreview: () => undefined};
+const source6: SourceDelegate = {dndModel: model1, dndElement: box_content_box};
+const source7: SourceDelegate = {dndModel: model1, dndElement: box_border_box};
+const source8: SourceDelegate = {
+  dndModel: model1,
+  dnd: { isProcessing: false },
+  dndElement: box_0_5,
+  dndCanDrag: () => false
+};
 
+test('add source', t => {
   t.throws(() => dndService.addSource(undefined), 'missing delegate');
-  t.throws(() => dndService.addSource({dndElement: box_0_0}), 'missing dndModel()');
+  t.throws(() => dndService.addSource({dndElement: box_0_0} as SourceDelegate), 'missing dndModel()');
   t.throws(() => dndService.addSource({dndModel: model1}), 'missing dndElement');
-  t.throws(() => dndService.addSource({dndModel: model1, dndElement: box_0_0}, {handler: 1}), 'invalid handler');
+  t.throws(() => dndService.addSource({dndModel: model1, dndElement: box_0_0}, {handler: 1} as any as SourceOptions), 'invalid handler');
 
   // normal source
-  dndService.addSource({dndModel: model1, dndElement: box_0_0});
+  dndService.addSource(source1);
 
   // source with element option and noPreview
-  dndService.addSource({dndModel: model1}, {element: box_0_1, noPreview: true});
+  dndService.addSource(source2, {element: box_0_1, noPreview: true});
 
   // source with customised preview and dndCanDrag
-  dndService.addSource({
-    dndModel: model2,
-    dndElement: box_0_2,
-    dndPreview: (model) => {
-      const dom = $('<div></div>');
-      dom.text(model.name);
-      dom.css('width', '25px');
-      dom.css('height', '20px');
-      return dom.get(0);
-    },
-    dndCanDrag: () => true
-  });
+  dndService.addSource(source3);
 
   // source with customised preview, centerPreviewToMousePosition
-  dndService.addSource({
-    dndModel: model2,
-    dndElement: box_0_3,
-    dndPreview: (model) => {
-      const dom = $('<div></div>');
-      dom.text('+');
-      dom.css('width', '10px');
-      dom.css('height', '10px');
-      return dom.get(0);
-    }
-  }, {centerPreviewToMousePosition: true, hideCursor: true});
+  dndService.addSource(source4, {centerPreviewToMousePosition: true, hideCursor: true});
 
   // source with handler, a dndPreview returns undefined
-  dndService.addSource({dndModel: model2, dndElement: box_0_4, dndPreview: () => undefined}, {handler: box_0_4_handler});
+  dndService.addSource(source5, {handler: box_0_4_handler});
 
   // source with content-box box-sizing
-  dndService.addSource({dndModel: model1, dndElement: box_content_box});
+  dndService.addSource(source6);
   // source with border-box box-sizing
-  dndService.addSource({dndModel: model1, dndElement: box_border_box});
+  dndService.addSource(source7);
 
   // source with customised dndCanDrag
-  dndService.addSource({
-    dndModel: model1,
-    dndElement: box_0_5,
-    dndCanDrag: () => false
-  });
+  dndService.addSource(source8);
 
   t.end();
 });
 
 test('add target', t => {
-
-  t.throws(() => dndService.addTarget(), 'missing delegate');
-  t.throws(() => dndService.addTarget({dndElement: tbox_big}), 'missing dndCanDrop() and dndDrop()');
+  t.throws(() => dndService.addTarget(undefined), 'missing delegate');
+  t.throws(() => dndService.addTarget({dndElement: tbox_big} as TargetDelegate), 'missing dndCanDrop() and dndDrop()');
   t.throws(() => dndService.addTarget({dndDrop: () => 1, dndCanDrop: () => true}), 'missing dndElement');
-  t.throws(() => dndService.addTarget({dndElement: tbox_big, dndCanDrop: () => true}), 'missing dndDrop()');
-  t.throws(() => dndService.addTarget({dndElement: tbox_big, dndDrop: () => 1}), 'missing dndCanDrop()');
+  t.throws(() => dndService.addTarget({ dndElement: tbox_big, dndCanDrop: () => true } as unknown as TargetDelegate), 'missing dndDrop()');
+  t.throws(() => dndService.addTarget({ dndElement: tbox_big, dndDrop: () => 1 } as unknown as TargetDelegate), 'missing dndCanDrop()');
 
   // normal target, can drop type 'one'
   dndService.addTarget(target1);
@@ -238,10 +245,33 @@ test('add target', t => {
   t.end();
 });
 
-test('all targets have empty dnd property', t => {
-
+test('all sources targets have empty dnd property', t => {
   t.notOk(dndService.isProcessing);
   t.notOk(dndService.model);
+
+  t.notOk(source1.dnd.isProcessing);
+  t.notOk(source1.dnd.isStartingSource);
+
+  t.notOk(source2.dnd.isProcessing);
+  t.notOk(source2.dnd.isStartingSource);
+
+  t.notOk(source3.dnd.isProcessing);
+  t.notOk(source3.dnd.isStartingSource);
+
+  t.notOk(source4.dnd.isProcessing);
+  t.notOk(source4.dnd.isStartingSource);
+
+  t.notOk(source5.dnd.isProcessing);
+  t.notOk(source5.dnd.isStartingSource);
+
+  t.notOk(source6.dnd.isProcessing);
+  t.notOk(source6.dnd.isStartingSource);
+
+  t.notOk(source7.dnd.isProcessing);
+  t.notOk(source7.dnd.isStartingSource);
+
+  t.notOk(source8.dnd.isProcessing);
+  t.notOk(source8.dnd.isStartingSource);
 
   t.notOk(target1.dnd.isProcessing);
   t.notOk(target1.dnd.isHoveringShallowly);
@@ -272,6 +302,11 @@ test('drag type one, draw preview, drop on nothing', t => {
   t.notOk(dndService.isProcessing);
   t.notOk(dndService.model);
 
+  [source1, source2, source3, source4, source5, source6, source7, source8].forEach(s => {
+    t.notOk(s.dnd.isProcessing);
+    t.notOk(s.dnd.isStartingSource);
+  });
+
   t.deepEqual(_track, []);
 
   // first small movement, this is where dnd starts
@@ -280,6 +315,14 @@ test('drag type one, draw preview, drop on nothing', t => {
   // moved mouse, dnd starts
   t.ok(dndService.isProcessing);
   t.deepEqual(dndService.model, m);
+
+  t.ok(source1.dnd.isProcessing);
+  t.ok(source1.dnd.isStartingSource);
+
+  [source2, source3, source4, source5, source6, source7, source8].forEach(s => {
+    t.ok(s.dnd.isProcessing);
+    t.notOk(s.dnd.isStartingSource);
+  });
 
   t.ok(target1.dnd.isProcessing);
   t.notOk(target1.dnd.isHoveringShallowly);
@@ -305,7 +348,7 @@ test('drag type one, draw preview, drop on nothing', t => {
   t.equal(preview.css('top'), '0px');
 
   t.deepEqual(_track, [
-    { event: 'dnd:willStart', isProcessing: undefined, model: undefined },
+    { event: 'dnd:willStart', isProcessing: false, model: undefined },
     { event: 'dnd:didStart', isProcessing: true, model: { name: 'model1', type: 'one' } }
   ]);
 
@@ -324,7 +367,7 @@ test('drag type one, draw preview, drop on nothing', t => {
 
   t.deepEqual(_track, [
     { event: 'dnd:willEnd', isProcessing: true, model: { name: 'model1', type: 'one' } },
-    { event: 'dnd:didEnd', isProcessing: undefined, model: undefined },
+    { event: 'dnd:didEnd', isProcessing: false, model: undefined },
   ]);
 
   clearTrack();
@@ -463,7 +506,7 @@ test('drag type one, hover over 2 targets, drop on inner target', t => {
         targetElementRect: { x: 150, y: 50, width: 100, height: 100 }
       }
     },
-    { event: 'dnd:didEnd', isProcessing: undefined, model: undefined }
+    { event: 'dnd:didEnd', isProcessing: false, model: undefined }
   ]);
 
   clearTrack();
@@ -556,7 +599,7 @@ test('drag type one with no preview, drop on outer target', t => {
         targetElementRect: { x: 100, y: 0, width: 250, height: 250 }
       }
     },
-    { event: 'dnd:didEnd', isProcessing: undefined, model: undefined }
+    { event: 'dnd:didEnd', isProcessing: false, model: undefined }
   ]);
 
   clearTrack();
@@ -636,7 +679,7 @@ test('drag type two with customised preview, drop on invalid target', t => {
 
   t.deepEqual(_track, [
     { event: 'dnd:willEnd', isProcessing: true, model: { name: 'model2', type: 'two' } },
-    { event: 'dnd:didEnd', isProcessing: undefined, model: undefined }
+    { event: 'dnd:didEnd', isProcessing: false, model: undefined }
   ], 'no drop recorded');
 
   clearTrack();
@@ -754,7 +797,7 @@ test('drag type two with customised preview, hideCursor, centerPreviewToMousePos
         targetElementRect: { x: 350, y: 0, width: 250, height: 250 }
       }
     },
-    { event: 'dnd:didEnd', isProcessing: undefined, model: undefined }
+    { event: 'dnd:didEnd', isProcessing: false, model: undefined }
   ]);
 
   clearTrack();
@@ -828,7 +871,7 @@ test('drag type two inside of handler, drop on target', t => {
   t.equal(preview.text(), '04');
 
   t.deepEqual(_track, [
-    { event: 'dnd:willStart', isProcessing: undefined, model: undefined },
+    { event: 'dnd:willStart', isProcessing: false, model: undefined },
     { event: 'dnd:didStart', isProcessing: true, model: { name: 'model2', type: 'two' } }
   ]);
 
@@ -901,7 +944,7 @@ test('drag type two inside of handler, drop on target', t => {
         targetElementRect: { x: 350, y: 0, width: 250, height: 250 }
       }
     },
-    { event: 'dnd:didEnd', isProcessing: undefined, model: undefined },
+    { event: 'dnd:didEnd', isProcessing: false, model: undefined },
   ]);
 
   clearTrack();
@@ -1004,7 +1047,7 @@ test('drag type one, cancel with esc key', t => {
   t.notOk(target3.dnd.model);
 
   t.deepEqual(_track, [
-    {event: 'dnd:didCancel', isProcessing: undefined, model: undefined}
+    {event: 'dnd:didCancel', isProcessing: false, model: undefined}
   ]);
 
   // After esc, hover over tbox_small_inner move 150px to the right, move 55px down
@@ -1016,7 +1059,7 @@ test('drag type one, cancel with esc key', t => {
   t.notOk(target2.dnd.isProcessing);
   t.notOk(target3.dnd.isProcessing);
   t.deepEqual(_track, [
-    {event: 'dnd:didCancel', isProcessing: undefined, model: undefined}
+    {event: 'dnd:didCancel', isProcessing: false, model: undefined}
   ]);
 
   // After esc, drop on tbox_small_inner
@@ -1028,7 +1071,7 @@ test('drag type one, cancel with esc key', t => {
   t.notOk(target3.dnd.isProcessing);
 
   t.deepEqual(_track, [
-    {event: 'dnd:didCancel', isProcessing: undefined, model: undefined}
+    {event: 'dnd:didCancel', isProcessing: false, model: undefined}
   ]);
 
   t.end();

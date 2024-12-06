@@ -4,6 +4,7 @@ import {trPreview, liPreview, unknownTagPreview, defaultPreview} from './preview
 
 export interface SourceDelegate {
   dndElement?: Element;
+  dnd?: SourceDelegateInjectedDnd;
   dndModel(): any;
   dndCanDrag?(): boolean;
   dndPreview?(model: any): Element;
@@ -15,6 +16,11 @@ export interface SourceOptions {
   noPreview?: boolean;
   hideCursor?: boolean;
   centerPreviewToMousePosition?: boolean;
+}
+
+export interface SourceDelegateInjectedDnd {
+  isProcessing: boolean;
+  isStartingSource?: boolean;
 }
 
 interface Point {
@@ -44,6 +50,8 @@ export interface TargetDelegateInjectedDnd {
   isHovering?: boolean;
   isHoveringShallowly?: boolean;
 }
+
+export type SourceAndTargetDelegateInjectedDnd = SourceDelegateInjectedDnd & TargetDelegateInjectedDnd;
 
 export interface TargetDelegate {
   dndElement?: Element;
@@ -377,8 +385,8 @@ class DndService {
   dndTargets: Array<DndTarget>;
   previewDrawers: Array<PreviewDrawer>;
 
-  isProcessing: boolean;
-  model: any;
+  isProcessing = false;
+  model: any = undefined;
 
   _element: Element | void;
   _grabbed: DndSource | void;
@@ -430,7 +438,22 @@ class DndService {
   }
 
   addSource(delegate: SourceDelegate, options: SourceOptions = {}): void {
-    this.dndSources.push(new DndSource(delegate, options));
+    if (delegate.dnd) {
+      delegate.dnd.isProcessing = false;
+    } else {
+      delegate.dnd = { isProcessing: false };
+    }
+
+    const dndSource = new DndSource(delegate, options);
+
+    // init delegate.dnd if there is a dnd session
+    if (this.isProcessing) {
+      const dnd = dndSource.delegate.dnd;
+      dnd.isProcessing = true;
+      dnd.isStartingSource = false;
+    }
+
+    this.dndSources.push(dndSource);
   }
 
   removeSource(delegateOrElement: SourceDelegate | Element): void {
@@ -677,6 +700,12 @@ class DndService {
       }
     }
 
+    this.dndSources.forEach(source => {
+      const dnd = source.delegate.dnd;
+      dnd.isProcessing = true;
+      dnd.isStartingSource = dndSource === source;
+    });
+
     this.dndTargets.forEach(dndTarget => {
       const canDrop = dndTarget.delegate.dndCanDrop(this.model);
       const dnd = dndTarget.delegate.dnd;
@@ -693,7 +722,7 @@ class DndService {
   _cleanup(): void {
     this._ungrab();
     this._removePreviewImage();
-    this.isProcessing = undefined;
+    this.isProcessing = false;
     this.model = undefined;
     this._sourceElement = undefined;
     this._noPreview = undefined;
@@ -704,16 +733,19 @@ class DndService {
     this._offsetX = 0;
     this._offsetY = 0;
 
+    this.dndSources.forEach(source => {
+      const dnd = source.delegate.dnd;
+      dnd.isProcessing = false;
+      dnd.isStartingSource = false;
+    });
+
     this.dndTargets.forEach(dndTarget => {
       const dnd = dndTarget.delegate.dnd;
-      dnd.canDrop = undefined;
-      dnd.isProcessing = undefined;
-      dnd.isHoveringShallowly = undefined;
-      dnd.isHovering = undefined;
+      dnd.canDrop = false;
+      dnd.isProcessing = false;
+      dnd.isHoveringShallowly = false;
+      dnd.isHovering = false;
       dnd.model = undefined;
-
-      // if turn on debounce
-      // if (dndTarget.dndHover) dndTarget.dndHover.cancel();
     });
   }
 

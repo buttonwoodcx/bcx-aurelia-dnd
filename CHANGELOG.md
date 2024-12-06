@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.5.2...v1.6.0) (2024-12-06)
+
+
+### Features
+
+* add .dnd.isProcessing and .dnd.isStartingSource to source delegate ([69b0457](https://github.com/buttonwoodcx/bcx-aurelia-dnd/commit/69b045704f7d81c6660d503193cfd2142eb49f3a))
+
+
+
 ## [1.5.2](https://github.com/buttonwoodcx/bcx-aurelia-dnd/compare/v1.5.1...v1.5.2) (2020-06-12)
 
 

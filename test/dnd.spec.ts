@@ -381,8 +381,26 @@ test('drag type one, hover over 2 targets, drop on inner target', t => {
   fireEvent(box_0_0, 'mousedown', {which: 1, clientX: 5, clientY: 10});
   t.notOk($('body').hasClass('bcx-dnd-hide-cursor'));
 
+  [source1, source2, source3, source4, source5, source6, source7, source8].forEach(s => {
+    t.notOk(s.dnd.isProcessing);
+    t.notOk(s.dnd.isStartingSource);
+  });
+
   // first small movement, this is where dnd starts
   fireEvent(documentElement, 'mousemove', {which: 1, clientX: 6, clientY: 10});
+
+  // moved mouse, dnd starts
+  t.ok(dndService.isProcessing);
+  t.deepEqual(dndService.model, m);
+
+  t.ok(source1.dnd.isProcessing);
+  t.ok(source1.dnd.isStartingSource);
+
+  [source2, source3, source4, source5, source6, source7, source8].forEach(s => {
+    t.ok(s.dnd.isProcessing);
+    t.notOk(s.dnd.isStartingSource);
+  });
+
   const preview = $('.bcx-dnd-preview');
   // following movement re-position preview.
   fireEvent(documentElement, 'mousemove', {which: 1, clientX: 8, clientY: 10});
@@ -475,6 +493,11 @@ test('drag type one, hover over 2 targets, drop on inner target', t => {
   // finished
   t.notOk(dndService.isProcessing);
   t.notOk(dndService.model);
+
+  [source1, source2, source3, source4, source5, source6, source7, source8].forEach(s => {
+    t.notOk(s.dnd.isProcessing);
+    t.notOk(s.dnd.isStartingSource);
+  });
 
   t.notOk(target1.dnd.isProcessing);
   t.notOk(target1.dnd.isHoveringShallowly);
